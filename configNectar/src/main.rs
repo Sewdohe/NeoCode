@@ -31,7 +31,6 @@ fn main() {
         }
         config_path.push("AppData");
         config_path.push("Local");
-
         // Change directory to the local appdata folder
         match env::set_current_dir(config_path.as_path()) {
             Ok(()) => println!("Changed dir to config: {}", config_path.display()),
@@ -112,6 +111,7 @@ fn main() {
         }
     } else if os == "linux" {
         println!("trying to [unix] symlink {} to {}", dir.display(), config_path.display());
+
         match symlink_dir(dir, config_path.as_path()){
             Ok(()) => println!("Symlink done"),
             Err(err) => println!("Error Symlink: {}", err)
