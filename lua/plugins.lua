@@ -13,6 +13,7 @@ local use = require('packer').use
 require('packer').startup(function()
   use 'wbthomason/packer.nvim'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
+  use 'williamboman/nvim-lsp-installer'
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
@@ -29,6 +30,12 @@ require('packer').startup(function()
   use 'junegunn/fzf.vim'
   use 'windwp/nvim-autopairs'
   use 'sheerun/vim-polyglot'
+  use {
+    'tanvirtin/vgit.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim'
+    }
+  }
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'terrortylor/nvim-comment'
   use {
@@ -113,3 +120,4 @@ require('telescope').setup {
 -- require('telescope').load_extension('fzf')
 require('telescope').load_extension("workspaces")
 require('nvim_comment').setup()
+require('vgit').setup()
