@@ -8,8 +8,8 @@ use Result::Err;
 #[cfg(target_os = "windows")]
 use std::os::windows::fs::symlink_dir;
 
-#[cfg(target_os = "unix")]
-use std::os::unix::fs::symlink_dir;
+#[cfg(target_family = "unix")]
+use std::os::unix::fs::symlink as symlink_dir;
 
 fn main() {
     println!("Backing up old config directory");
@@ -17,7 +17,7 @@ fn main() {
     let os = env::consts::OS;
     let starting_dir: PathBuf = match env::current_dir() {
         Ok(val) => val,
-        Err(err) => PathBuf::new()
+        Err(_err) => PathBuf::new()
     };
     let mut config_path = PathBuf::from("");
 
@@ -44,7 +44,7 @@ fn main() {
             Ok(()) => {println!("Old config back up complete")},
             Err(err) => { println!("Error: {}", err)}
         }
-    } else if os == "unix" {
+    } else if os == "linux" {
         // set URL for windows config
         match env::var("HOME") {
             Ok(val) => {
@@ -66,7 +66,9 @@ fn main() {
             Ok(()) => {println!("Old config back up complete")},
             Err(err) => { println!("Error: {}", err)}
         }
-    }
+    } else if os == "macos" {
+
+    } 
 
     // Backup complete. CD back to starting directory
     match env::set_current_dir(starting_dir.as_path()) {
@@ -88,7 +90,7 @@ fn main() {
             Ok(()) => println!("Symlink done"),
             Err(err) => println!("Error Symlink: {}", err)
         }
-    } else if os == "unix" {
+    } else if os == "linux" {
         println!("trying to [unix] symlink {} to {}", dir.display(), config_path.display());
         match symlink_dir(dir, config_path.as_path()){
             Ok(()) => println!("Symlink done"),
