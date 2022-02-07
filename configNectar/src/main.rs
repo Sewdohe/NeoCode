@@ -45,7 +45,7 @@ fn main() {
             Err(err) => { println!("Error: {}", err)}
         }
     } else if os == "linux" {
-        // set URL for windows config
+        // set URL for unix config
         match env::var("HOME") {
             Ok(val) => {
                 config_path.push(val);
@@ -67,8 +67,28 @@ fn main() {
             Err(err) => { println!("Error: {}", err)}
         }
     } else if os == "macos" {
+        // set URL for unix config
+        match env::var("HOME") {
+            Ok(val) => {
+                config_path.push(val);
+            },
+            Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
+        }
+        config_path.push(".config");
 
-    } 
+        // Change directory to the local appdata folder
+        match env::set_current_dir(config_path.as_path()) {
+            Ok(()) => println!("Changed dir to config: {}", config_path.display()),
+            Err(err) => println!("Error: {}", err)
+        }
+        
+        println!("Trying to rename nvim folder...");
+        // Rename the nvim folder to nvim.old (backup)
+        match fs::rename("nvim", "nvim.old" ) {
+            Ok(()) => {println!("Old config back up complete")},
+            Err(err) => { println!("Error: {}", err)}
+        }
+    }
 
     // Backup complete. CD back to starting directory
     match env::set_current_dir(starting_dir.as_path()) {
@@ -96,5 +116,37 @@ fn main() {
             Ok(()) => println!("Symlink done"),
             Err(err) => println!("Error Symlink: {}", err)
         }
+    } else if os == "macos" {
+        println!("trying to [unix] symlink {} to {}", dir.display(), config_path.display());
+        match symlink_dir(dir, config_path.as_path()){
+            Ok(()) => println!("Symlink done"),
+            Err(err) => println!("Error Symlink: {}", err)
+        }
     }
+
+    //dotfile install complete. Install packer.nvim
+    install_packer();
+}
+
+fn install_packer() {
+    use std::process::Command;
+    
+    let output = if cfg!(target_os = "windows") {
+        Command::new("pwsh")
+                .args(["C:\", git clone https://github.com/wbthomason/packer.nvim \"$env:LOCALAPPDATA\\nvim-data\\site\\pack\\packer\\start\\packer.nvim\""])
+                .output()
+                .expect("failed to execute process")
+    } else {
+        Command::new("sh")
+                .arg("-c")
+                .arg(
+                    "git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+                     ~/.local/share/nvim/site/pack/packer/start/packer.nvim"
+                 )
+                .output()
+                .expect("failed to execute process")
+    };
+
+    let result_text = output.stdout;
+    println!("{}", String::from_utf8(result_text).unwrap());
 }
