@@ -30,12 +30,7 @@ require('packer').startup(function()
   use 'junegunn/fzf.vim'
   use 'windwp/nvim-autopairs'
   use 'sheerun/vim-polyglot'
-  use {
-    'tanvirtin/vgit.nvim',
-    requires = {
-      'nvim-lua/plenary.nvim'
-    }
-  }
+  use 'simrat39/rust-tools.nvim'
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'terrortylor/nvim-comment'
   use {
@@ -120,4 +115,4 @@ require('telescope').setup {
 -- require('telescope').load_extension('fzf')
 require('telescope').load_extension("workspaces")
 require('nvim_comment').setup()
-require('vgit').setup()
+require('rust-tools').setup({})

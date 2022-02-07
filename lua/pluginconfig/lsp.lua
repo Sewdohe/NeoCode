@@ -62,10 +62,8 @@ require'lspconfig'.sumneko_lua.setup {
     }
 }
 
-
-
+require'lspconfig'.rls.setup{}
 require'lspconfig'.angularls.setup{}
-require'lspconfig'.rust_analyzer.setup{}
 require'lspconfig'.tsserver.setup{}
 require'lspconfig'.html.setup{}
 require'lspconfig'.cssmodules_ls.setup{}
