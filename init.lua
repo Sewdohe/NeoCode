@@ -1,0 +1,27 @@
+--[[
+.########..####.##.....##.##....##.########..######..########....###....########.
+.##.....##..##..##.....##.###...##.##.......##....##....##......##.##...##.....##
+.##.....##..##..##.....##.####..##.##.......##..........##.....##...##..##.....##
+.##.....##..##..##.....##.##.##.##.######...##..........##....##.....##.########.
+.##.....##..##...##...##..##..####.##.......##..........##....#########.##...##..
+.##.....##..##....##.##...##...###.##.......##....##....##....##.....##.##....##.
+.########..####....###....##....##.########..######.....##....##.....##.##.....##
+
+I've been loving using LUA for Neovim config. If you stumble upon this config, I hope you enjoy!
+--]]
+
+--[[
+When configuring Vim using LUA, it will look into the "lua" folder for any requires you may need.
+Use dot notation to navigate folders. Example:
+if you had the directory /lua/core/settings.lua, you would use "require(core.settings)"
+
+Here I chose not to nest that deeply just to keep the config simple, and keep from having to
+navigate multiple files.
+--]]
+require('settings')
+
+require('plugins')
+
+require('keymap')
+
+require('visual')
