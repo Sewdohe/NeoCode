@@ -160,13 +160,29 @@ fn install_packer() {
     }
 }
 
-#[cfg(target_family = "unix")]
+#[cfg(target_os = "linux")]
 fn install_packer() {
-    //TODO: Implement Unix install
-    std::process::Command::new("sh")
-        .arg("-c")
-        .arg("git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim")
-        .output()
-        .expect("installed failed somewhere.")
+
+    println!("Attempting linux install of packer.nvim");
+   use run_script::ScriptOptions; 
+
+   let options = ScriptOptions::new();
+
+   let args = vec![];
+
+   let child = run_script::spawn(
+        r#"
+         git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+         "#,
+        &args,
+        &options,
+    )
+    .unwrap();
+
+    let spawn_output = child.wait_with_output().unwrap();
+
+    println!("Success: {}", &spawn_output.status.success());
 }
+
+
