@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use std::path::Path;
 use Result::Ok;
 use Result::Err;
+use predicates::prelude::*;
 
 #[cfg(target_os = "windows")]
 use std::os::windows::fs::symlink_dir;
@@ -12,7 +13,7 @@ use std::os::windows::fs::symlink_dir;
 use std::os::unix::fs::symlink as symlink_dir;
 
 fn main() {
-    println!("Backing up old config directory");
+    println!("Backing up old config directory ------------------");
     println!("Current OS is {}", env::consts::OS); // Prints the current OS.
     let os = env::consts::OS;
     let starting_dir: PathBuf = match env::current_dir() {
@@ -62,7 +63,7 @@ fn main() {
         println!("Trying to rename nvim folder...");
         // Rename the nvim folder to nvim.old (backup)
         match fs::rename("nvim", "nvim.old" ) {
-            Ok(()) => {println!("Old config back up complete")},
+            Ok(()) => {println!("Renamed old config to nvim.old")},
             Err(err) => { println!("Error: {}", err)}
         }
     } else if os == "macos" {
@@ -84,7 +85,7 @@ fn main() {
         println!("Trying to rename nvim folder...");
         // Rename the nvim folder to nvim.old (backup)
         match fs::rename("nvim", "nvim.old" ) {
-            Ok(()) => {println!("Old config back up complete")},
+            Ok(()) => {println!("Old config back up complete ------------------------\n\n")},
             Err(err) => { println!("Error: {}", err)}
         }
     }
@@ -105,21 +106,36 @@ fn main() {
     // Symlink the config directory now
     if os == "windows" {
         println!("trying to [windows] symlink {} to {}", dir.display(), config_path.display());
+
+        // TODO: Check if symlink exists already
+        // assert that the nvim directory isn't already a symlink
+        let predicate_fn = predicate::path::is_symlink();
+        assert_eq!(false, predicate_fn.eval(config_path.as_path()), "Looks like your nvim directory is already symlinked!");
+
         match symlink_dir(dir, config_path.as_path()){
-            Ok(()) => println!("Symlink done"),
+            Ok(()) => println!("Symlink done -------------------"),
             Err(err) => println!("Error Symlink: {}", err)
         }
     } else if os == "linux" {
         println!("trying to [unix] symlink {} to {}", dir.display(), config_path.display());
 
+        // assert that the nvim directory isn't already a symlink
+        let predicate_fn = predicate::path::is_symlink();
+        assert_eq!(false, predicate_fn.eval(config_path.as_path()), "Looks like your nvim directory is already symlinked!");
+
         match symlink_dir(dir, config_path.as_path()){
-            Ok(()) => println!("Symlink done"),
+            Ok(()) => println!("Symlink done -------------------"),
             Err(err) => println!("Error Symlink: {}", err)
         }
     } else if os == "macos" {
-        println!("trying to [unix] symlink {} to {}", dir.display(), config_path.display());
+        println!("trying to [macOS] symlink {} to {}", dir.display(), config_path.display());
+
+        // assert that the nvim directory isn't already a symlink
+        let predicate_fn = predicate::path::is_symlink();
+        assert_eq!(false, predicate_fn.eval(config_path.as_path()), "Looks like your nvim directory is already symlinked!");
+
         match symlink_dir(dir, config_path.as_path()){
-            Ok(()) => println!("Symlink done"),
+            Ok(()) => println!("Symlink done -------------------"),
             Err(err) => println!("Error Symlink: {}", err)
         }
     }
@@ -128,25 +144,29 @@ fn main() {
     install_packer();
 }
 
+#[cfg(target_os = "windows")]
 fn install_packer() {
-    use std::process::Command;
+    println!("Attempting install for packer.nvim for windows env -----------");
+    use powershell_script;
     
-    let output = if cfg!(target_os = "windows") {
-        Command::new("pwsh")
-                .args(["C:\", git clone https://github.com/wbthomason/packer.nvim \"$env:LOCALAPPDATA\\nvim-data\\site\\pack\\packer\\start\\packer.nvim\""])
-                .output()
-                .expect("failed to execute process")
-    } else {
-        Command::new("sh")
-                .arg("-c")
-                .arg(
-                    "git clone --depth 1 https://github.com/wbthomason/packer.nvim\
-                     ~/.local/share/nvim/site/pack/packer/start/packer.nvim"
-                 )
-                .output()
-                .expect("failed to execute process")
-    };
+    let create_shortcut = include_str!("install-packer.ps");
+    match powershell_script::run(create_shortcut, true) {
+        Ok(output) => {
+            println!("{}", output);
+        }
+        Err(e) => {
+            println!("Error: {}", e);
+        }
+    }
+}
 
-    let result_text = output.stdout;
-    println!("{}", String::from_utf8(result_text).unwrap());
+#[cfg(target_family = "unix")]
+fn install_packer() {
+    //TODO: Implement Unix install
+    std::process::Command::new("sh")
+        .arg("-c")
+        .arg("git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim")
+        .output()
+        .expect("installed failed somewhere.")
 }
