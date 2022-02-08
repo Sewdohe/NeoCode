@@ -5,6 +5,7 @@ use std::path::Path;
 use Result::Ok;
 use Result::Err;
 use predicates::prelude::*;
+use powershell_script;
 
 #[cfg(target_os = "windows")]
 use std::os::windows::fs::symlink_dir;
@@ -13,73 +14,67 @@ use std::os::windows::fs::symlink_dir;
 use std::os::unix::fs::symlink as symlink_dir;
 
 fn main() {
-    println!("Backing up old config directory ------------------");
-    println!("Current OS is {}", env::consts::OS); // Prints the current OS.
-    let os = env::consts::OS;
     let starting_dir: PathBuf = match env::current_dir() {
         Ok(val) => val,
         Err(_err) => PathBuf::new()
     };
-    let mut config_path = PathBuf::from("");
+    let mut config_folder_path = PathBuf::from("");
+    let os = env::consts::OS;
 
     if os == "windows" {
         // set URL for windows config
         match env::var("USERPROFILE") {
             Ok(val) => {
-                config_path.push(val);
+                config_folder_path.push(val);
             },
             Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
         }
-        config_path.push("AppData");
-        config_path.push("Local");
-        // Change directory to the local appdata folder
-        match env::set_current_dir(config_path.as_path()) {
-            Ok(()) => println!("Changed dir to config: {}", config_path.display()),
-            Err(err) => println!("Error: {}", err)
-        }
-        
-        println!("Trying to rename nvim folder...");
-        // Rename the nvim folder to nvim.old (backup)
-        match fs::rename("nvim", "nvim.old" ) {
-            Ok(()) => {println!("Old config back up complete")},
-            Err(err) => { println!("Error: {}", err)}
-        }
+        config_folder_path.push("AppData");
+        config_folder_path.push("Local");
     } else if os == "linux" {
-        // set URL for unix config
-        match env::var("HOME") {
+         // set URL for unix config
+         match env::var("HOME") {
             Ok(val) => {
-                config_path.push(val);
+                config_folder_path.push(val);
             },
             Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
         }
-        config_path.push(".config");
-
-        // Change directory to the local appdata folder
-        match env::set_current_dir(config_path.as_path()) {
-            Ok(()) => println!("Changed dir to config: {}", config_path.display()),
-            Err(err) => println!("Error: {}", err)
-        }
-        
-        println!("Trying to rename nvim folder...");
-        // Rename the nvim folder to nvim.old (backup)
-        match fs::rename("nvim", "nvim.old" ) {
-            Ok(()) => {println!("Renamed old config to nvim.old")},
-            Err(err) => { println!("Error: {}", err)}
-        }
+        config_folder_path.push(".config");
     } else if os == "macos" {
         // set URL for unix config
         match env::var("HOME") {
             Ok(val) => {
-                config_path.push(val);
+                config_folder_path.push(val);
             },
             Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
         }
-        config_path.push(".config");
+        config_folder_path.push(".config");
+    }
 
-        // Change directory to the local appdata folder
+    backup_old_config(config_folder_path.clone());
+    symlink_config(config_folder_path.clone(), starting_dir);
+    install_packer();
+
+}
+
+
+fn backup_old_config(config_path: PathBuf) {
+
+    let os = env::consts::OS;
+    println!("Backing up old config directory ------------------");
+    println!("Current OS is {}", env::consts::OS); // Prints the current OS.
+
+        // Change process directory to the systems config folder
         match env::set_current_dir(config_path.as_path()) {
             Ok(()) => println!("Changed dir to config: {}", config_path.display()),
             Err(err) => println!("Error: {}", err)
+        }
+        
+        // Rename the nvim folder to nvim.old (backup)
+        println!("Trying to rename nvim folder...");
+        match fs::rename("nvim", "nvim.old" ) {
+            Ok(()) => {println!("Old config back up complete")},
+            Err(err) => { println!("Error: {}", err)}
         }
         
         println!("Trying to rename nvim folder...");
@@ -90,7 +85,9 @@ fn main() {
         }
     }
 
+fn symlink_config(mut config_path: PathBuf, starting_dir: PathBuf) {
     // Backup complete. CD back to starting directory
+    let os = env::consts::OS;
     match env::set_current_dir(starting_dir.as_path()) {
         Ok(()) => println!("Back to starting directory"),
         Err(err) => println!("Error: {}", err)
@@ -99,6 +96,7 @@ fn main() {
         Some(val) => val,
         None => Path::new("")
     };
+    // the starting dir's parent is where the dotfiles are.
     println!("The starting dir parent is: {}", dir.display());
 
     config_path.push("nvim");
@@ -139,15 +137,12 @@ fn main() {
             Err(err) => println!("Error Symlink: {}", err)
         }
     }
-
-    //dotfile install complete. Install packer.nvim
-    install_packer();
 }
 
 #[cfg(target_os = "windows")]
 fn install_packer() {
+    run_packer_install();
     println!("Attempting install for packer.nvim for windows env -----------");
-    use powershell_script;
     
     let create_shortcut = include_str!("install-packer.ps");
     match powershell_script::run(create_shortcut, true) {
@@ -158,9 +153,35 @@ fn install_packer() {
             println!("Error: {}", e);
         }
     }
+
+ 
+}
+
+#[cfg(target_os = "windows")]
+fn run_packer_install() {
+    std::process::Command::new("powershell")
+    // .arg("-c")
+    .arg("nvim")
+    .arg("+PackerInstall")
+    .spawn()
+    .expect("Error: Failed to run editor")
+    .wait()
+    .expect("Error: Editor returned a non-zero status");
 }
 
 #[cfg(target_os = "linux")]
+fn run_packer_install() {
+    std::process::Command::new("powershell")
+    // .arg("-c")
+    .arg("nvim")
+    .arg("+PackerInstall")
+    .spawn()
+    .expect("Error: Failed to run editor")
+    .wait()
+    .expect("Error: Editor returned a non-zero status");
+}
+
+#[cfg(target_family = "unix")]
 fn install_packer() {
 
     println!("Attempting linux install of packer.nvim");
@@ -184,5 +205,3 @@ fn install_packer() {
 
     println!("Success: {}", &spawn_output.status.success());
 }
-
-
