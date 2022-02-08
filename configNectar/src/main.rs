@@ -76,13 +76,6 @@ fn backup_old_config(config_path: PathBuf) {
             Ok(()) => {println!("Old config back up complete")},
             Err(err) => { println!("Error: {}", err)}
         }
-        
-        println!("Trying to rename nvim folder...");
-        // Rename the nvim folder to nvim.old (backup)
-        match fs::rename("nvim", "nvim.old" ) {
-            Ok(()) => {println!("Old config back up complete ------------------------\n\n")},
-            Err(err) => { println!("Error: {}", err)}
-        }
     }
 
 fn symlink_config(mut config_path: PathBuf, starting_dir: PathBuf) {
