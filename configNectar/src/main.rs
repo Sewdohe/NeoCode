@@ -170,9 +170,13 @@ fn run_packer_install() {
 #[cfg(target_os = "linux")]
 fn run_packer_install() {
     std::process::Command::new("sh")
-    // .arg("-c")
+    .arg("-c")
     .arg("nvim")
-    // .arg("+PackerInstall")
+    .arg("--headless")
+    .arg("-c")
+    .arg("'autocmd User PackerComplete quitall'")
+    .arg("-c")
+    .arg("'PackerSync'")
     .spawn()
     .expect("Error: Failed to run editor")
     .wait()
