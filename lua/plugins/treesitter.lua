@@ -4,7 +4,11 @@ if not status_ok then
 end
 
 configs.setup({
-	ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+	-- this is a list of default support you need.
+	ensure_installed = {
+		"lua",
+		"typescript"
+	}, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 	sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
 	ignore_install = { "" }, -- List of parsers to ignore installing
 	highlight = {
@@ -37,8 +41,5 @@ configs.setup({
 			-- "LawnGreen",
 		},
 		disable = { "html" },
-	},
-	playground = {
-		enable = true,
 	},
 })

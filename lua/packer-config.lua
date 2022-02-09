@@ -64,10 +64,13 @@ packer.startup(function(use)
   use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
   use "windwp/nvim-autopairs"
-  use "nvim-treesitter/playground"
   use "romgrk/nvim-treesitter-context"
   use "windwp/nvim-ts-autotag"
   use "folke/lua-dev.nvim"
+
+  use "ahmedkhalf/project.nvim"
+  use "Shatur/neovim-session-manager"
+
   use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
