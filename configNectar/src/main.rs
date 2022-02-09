@@ -53,14 +53,13 @@ fn main() {
 
     backup_old_config(config_folder_path.clone());
     symlink_config(config_folder_path.clone(), starting_dir);
-    install_packer();
+    // install_packer();
 
 }
 
 
 fn backup_old_config(config_path: PathBuf) {
 
-    let os = env::consts::OS;
     println!("Backing up old config directory ------------------");
     println!("Current OS is {}", env::consts::OS); // Prints the current OS.
 
@@ -130,11 +129,12 @@ fn symlink_config(mut config_path: PathBuf, starting_dir: PathBuf) {
             Err(err) => println!("Error Symlink: {}", err)
         }
     }
+
+    run_packer_install();
 }
 
 #[cfg(target_os = "windows")]
 fn install_packer() {
-    run_packer_install();
     println!("Attempting install for packer.nvim for windows env -----------");
     
     let create_shortcut = include_str!("install-packer.ps");
@@ -146,8 +146,8 @@ fn install_packer() {
             println!("Error: {}", e);
         }
     }
-
- 
+    // don't need packer installer anymore. Packer already had it in the docs!!!
+    // run_packer_install();
 }
 
 #[cfg(target_os = "windows")]
@@ -155,7 +155,12 @@ fn run_packer_install() {
     std::process::Command::new("powershell")
     // .arg("-c")
     .arg("nvim")
-    .arg("+PackerInstall")
+    .arg("--headless")
+    .arg("-c")
+    .arg("'autocmd User PackerComplete quitall'")
+    .arg("-c")
+    .arg("'PackerSync'")
+    // .arg("+PackerInstall")
     .spawn()
     .expect("Error: Failed to run editor")
     .wait()
@@ -164,10 +169,10 @@ fn run_packer_install() {
 
 #[cfg(target_os = "linux")]
 fn run_packer_install() {
-    std::process::Command::new("powershell")
+    std::process::Command::new("sh")
     // .arg("-c")
     .arg("nvim")
-    .arg("+PackerInstall")
+    // .arg("+PackerInstall")
     .spawn()
     .expect("Error: Failed to run editor")
     .wait()
