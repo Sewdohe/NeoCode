@@ -25,5 +25,3 @@ require('plugins')
 require('keymap')
 
 require('visual')
-
--- SYMLINKED BOIIII

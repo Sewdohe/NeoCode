@@ -10,12 +10,21 @@
 
 
 --]]
+local colorscheme = "ayu"
+
+local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
+if not status_ok then
+  vim.notify("colorscheme " .. colorscheme .. " not found!")
+  return
+end
+
+
 if vim.g.neovide then
   -- set neovide specific settings here
   -- (neovide is a fantastic Neovimm GUI wrapper, check it out!!!)
    vim.cmd([[
    " let ayucolor="light"
-   colorscheme kanagawa
+   colorscheme ayu
    ]])
 else
   vim.cmd([[

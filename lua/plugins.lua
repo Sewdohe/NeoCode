@@ -9,8 +9,38 @@ ______ _             _
                |___/
 --]]
 
-local use = require('packer').use
-require('packer').startup(function()
+if package.config:sub(1,1) == "/" then
+  Current_Os = "unix"
+else
+  Current_Os = "windows"
+end
+
+-- after loading the basic settings, let's check if packer is
+-- installed before loading a shitload of errors:
+local fn = vim.fn
+local install_path
+
+if Current_Os == "unix" then
+  install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+else
+  install_path = fn.stdpath('data')..'\\site\\pack\\packer\\start\\packer.nvim'
+end
+
+if fn.empty(fn.glob(install_path)) > 0 then
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  print("installed packer")
+  vim.cmd [[packadd packer.nvim]]
+else
+  print("packer already installed")
+end
+
+-- Use a protected call so we don't error out on first use
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+  return
+end
+
+packer.startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
   use 'williamboman/nvim-lsp-installer'
@@ -33,15 +63,6 @@ require('packer').startup(function()
   use 'simrat39/rust-tools.nvim'
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'terrortylor/nvim-comment'
-  use {
-    'rmagatti/auto-session',
-    config = function()
-      require('auto-session').setup {
-        log_level = 'info',
-        auto_session_suppress_dirs = {'~/', '~/Projects'}
-      }
-    end
-  }
   use 'natecraddock/workspaces.nvim'
   use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
@@ -53,8 +74,7 @@ require('packer').startup(function()
     'kyazdani42/nvim-tree.lua',
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
-    },
-    config = function() require'nvim-tree'.setup {} end
+    }
   }
   use { 'ibhagwan/fzf-lua',
   -- optional for icon support
@@ -64,55 +84,11 @@ require('packer').startup(function()
    'nvim-lualine/lualine.nvim',
    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
-  use {
-    'goolord/alpha-nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function ()
-        require'alpha'.setup(require'alpha.themes.dashboard'.config)
-    end
-  }
+
+  if packer_bootstrap then
+    require('packer').sync()
+  end
+
 end)
 
-local lspOK, _ = pcall(require, 'pluginconfig.lsp')
-if not lspOK then
-  return
-end
-
-local cmpOK, _ = pcall(require, 'pluginconfig.cmp')
-if not cmpOK then
-  return
-end
-
-local snippyOK, _ = pcall(require, 'pluginconfig.snippy')
-if not snippyOK then
-  return
-end
-
-local snippyOK, _ = pcall(require, 'pluginconfig.nvimtree')
-if not snippyOK then
-  return
-end
-
--- Custom lualine config
-require("pluginconfig.lline")
-
-require('nvim-autopairs').setup{}
-require("bufferline").setup{}
-require('auto-session').setup()
-require("workspaces").setup()
-require('telescope').setup {
-  extensions = {
-    fzf = {
-      fuzzy = true,                    -- false will only do exact matching
-      override_generic_sorter = true,  -- override the generic sorter
-      override_file_sorter = true,     -- override the file sorter
-      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-                                       -- the default case_mode is "smart_case"
-    }
-  }
-}
--- Load FZF into telescope
--- require('telescope').load_extension('fzf')
-require('telescope').load_extension("workspaces")
-require('nvim_comment').setup()
-require('rust-tools').setup({})
+require("plug-load")
