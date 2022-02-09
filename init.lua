@@ -18,10 +18,15 @@ if you had the directory /lua/core/settings.lua, you would use "require(core.set
 Here I chose not to nest that deeply just to keep the config simple, and keep from having to
 navigate multiple files.
 --]]
-require('settings')
-
-require('plugins')
-
-require('keymap')
-
-require('visual')
+require "settings"
+require "keymap"
+require "packer-config"
+require "visual"
+require "lsp"
+require "plugins.cmp"
+require "plugins.lline"
+require "plugins.gps"
+require "plugins.nvim-tree"
+require "plugins.treesitter"
+require "plugins.bufferline"
+require "plugins.alpha"

@@ -5,7 +5,6 @@ use std::path::Path;
 use Result::Ok;
 use Result::Err;
 use predicates::prelude::*;
-use powershell_script;
 
 #[cfg(target_os = "windows")]
 use std::os::windows::fs::symlink_dir;
@@ -134,23 +133,6 @@ fn symlink_config(mut config_path: PathBuf, starting_dir: PathBuf) {
 }
 
 #[cfg(target_os = "windows")]
-fn install_packer() {
-    println!("Attempting install for packer.nvim for windows env -----------");
-    
-    let create_shortcut = include_str!("install-packer.ps");
-    match powershell_script::run(create_shortcut, true) {
-        Ok(output) => {
-            println!("{}", output);
-        }
-        Err(e) => {
-            println!("Error: {}", e);
-        }
-    }
-    // don't need packer installer anymore. Packer already had it in the docs!!!
-    // run_packer_install();
-}
-
-#[cfg(target_os = "windows")]
 fn run_packer_install() {
     std::process::Command::new("powershell")
     // .arg("-c")
@@ -181,29 +163,4 @@ fn run_packer_install() {
     .expect("Error: Failed to run editor")
     .wait()
     .expect("Error: Editor returned a non-zero status");
-}
-
-#[cfg(target_family = "unix")]
-fn install_packer() {
-
-    println!("Attempting linux install of packer.nvim");
-   use run_script::ScriptOptions; 
-
-   let options = ScriptOptions::new();
-
-   let args = vec![];
-
-   let child = run_script::spawn(
-        r#"
-         git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-         "#,
-        &args,
-        &options,
-    )
-    .unwrap();
-
-    let spawn_output = child.wait_with_output().unwrap();
-
-    println!("Success: {}", &spawn_output.status.success());
 }

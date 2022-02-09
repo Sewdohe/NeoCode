@@ -30,8 +30,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
   print("installed packer")
   vim.cmd [[packadd packer.nvim]]
-else
-  print("packer already installed")
 end
 
 -- Use a protected call so we don't error out on first use
@@ -42,6 +40,7 @@ end
 
 packer.startup(function(use)
   use 'wbthomason/packer.nvim'
+
   use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
   use 'williamboman/nvim-lsp-installer'
   use 'hrsh7th/cmp-nvim-lsp'
@@ -49,23 +48,26 @@ packer.startup(function(use)
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
+  use "hrsh7th/cmp-nvim-lua"
+
+  use 'L3MON4D3/LuaSnip'
+  use 'saadparwaiz1/cmp_luasnip'
+
   use 'ayu-theme/ayu-vim'
-  use "rebelot/kanagawa.nvim"
-  use 'dracula/vim'
   use 'norcalli/nvim-colorizer.lua'
-  use 'dcampos/nvim-snippy'
-  use 'dcampos/cmp-snippy'
   use 'honza/vim-snippets'
   use 'junegunn/fzf'
   use 'junegunn/fzf.vim'
-  use 'windwp/nvim-autopairs'
-  use 'sheerun/vim-polyglot'
-  use 'simrat39/rust-tools.nvim'
   use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
   use 'terrortylor/nvim-comment'
-  use 'natecraddock/workspaces.nvim'
+  
   use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
   use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
+  use "windwp/nvim-autopairs"
+  use "nvim-treesitter/playground"
+  use "romgrk/nvim-treesitter-context"
+  use "windwp/nvim-ts-autotag"
+  use "folke/lua-dev.nvim"
   use {
     'nvim-telescope/telescope.nvim',
     requires = { {'nvim-lua/plenary.nvim'} }
@@ -84,11 +86,21 @@ packer.startup(function(use)
    'nvim-lualine/lualine.nvim',
    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
+  use {
+    "SmiteshP/nvim-gps",
+    requires = "nvim-treesitter/nvim-treesitter"
+  }
+
+  use {
+    'goolord/alpha-nvim',
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    config = function ()
+        require'alpha'.setup(require'alpha.themes.startify'.config)
+    end
+}
 
   if packer_bootstrap then
     require('packer').sync()
   end
 
 end)
-
-require("plug-load")
