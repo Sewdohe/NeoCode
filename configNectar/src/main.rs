@@ -12,6 +12,8 @@ use std::os::windows::fs::symlink_dir;
 #[cfg(target_family = "unix")]
 use std::os::unix::fs::symlink as symlink_dir;
 
+
+
 fn main() {
     let starting_dir: PathBuf = match env::current_dir() {
         Ok(val) => val,
@@ -19,6 +21,7 @@ fn main() {
     };
     let mut config_folder_path = PathBuf::from("");
     let os = env::consts::OS;
+ 
 
     if os == "windows" {
         // set URL for windows config
@@ -149,7 +152,7 @@ fn run_packer_install() {
     .expect("Error: Editor returned a non-zero status");
 }
 
-#[cfg(target_os = "linux")]
+#[cfg(target_family = "unix")]
 fn run_packer_install() {
     std::process::Command::new("sh")
     .arg("-c")

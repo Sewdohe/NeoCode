@@ -135,6 +135,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\fzf.vim",
     url = "https://github.com/junegunn/fzf.vim"
   },
+  ["lsp_signature.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lsp_signature.nvim",
+    url = "https://github.com/ray-x/lsp_signature.nvim"
+  },
   ["lua-dev.nvim"] = {
     loaded = true,
     path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lua-dev.nvim",

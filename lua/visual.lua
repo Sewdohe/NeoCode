@@ -34,7 +34,7 @@ else
 end
 
 vim.cmd([[
-    set guifont=CaskaydiaCove\ Nerd\ Font:h14
+    set guifont=CaskaydiaCove\ Nerd\ Font:h12
 ]])
 
 

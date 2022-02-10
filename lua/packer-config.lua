@@ -46,12 +46,19 @@ packer.startup(function(use)
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
   use 'hrsh7th/cmp-path'
+  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use 'hrsh7th/cmp-cmdline'
   use 'hrsh7th/nvim-cmp'
+  use "ray-x/lsp_signature.nvim"
   use "hrsh7th/cmp-nvim-lua"
+  use "simrat39/symbols-outline.nvim"
 
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
+  use { "michaelb/sniprun", run = "bash ./install.sh" }
+
+  -- Terminal emulator
+  use "akinsho/toggleterm.nvim"
 
   use 'ayu-theme/ayu-vim'
   use 'norcalli/nvim-colorizer.lua'
