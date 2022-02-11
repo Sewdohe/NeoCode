@@ -120,6 +120,11 @@ _G.packer_plugins = {
     path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
+  ["fidget.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\fidget.nvim",
+    url = "https://github.com/j-hui/fidget.nvim"
+  },
   fzf = {
     loaded = true,
     path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\fzf",
@@ -149,6 +154,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
+  },
+  neon = {
+    loaded = true,
+    path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\neon",
+    url = "https://github.com/rafamadriz/neon"
   },
   ["neovim-session-manager"] = {
     loaded = true,
@@ -225,10 +235,20 @@ _G.packer_plugins = {
     path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
   },
+  ["popup.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\popup.nvim",
+    url = "https://github.com/nvim-lua/popup.nvim"
+  },
   ["project.nvim"] = {
     loaded = true,
     path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\project.nvim",
     url = "https://github.com/ahmedkhalf/project.nvim"
+  },
+  sniprun = {
+    loaded = true,
+    path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\sniprun",
+    url = "https://github.com/michaelb/sniprun"
   },
   ["telescope-fzf-native.nvim"] = {
     loaded = true,
@@ -240,10 +260,20 @@ _G.packer_plugins = {
     path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
+  ["toggleterm.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\toggleterm.nvim",
+    url = "https://github.com/akinsho/toggleterm.nvim"
+  },
   ["vim-snippets"] = {
     loaded = true,
     path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\vim-snippets",
     url = "https://github.com/honza/vim-snippets"
+  },
+  ["virtual-types.nvim"] = {
+    loaded = true,
+    path = "C:\\Users\\ifEls\\AppData\\Local\\nvim-data\\site\\pack\\packer\\start\\virtual-types.nvim",
+    url = "https://github.com/jubnzv/virtual-types.nvim"
   }
 }
 
@@ -257,5 +287,6 @@ if should_profile then save_profiles() end
 end)
 
 if not no_errors then
+  error_msg = error_msg:gsub('"', '\\"')
   vim.api.nvim_command('echohl ErrorMsg | echom "Error in packer_compiled: '..error_msg..'" | echom "Please check your config for correctness" | echohl None')
 end

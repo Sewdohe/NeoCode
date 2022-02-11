@@ -51,8 +51,8 @@ packer.startup(function(use)
   use 'hrsh7th/nvim-cmp'
   use "ray-x/lsp_signature.nvim"
   use "hrsh7th/cmp-nvim-lua"
-  use "simrat39/symbols-outline.nvim"
-
+  use 'jubnzv/virtual-types.nvim'
+  use 'j-hui/fidget.nvim'
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
   use { "michaelb/sniprun", run = "bash ./install.sh" }
@@ -61,6 +61,7 @@ packer.startup(function(use)
   use "akinsho/toggleterm.nvim"
 
   use 'ayu-theme/ayu-vim'
+  use "rafamadriz/neon"
   use 'norcalli/nvim-colorizer.lua'
   use 'honza/vim-snippets'
   use 'junegunn/fzf'

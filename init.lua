@@ -33,4 +33,6 @@ require "plugins.alpha"
 require "plugins.project"
 require "plugins.session-manager"
 require "plugins.toggleterm"
-require "plugins.symbol-outline"
+
+require"fidget".setup{}
+-- require "plugins.symbol-outline"

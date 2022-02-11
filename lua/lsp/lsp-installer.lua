@@ -11,6 +11,7 @@ lsp_installer.on_server_ready(function(server)
     capabilities = require("lsp.handlers").capabilities,
   }
 
+
   if server.name == "sumneko_lua" then
     local sumneko_opts = require "lsp.settings.sumneko_lua"
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
