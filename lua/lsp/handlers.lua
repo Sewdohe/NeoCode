@@ -15,9 +15,7 @@ M.setup = function()
   end
 
   local config = {
-    -- disable virtual text
-    virtual_text = true,
-    -- show signs
+    virtual_text = false,
     signs = {
       active = signs,
     },
@@ -73,13 +71,13 @@ local function lsp_keymaps(bufnr)
   vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
 end
 
--- local notify_status_ok, notify = pcall(require, "notify")
--- if not notify_status_ok then
---   return
--- end
+local notify_status_ok, notify = pcall(require, "notify")
+if not notify_status_ok then
+  return
+end
 
 M.on_attach = function(client, bufnr)
-  -- notify(client.name)
+  notify(client.name)
   if client.name == "tsserver" or client.name == "html" then
     client.resolved_capabilities.document_formatting = false
   end

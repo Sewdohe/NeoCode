@@ -35,4 +35,6 @@ require "plugins.session-manager"
 require "plugins.toggleterm"
 
 require"fidget".setup{}
+require"plugins.nvim-lines".register_lsp_virtual_lines()
 -- require "plugins.symbol-outline"
+

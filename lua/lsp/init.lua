@@ -7,6 +7,6 @@ end
 require "lsp.lsp-installer"
 require("lsp.handlers").setup()
 require "lsp.lsp-signature"
-
+require"lsp.lua-dev"
 
 -- require "lsp.null-ls"

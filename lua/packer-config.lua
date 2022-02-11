@@ -51,16 +51,19 @@ packer.startup(function(use)
   use 'hrsh7th/nvim-cmp'
   use "ray-x/lsp_signature.nvim"
   use "hrsh7th/cmp-nvim-lua"
+  use "folke/lua-dev.nvim"
   use 'jubnzv/virtual-types.nvim'
   use 'j-hui/fidget.nvim'
   use 'L3MON4D3/LuaSnip'
   use 'saadparwaiz1/cmp_luasnip'
   use { "michaelb/sniprun", run = "bash ./install.sh" }
+  use 'sewdohe/nvim-lines.nvim'
 
   -- Terminal emulator
   use "akinsho/toggleterm.nvim"
 
   use 'ayu-theme/ayu-vim'
+  use 'rcarriga/nvim-notify'
   use "rafamadriz/neon"
   use 'norcalli/nvim-colorizer.lua'
   use 'honza/vim-snippets'
@@ -74,7 +77,6 @@ packer.startup(function(use)
   use "windwp/nvim-autopairs"
   use "romgrk/nvim-treesitter-context"
   use "windwp/nvim-ts-autotag"
-  use "folke/lua-dev.nvim"
 
   use "ahmedkhalf/project.nvim"
   use "Shatur/neovim-session-manager"

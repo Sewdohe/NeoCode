@@ -10,7 +10,7 @@
 
 
 --]]
-local colorscheme = "neon"
+local colorscheme = "ayu"
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
@@ -29,12 +29,12 @@ if vim.g.neovide then
   -- (neovide is a fantastic Neovimm GUI wrapper, check it out!!!)
    vim.cmd([[
    " let ayucolor="light"
-   colorscheme neon
+   colorscheme ayu
    ]])
 else
   vim.cmd([[
   let ayucolor="dark"
-  colorscheme neon
+  colorscheme ayu
   ]])
 end
 
