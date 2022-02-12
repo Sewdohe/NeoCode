@@ -99,6 +99,7 @@ fn symlink_config(mut config_path: PathBuf, starting_dir: PathBuf) {
     if os == "windows" {
         println!("trying to [windows] symlink {} to {}", dir.display(), config_path.display());
 
+
         // TODO: Check if symlink exists already
         // assert that the nvim directory isn't already a symlink
         let predicate_fn = predicate::path::is_symlink();

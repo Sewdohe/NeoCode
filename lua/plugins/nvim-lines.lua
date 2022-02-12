@@ -1,5 +1,10 @@
 local M = {}
 
+local notify_status_ok, notify = pcall(require, "notify")
+if not notify_status_ok then
+  return
+end
+
 local indentation_regex = vim.regex([[^\s\+]])
 
 local highlight_groups = {
@@ -34,7 +39,6 @@ end
 M.register_lsp_virtual_lines = function()
   -- TODO: When a diagnostic changes for the current line, the cursor is not shifted properly.
   -- TODO: On LSP restart (e.g.: diagnostics cleared), errors don't go away.
-
   vim.diagnostic.handlers.virtual_lines = {
     show = function(namespace, bufnr, diagnostics, opts)
       vim.validate({
@@ -94,5 +98,7 @@ M.register_lsp_virtual_lines = function()
     end,
   }
 end
+
+vim.diagnostic.config({ virtual_lines = {prefix = '🔥'}})
 
 return M

@@ -24,7 +24,7 @@ require "packer-config"
 require "visual"
 require "lsp"
 require "plugins.cmp"
-require "plugins.lline"
+require "plugins.statusline"
 require "plugins.gps"
 require "plugins.nvim-tree"
 require "plugins.treesitter"
@@ -33,8 +33,11 @@ require "plugins.alpha"
 require "plugins.project"
 require "plugins.session-manager"
 require "plugins.toggleterm"
+require "plugins.autopairs"
 
 require"fidget".setup{}
-require"plugins.nvim-lines".register_lsp_virtual_lines()
--- require "plugins.symbol-outline"
+require('nvim_comment').setup()
+
+-- This plugin is shifting the cursor and making it hard to autocomplete to be useful
+-- require"plugins.nvim-lines".register_lsp_virtual_lines()
 

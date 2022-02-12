@@ -9,6 +9,7 @@ if not status_gps_ok then
   return
 end
 
+-- Evil Line
 -- Stole this lua config from:
 -- Author: shadmansaleh
 -- Credit: glepnir
@@ -49,13 +50,7 @@ local config = {
     -- Disable sections and component separators
     component_separators = '',
     section_separators = '',
-    theme = {
-      -- We are going to use lualine_c an lualine_x as left and
-      -- right section. Both are highlighted by c theme .  So we
-      -- are just setting default looks o statusline
-      normal = { c = { fg = colors.fg, bg = colors.bg } },
-      inactive = { c = { fg = colors.fg, bg = colors.bg } },
-    },
+    theme = "catppuccin",
   },
   sections = {
     -- these are to remove the defaults

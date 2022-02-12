@@ -14,7 +14,7 @@ vim.api.nvim_set_keymap('n', 'gt', ':BufferLineCyclePrev<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gy', ':BufferLineCycleNext<CR>', opts)
 vim.api.nvim_set_keymap('n',
   '<leader><leader>f',
-  ':Telescope find_files find_command=rg,--ignore,--hidden,--files prompt_prefix=🔍<CR>',
+  ':Telescope find_files prompt_prefix=🔎<CR>',
   opts)
 vim.api.nvim_set_keymap('n',
   '<C-p>',
@@ -24,18 +24,21 @@ vim.api.nvim_set_keymap('n',
   '<C-c>',
   ':Telescope commands<CR>',
   opts)
-
 vim.api.nvim_set_keymap('n',
   '<C-O>',
-  ':Telescope lsp_document_symbols prompt_prefix=🔍<CR>',
+  ':AerialToggle right<CR>',
   opts)
+-- vim.api.nvim_set_keymap('n',
+--   '<C-O>',
+--   ':Telescope lsp_document_symbols prompt_prefix=🔍<CR>',
+--   opts)
 
 vim.api.nvim_set_keymap("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 vim.api.nvim_set_keymap('n', '<leader><leader>b', ':Telescope buffers<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader><leader>g', ':Telescope live_grep<CR>', opts)
 vim.api.nvim_set_keymap('n', '<leader><leader>w', ':Telescope workspaces<CR>', opts)
--- vim.api.nvim_set_keymap('n', '<leader><leader>c', ':CommentToggle<CR>', opts)
-
+vim.api.nvim_set_keymap('n', '<leader><leader>c', ':CommentToggle<CR>', opts)
+vim.api.nvim_set_keymap('n', 'gh', ':Lspsaga lsp_finder<CR', opts)
 -- Stay in indent mode
 vim.api.nvim_set_keymap("v", "<", "<gv", opts)
 vim.api.nvim_set_keymap("v", ">", ">gv", opts)
