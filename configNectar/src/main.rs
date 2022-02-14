@@ -3,6 +3,8 @@ use std::path::PathBuf;
 use Result::Ok;
 use Result::Err;
 use clap::Parser;
+mod helpers;
+pub use helpers::funcs;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
@@ -11,11 +13,6 @@ struct Args {
     #[clap(short, long)]
     uninstall: bool,
 }
-
-
-mod helpers;
-
-pub  use helpers::funcs;
 
 fn main() {
     let args = Args::parse();
@@ -30,12 +27,13 @@ fn main() {
         funcs::uninstall();
         println!("Config uninstalled.");
         return;
+    } else {
+        let config_folder_path = funcs::determine_config_path(); 
+        funcs::backup_old_config(config_folder_path.clone());
+        funcs::symlink_config(config_folder_path.clone(), starting_dir);
+        funcs::run_packer_install();
     }
 
-    let config_folder_path = funcs::determine_config_path(); 
-    funcs::backup_old_config(config_folder_path.clone());
-    funcs::symlink_config(config_folder_path.clone(), starting_dir);
-    funcs::run_packer_install();
 
 }
 
