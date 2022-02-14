@@ -5,7 +5,7 @@ pub mod funcs {
     use std::path::Path;
     use std::path::PathBuf;
     use Result::Err;
-    use Result::Ok;
+    use colored::*;
 
     #[cfg(target_os = "windows")]
     use std::os::windows::fs::symlink_dir;
@@ -14,23 +14,23 @@ pub mod funcs {
     use std::os::unix::fs::symlink as symlink_dir;
 
     pub fn backup_old_config(config_path: PathBuf) {
-        println!("Backing up old config directory ------------------");
-        println!("Current OS is {}", env::consts::OS); // Prints the current OS.
+        println!( "{}", "\n \nSTEP 1: Backing up old config".blue().bold() );
+        println!("{} {}", "Current OS is", env::consts::OS); // Prints the current OS.
 
         // Change process directory to the systems config folder
         match env::set_current_dir(config_path.as_path()) {
-            Ok(()) => println!("Changed dir to config: {}", config_path.display()),
-            Err(err) => println!("Error: {}", err),
+            Ok(()) => println!("Changed process to config directory: {}", config_path.display()),
+            Err(err) => println!("{} {}", "Error: couldn't locate config directory {}".red().bold(), err),
         }
 
         // Rename the nvim folder to nvim.old (backup)
-        println!("Trying to rename nvim folder...");
+        println!("{}", "Trying to rename nvim folder...");
         match fs::rename("nvim", "nvim.old") {
             Ok(()) => {
-                println!("Old config back up complete")
+                println!("Old config back up complete \n \n")
             }
             Err(_) => {
-                println!("You don't have an old config to back up. Skipping...")
+                println!("{}", "You don't have an old config to back up. Skipping... \n \n".red().bold())
             }
         }
     }
@@ -59,18 +59,17 @@ pub mod funcs {
     }
 
     pub fn symlink_config(mut config_path: PathBuf, starting_dir: PathBuf) {
+        println!("{}", "STEP 2: Symlinking NeoCode config to config directory: ".blue().bold());
         // Backup complete. CD back to starting directory
         let os = env::consts::OS;
         match env::set_current_dir(starting_dir.as_path()) {
-            Ok(()) => println!("Back to starting directory"),
-            Err(err) => println!("Error: {}", err),
+            Ok(()) => println!("Process went back to starting directory"),
+            Err(err) => println!("{} {}", "Error: Couldn't return to starting directory {}".red().bold(), err),
         }
         let dir: &Path = match starting_dir.parent() {
             Some(val) => val,
             None => Path::new(""),
         };
-        // the starting dir's parent is where the dotfiles are.
-        println!("The starting dir parent is: {}", dir.display());
 
         config_path.push("nvim");
 
@@ -92,8 +91,8 @@ pub mod funcs {
             );
 
             match symlink_dir(dir, config_path.as_path()) {
-                Ok(()) => println!("Symlink done -------------------"),
-                Err(err) => println!("Error Symlink: {}", err),
+                Ok(()) => println!("{}", "Symlink done ------------------- \n \n".blue().bold()),
+                Err(err) => println!("{} {}", "Error Symlink: {}".red().bold(), err),
             }
         } else if os == "linux" {
             println!(
@@ -111,7 +110,7 @@ pub mod funcs {
             );
 
             match symlink_dir(dir, config_path.as_path()) {
-                Ok(()) => println!("Symlink done -------------------"),
+                Ok(()) => println!("{}", "Symlink done ------------------- \n \n".red().bold()),
                 Err(err) => println!("Error Symlink: {}", err),
             }
         } else if os == "macos" {
@@ -130,7 +129,7 @@ pub mod funcs {
             );
 
             match symlink_dir(dir, config_path.as_path()) {
-                Ok(()) => println!("Symlink done -------------------"),
+                Ok(()) => println!("{}", "Symlink done ------------------- \n \n".red().bold()),
                 Err(err) => println!("Error Symlink: {}", err),
             }
         }
@@ -179,6 +178,7 @@ pub mod funcs {
 
     #[cfg(target_os = "windows")]
     pub fn uninstall(){
+        println!("{}", "Removing NeoCode configuration".blue().bold());
         let mut data_dir: PathBuf = get_home_dir();
         let mut config_dir = get_home_dir();
 
@@ -190,21 +190,22 @@ pub mod funcs {
         config_dir.push("Local");
         config_dir.push("nvim");
 
-        println!("data dir for windows: {}", data_dir.display());
-        println!("config dir for windows: {}", config_dir.display());
+        // println!("data dir for windows: {}", data_dir.display());
+        // println!("config dir for windows: {}", config_dir.display());
         
         match fs::remove_dir(config_dir) {
-            Ok(_) => println!("Deleted neovim folder"),
-            Err(err) => println!("Err {}", err)
+            Ok(_) => println!("Deleted config folder symlink"),
+            Err(_) => println!("{}", "Err: No symlinked nvim config folder to remove".red().bold())
         }
         match fs::remove_dir_all(data_dir, ) {
             Ok(_) => println!("Deleted data folder"),
-            Err(err) => println!("Err {}", err)
+            Err(_) => println!("{}", "Err: No data dir to delete".red().bold())
         }
     }
 
     #[cfg(target_family = "unix")]
     pub fn uninstall(){
+        println!("{}", "Removing NeoCode configuration".blue().bold());
         let mut data_dir: PathBuf = get_home_dir();
         let mut config_dir = get_home_dir();
 
@@ -216,10 +217,9 @@ pub mod funcs {
         data_dir.push("packer");
 
         config_dir.push(".config");
-        // config_dir.push("nvim");
 
-        println!("data dir for linux: {}", data_dir.display());
-        println!("config dir for linux: {}", config_dir.display());
+        // println!("data dir for linux: {}", data_dir.display());
+        // println!("config dir for linux: {}", config_dir.display());
 
         match env::set_current_dir(config_dir.as_path()) {
             Ok(()) => println!("Changed dir to config: {}", config_dir.display()),
@@ -228,47 +228,45 @@ pub mod funcs {
 
         match std::fs::remove_file("nvim") {
             Ok(_) => println!("Deleted config folder symlink"),
-            Err(err) => println!("Err deleting symlink config: {}", err)
+            Err(err) => println!("{}", "Err: No symlinked nvim config folder to remove".red().bold())
         }
         match fs::remove_dir_all(data_dir) {
             Ok(_) => println!("Deleted data folder"),
-            Err(err) => println!("Err deleting data folder for packer: {}", err)
+            Err(err) => println!("{}", "Err: No data dir to delete".red().bold())
         }
     }
 
 
     #[cfg(target_os = "windows")]
-    fn run_packer_install() {
-        println!("starting packer for windows");
-        std::process::Command::new("powershell")
-            // .arg("-c")
-            .arg("nvim")
-            .arg("--headless")
-            .arg("-c")
-            .arg("'autocmd User PackerComplete quitall'")
-            .arg("-c")
-            .arg("'PackerSync'")
-            // .arg("+PackerInstall")
-            .spawn()
-            .expect("Error: Failed to run editor")
-            .wait()
-            .expect("Error: Editor returned a non-zero status");
+    pub fn run_packer_install() {
+        println!("{}", "STEP 3: running Neovim bootstrapping for windows".blue().bold());
+        // std::process::Command::new("powershell")
+        //     .arg("nvim")
+        //     .arg("--headless")
+        //     .arg("-c")
+        //     .arg("'autocmd User PackerComplete quitall'")
+        //     .arg("-c")
+        //     .arg("'PackerSync'")
+        //     .spawn()
+        //     .expect("Error: Failed to run editor")
+        //     .wait()
+        //     .expect("Error: Editor returned a non-zero status");
     }
 
     #[cfg(target_family = "unix")]
-    fn run_packer_install() {
-        println!("starting packer for linux or macos");
-        std::process::Command::new("sh")
-            .arg("-c")
-            .arg("nvim")
-            .arg("-headless")
-            .arg("-c")
-            .arg("autocmd User PackerComplete quitall")
-            .arg("-c")
-            .arg("PackerSync")
-            .spawn()
-            .expect("Error: Failed to run editor")
-            .wait()
-            .expect("Error: Editor returned a non-zero status");
+    pub fn run_packer_install() {
+        println!("{}", "STEP 3: running Neovim bootstrapping for unix".blue().bold());
+        // std::process::Command::new("sh")
+        //     .arg("-c")
+        //     .arg("nvim")
+        //     .arg("-headless")
+        //     .arg("-c")
+        //     .arg("autocmd User PackerComplete quitall")
+        //     .arg("-c")
+        //     .arg("PackerSync")
+        //     .spawn()
+        //     .expect("Error: Failed to run editor")
+        //     .wait()
+        //     .expect("Error: Editor returned a non-zero status");
     }
 }

@@ -26,7 +26,9 @@ dependencies = [
 name = "auto_nvim"
 version = "0.1.0"
 dependencies = [
+ "bunt",
  "clap",
+ "colored",
  "powershell_script",
  "predicates",
  "run_script",
@@ -43,6 +45,28 @@ name = "bitflags"
 version = "1.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
+
+[[package]]
+name = "bunt"
+version = "0.2.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "192bac6c13e04373feb683e4438cbc156e6bbe432f614a9d6247445108fc5551"
+dependencies = [
+ "bunt-macros",
+ "termcolor",
+]
+
+[[package]]
+name = "bunt-macros"
+version = "0.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "181ae31bbb8b46f840a70dc1323ad938f2cd7a504e7adc98d6fe58094900a680"
+dependencies = [
+ "litrs",
+ "proc-macro2",
+ "quote",
+ "unicode-xid",
+]
 
 [[package]]
 name = "cfg-if"
@@ -78,6 +102,17 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "colored"
+version = "2.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b3616f750b84d8f0de8a58bda93e08e2a81ad3f523089b05f1dffecab48c6cbd"
+dependencies = [
+ "atty",
+ "lazy_static",
+ "winapi",
 ]
 
 [[package]]
@@ -165,6 +200,15 @@ name = "libc"
 version = "0.2.117"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e74d72e0f9b65b5b4ca49a346af3976df0f9c61d550727f349ecd559f251a26c"
+
+[[package]]
+name = "litrs"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f9275e0933cf8bb20f008924c0cb07a0692fe54d8064996520bf998de9eb79aa"
+dependencies = [
+ "proc-macro2",
+]
 
 [[package]]
 name = "log"

@@ -35,6 +35,7 @@ fn main() {
     let config_folder_path = funcs::determine_config_path(); 
     funcs::backup_old_config(config_folder_path.clone());
     funcs::symlink_config(config_folder_path.clone(), starting_dir);
+    funcs::run_packer_install();
 
 }
 
