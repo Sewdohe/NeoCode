@@ -41,7 +41,11 @@ end
 
 packer.startup(function(use)
   -- use this commit for now, windows support is broken
-  use {'wbthomason/packer.nvim', commit = 'c5e98e3ca84843dbae47cd8f3a76bc38c6404241' }
+  use {
+    "wbthomason/packer.nvim",
+    commit = "62a69fb4cc995d17688a015df1f0bf890d9a201c",
+    as = "packer"
+}
 
   -- LSP and code navigation
   -- ------------------------------------

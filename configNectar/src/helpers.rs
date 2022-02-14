@@ -4,7 +4,6 @@ pub mod funcs {
     use std::fs;
     use std::path::Path;
     use std::path::PathBuf;
-    use std::str::FromStr;
     use Result::Err;
     use Result::Ok;
 
@@ -33,6 +32,66 @@ pub mod funcs {
             Err(_) => {
                 println!("You don't have an old config to back up. Skipping...")
             }
+        }
+    }
+
+    fn return_user_dir() -> PathBuf {
+        let os = env::consts::OS;
+        let mut user_directory = PathBuf::from("");
+        if os == "windows" {
+            match env::var("USERPROFILE") {
+                Ok(val) => {
+                    user_directory.push(val);
+                }
+                Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
+            }
+            return user_directory;
+        } else if os == "linux" {
+            // set URL for unix config
+            match env::var("HOME") {
+                Ok(val) => {
+                    user_directory.push(val);
+                }
+                Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
+            }
+            return user_directory;
+        } else if os == "macos" {
+            // set URL for unix config
+            match env::var("HOME") {
+                Ok(val) => {
+                    user_directory.push(val);
+                }
+                Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
+            }
+            return user_directory;
+        } else {
+            println!("Something is wrong!");
+            // this is a terrible way to handle errors
+            // TODO: 
+            return PathBuf::from("");
+        }
+    }
+
+    pub fn determine_config_path() -> PathBuf {
+        let os = env::consts::OS;
+        let mut config_path = get_home_dir();
+        if os == "windows" {
+            config_path.push("AppData");
+            config_path.push("Local");
+            return config_path;
+        } else if os == "linux" {
+            // set URL for unix config
+            config_path.push(".config");
+            return config_path;
+        } else if os == "macos" {
+            // set URL for unix config
+            config_path.push(".config");
+            return config_path;
+        } else {
+            println!("Something is wrong!");
+            // this is a terrible way to handle errors
+            // TODO: 
+            return PathBuf::from("");
         }
     }
 
@@ -113,10 +172,10 @@ pub mod funcs {
             }
         }
 
-        run_packer_install();
+        // run_packer_install();
     }
 
-    pub fn determine_config_path() -> PathBuf {
+    pub fn get_home_dir() -> PathBuf {
         let os = env::consts::OS;
         let mut config_folder_path = PathBuf::from("");
 
@@ -128,8 +187,6 @@ pub mod funcs {
                 }
                 Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
             }
-            config_folder_path.push("AppData");
-            config_folder_path.push("Local");
             return config_folder_path;
         } else if os == "linux" {
             // set URL for unix config
@@ -139,7 +196,6 @@ pub mod funcs {
                 }
                 Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
             }
-            config_folder_path.push(".config");
             return config_folder_path;
         } else if os == "macos" {
             // set URL for unix config
@@ -149,7 +205,6 @@ pub mod funcs {
                 }
                 Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
             }
-            config_folder_path.push(".config");
             return config_folder_path;
         } else {
             println!("Something is wrong!");
@@ -157,6 +212,51 @@ pub mod funcs {
             // TODO: 
             return PathBuf::from("");
         }
+    }
+
+    pub fn uninstall(){
+        let mut data_dir: PathBuf = get_home_dir();
+        let mut config_dir = get_home_dir();
+
+        #[cfg(target_os = "windows")]
+        {
+            data_dir.push("AppData");
+            data_dir.push("Local");
+            data_dir.push("nvim-data");
+
+            config_dir.push("AppData");
+            config_dir.push("Local");
+            config_dir.push("nvim");
+
+            println!("data dir for windows: {}", data_dir.display());
+            println!("config dir for windows: {}", config_dir.display());
+        }
+
+        #[cfg(target_os = "linux")]
+        {
+            data_dir.push(".local");
+            data_dir.push("share");
+            data_dir.push("nvim");
+            data_dir.push("site");
+            data_dir.push("pack");
+            data_dir.push("packer");
+
+            config_dir.push(".config");
+            config_dir.push("nvim");
+
+            println!("data dir for linux: {}", data_dir.display());
+            println!("config dir for linux: {}", config_dir.display());
+        };
+        
+        match fs::remove_dir(config_dir) {
+            Ok(_) => println!("Deleted neovim folder"),
+            Err(err) => println!("Err {}", err)
+        }
+        match fs::remove_dir_all(data_dir, ) {
+            Ok(_) => println!("Deleted data folder"),
+            Err(err) => println!("Err {}", err)
+        }
+
     }
 
     #[cfg(target_os = "windows")]

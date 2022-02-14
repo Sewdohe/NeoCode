@@ -9,3 +9,4 @@ edition = "2021"
 powershell_script = "0.2.1"
 predicates = "1.0"
 run_script = "*"
+clap = { version = "3.0.14", features = ["derive"] }
