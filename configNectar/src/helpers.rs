@@ -35,43 +35,6 @@ pub mod funcs {
         }
     }
 
-    fn return_user_dir() -> PathBuf {
-        let os = env::consts::OS;
-        let mut user_directory = PathBuf::from("");
-        if os == "windows" {
-            match env::var("USERPROFILE") {
-                Ok(val) => {
-                    user_directory.push(val);
-                }
-                Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
-            }
-            return user_directory;
-        } else if os == "linux" {
-            // set URL for unix config
-            match env::var("HOME") {
-                Ok(val) => {
-                    user_directory.push(val);
-                }
-                Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
-            }
-            return user_directory;
-        } else if os == "macos" {
-            // set URL for unix config
-            match env::var("HOME") {
-                Ok(val) => {
-                    user_directory.push(val);
-                }
-                Err(e) => println!("couldn't interpret {}: {}", "USERPROFILE", e),
-            }
-            return user_directory;
-        } else {
-            println!("Something is wrong!");
-            // this is a terrible way to handle errors
-            // TODO: 
-            return PathBuf::from("");
-        }
-    }
-
     pub fn determine_config_path() -> PathBuf {
         let os = env::consts::OS;
         let mut config_path = get_home_dir();
@@ -214,39 +177,21 @@ pub mod funcs {
         }
     }
 
+    #[cfg(target_os = "windows")]
     pub fn uninstall(){
         let mut data_dir: PathBuf = get_home_dir();
         let mut config_dir = get_home_dir();
 
-        #[cfg(target_os = "windows")]
-        {
-            data_dir.push("AppData");
-            data_dir.push("Local");
-            data_dir.push("nvim-data");
+        data_dir.push("AppData");
+        data_dir.push("Local");
+        data_dir.push("nvim-data");
 
-            config_dir.push("AppData");
-            config_dir.push("Local");
-            config_dir.push("nvim");
+        config_dir.push("AppData");
+        config_dir.push("Local");
+        config_dir.push("nvim");
 
-            println!("data dir for windows: {}", data_dir.display());
-            println!("config dir for windows: {}", config_dir.display());
-        }
-
-        #[cfg(target_os = "linux")]
-        {
-            data_dir.push(".local");
-            data_dir.push("share");
-            data_dir.push("nvim");
-            data_dir.push("site");
-            data_dir.push("pack");
-            data_dir.push("packer");
-
-            config_dir.push(".config");
-            config_dir.push("nvim");
-
-            println!("data dir for linux: {}", data_dir.display());
-            println!("config dir for linux: {}", config_dir.display());
-        };
+        println!("data dir for windows: {}", data_dir.display());
+        println!("config dir for windows: {}", config_dir.display());
         
         match fs::remove_dir(config_dir) {
             Ok(_) => println!("Deleted neovim folder"),
@@ -256,8 +201,41 @@ pub mod funcs {
             Ok(_) => println!("Deleted data folder"),
             Err(err) => println!("Err {}", err)
         }
-
     }
+
+    #[cfg(target_family = "unix")]
+    pub fn uninstall(){
+        let mut data_dir: PathBuf = get_home_dir();
+        let mut config_dir = get_home_dir();
+
+        data_dir.push(".local");
+        data_dir.push("share");
+        data_dir.push("nvim");
+        data_dir.push("site");
+        data_dir.push("pack");
+        data_dir.push("packer");
+
+        config_dir.push(".config");
+        // config_dir.push("nvim");
+
+        println!("data dir for linux: {}", data_dir.display());
+        println!("config dir for linux: {}", config_dir.display());
+
+        match env::set_current_dir(config_dir.as_path()) {
+            Ok(()) => println!("Changed dir to config: {}", config_dir.display()),
+            Err(err) => println!("Error: Couldn't change to config folder: {}", err),
+        }
+
+        match std::fs::remove_file("nvim") {
+            Ok(_) => println!("Deleted config folder symlink"),
+            Err(err) => println!("Err deleting symlink config: {}", err)
+        }
+        match fs::remove_dir_all(data_dir) {
+            Ok(_) => println!("Deleted data folder"),
+            Err(err) => println!("Err deleting data folder for packer: {}", err)
+        }
+    }
+
 
     #[cfg(target_os = "windows")]
     fn run_packer_install() {
