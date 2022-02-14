@@ -1,5 +1,5 @@
 local M = {}
-local virtualtypes = require("virtualtypes")
+-- local virtualtypes = require("virtualtypes")
 
 M.setup = function()
   local icons = require "icons"
@@ -84,7 +84,7 @@ M.on_attach = function(client, bufnr)
   end
   lsp_keymaps(bufnr)
   lsp_highlight_document(client)
-  virtualtypes.on_attach()
+  -- virtualtypes.on_attach()
 -- Call the setup function to change the default behavior
 require("aerial").setup({
   backends = { "lsp", "treesitter", "markdown" },

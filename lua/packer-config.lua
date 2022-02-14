@@ -49,33 +49,31 @@ packer.startup(function(use)
 
   -- LSP and code navigation
   -- ------------------------------------
-  use 'neovim/nvim-lspconfig' -- Collection of configurations for the built-in LSP client
-  use 'williamboman/nvim-lsp-installer'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
-  use 'hrsh7th/cmp-cmdline'
-  use 'hrsh7th/nvim-cmp'
-  use "ray-x/lsp_signature.nvim"
-  use "hrsh7th/cmp-nvim-lua"
-  use "folke/lua-dev.nvim"
+  use {'neovim/nvim-lspconfig', as = "lspconfig"} -- Collection of configurations for the built-in LSP client
+  use {'williamboman/nvim-lsp-installer', as = "lsp-installer"}
+  use {'hrsh7th/cmp-nvim-lsp', as ="cmp-nvim-lsp"}
+  use {'hrsh7th/cmp-buffer', as = "cmp-buffer"}
+  use {'hrsh7th/cmp-path', as = "cmp-path"}
+  use {"nvim-lua/popup.nvim", as = "popup"} -- An implementation of the Popup API from vim in Neovim
+  use {'hrsh7th/cmp-cmdline', as = "cmp-cmdline"}
+  use {'hrsh7th/nvim-cmp', as = "nvim-cmp"}
+  use {"ray-x/lsp_signature.nvim", as = "lsp-signature"}
+  use {"hrsh7th/cmp-nvim-lua", as = "cmp-nvim-lua"}
+  use {"folke/lua-dev.nvim", as = "lua-dev"}
   -- Can't figure out how to make this one work...
-  use 'jubnzv/virtual-types.nvim'
-  use 'j-hui/fidget.nvim'
-  use 'L3MON4D3/LuaSnip'
-  use 'saadparwaiz1/cmp_luasnip'
-  use 'glepnir/lspsaga.nvim'
-  use {'stevearc/aerial.nvim'}
-  use { "michaelb/sniprun", run = "bash ./install.sh" }
-  use 'honza/vim-snippets'
-  use 'terrortylor/nvim-comment'
-  use 'jose-elias-alvarez/null-ls.nvim'
+  -- use {'jubnzv/virtual-types.nvim', as = "virtual-types"}
+  use {'j-hui/fidget.nvim', as = "fidget"}
+  use {'L3MON4D3/LuaSnip', as = "lua-snip"}
+  use {'saadparwaiz1/cmp_luasnip', as = "cmp-luasnip"}
+  use {'stevearc/aerial.nvim', as = "aerial"}
+  use {'honza/vim-snippets', as = "vim-snippets"}
+  use {'terrortylor/nvim-comment', as = "nvim_comment"}
+  use {'jose-elias-alvarez/null-ls.nvim', as = "null-ls"}
 
   -- Syntax highlighter
   -- ---------------------
-  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate' }
-  use "romgrk/nvim-treesitter-context"
+  use { 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', as = "nvim-treesitter" }
+  use {"romgrk/nvim-treesitter-context", as = "nvim-treesitter-context"}
 
   -- Theme / UI
   -- -----------------
@@ -83,48 +81,57 @@ packer.startup(function(use)
     "catppuccin/nvim",
     as = "catppuccin"
   })
-  use 'rcarriga/nvim-notify'
-  use 'norcalli/nvim-colorizer.lua'
-  use {'akinsho/bufferline.nvim', requires = 'kyazdani42/nvim-web-devicons'}
+  use {'rcarriga/nvim-notify', as = "notify"}
+  use {'norcalli/nvim-colorizer.lua', as = "colorizer"}
+  use {
+    'akinsho/bufferline.nvim', 
+    requires = 'kyazdani42/nvim-web-devicons', 
+    as = "bufferline"}
   use {
     'kyazdani42/nvim-tree.lua',
     requires = {
       'kyazdani42/nvim-web-devicons', -- optional, for file icon
-    }
+    },
+    as = "nvim-tree"
   }
   use {
    'nvim-lualine/lualine.nvim',
-   requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+   requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+   as = "lualine"
   }
   use {
     'goolord/alpha-nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' }
+    requires = { 'kyazdani42/nvim-web-devicons' },
+    as = "alpha"
   }
-  use "lukas-reineke/indent-blankline.nvim"
-  use {'stevearc/dressing.nvim'}
+  use {"lukas-reineke/indent-blankline.nvim", as = "indent-line"}
+  use {'stevearc/dressing.nvim', as = "dressing"}
 
   -- Terminal emulator
   -- ---------------------
-  use "akinsho/toggleterm.nvim"
+  use {"akinsho/toggleterm.nvim", as = "toggleterm"}
 
   -- Search tools
   -- --------------
-  use 'junegunn/fzf'
-  use 'junegunn/fzf.vim'
-  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use {'nvim-lua/plenary.nvim', as = "plenary"}
+  use {'junegunn/fzf', as = "fzf"}
+  use {'junegunn/fzf.vim', as = "fzf-vim"}
+  use {'nvim-telescope/telescope-fzf-native.nvim', run = 'make', as = "telescope-fzf" }
   use { 'ibhagwan/fzf-lua',
   -- optional for icon support
-  requires = { 'kyazdani42/nvim-web-devicons' }
+  requires = { 'kyazdani42/nvim-web-devicons' },
+  as = "fzf-lua"
   }
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires = { {'nvim-lua/plenary.nvim'} },
+    as = "telescope"
   }
 
   
-  use "windwp/nvim-autopairs"
-  use "ahmedkhalf/project.nvim"
-  use "Shatur/neovim-session-manager"
+  use {"windwp/nvim-autopairs", as = "autopairs"}
+  use {"ahmedkhalf/project.nvim", as = "project"}
+  use {"Shatur/neovim-session-manager", as = "session-manager"}
 
 
 

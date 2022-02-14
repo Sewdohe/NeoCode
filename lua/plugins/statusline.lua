@@ -3,12 +3,6 @@ if not status_ok then
   return
 end
 
--- TODO: Implement GPS in here
-local status_gps_ok, gps = pcall(require, "nvim-gps")
-if not status_gps_ok then
-  return
-end
-
 -- Evil Line
 -- Stole this lua config from:
 -- Author: shadmansaleh

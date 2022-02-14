@@ -240,33 +240,33 @@ pub mod funcs {
     #[cfg(target_os = "windows")]
     pub fn run_packer_install() {
         println!("{}", "STEP 3: running Neovim bootstrapping for windows".blue().bold());
-        // std::process::Command::new("powershell")
-        //     .arg("nvim")
-        //     .arg("--headless")
-        //     .arg("-c")
-        //     .arg("'autocmd User PackerComplete quitall'")
-        //     .arg("-c")
-        //     .arg("'PackerSync'")
-        //     .spawn()
-        //     .expect("Error: Failed to run editor")
-        //     .wait()
-        //     .expect("Error: Editor returned a non-zero status");
+        std::process::Command::new("powershell")
+            .arg("nvim")
+            .arg("--headless")
+            .arg("-c")
+            .arg("'autocmd User PackerComplete quitall'")
+            .arg("-c")
+            .arg("'PackerSync'")
+            .spawn()
+            .expect("Error: Failed to run editor")
+            .wait()
+            .expect("Error: Editor returned a non-zero status");
     }
 
     #[cfg(target_family = "unix")]
     pub fn run_packer_install() {
         println!("{}", "STEP 3: running Neovim bootstrapping for unix".blue().bold());
-        // std::process::Command::new("sh")
-        //     .arg("-c")
-        //     .arg("nvim")
-        //     .arg("-headless")
-        //     .arg("-c")
-        //     .arg("autocmd User PackerComplete quitall")
-        //     .arg("-c")
-        //     .arg("PackerSync")
-        //     .spawn()
-        //     .expect("Error: Failed to run editor")
-        //     .wait()
-        //     .expect("Error: Editor returned a non-zero status");
+        std::process::Command::new("sh")
+            .arg("-c")
+            .arg("nvim")
+            .arg("-headless")
+            .arg("-c")
+            .arg("autocmd User PackerComplete quitall")
+            .arg("-c")
+            .arg("PackerSync")
+            .spawn()
+            .expect("Error: Failed to run editor")
+            .wait()
+            .expect("Error: Editor returned a non-zero status");
     }
 }
