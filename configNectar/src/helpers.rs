@@ -161,6 +161,7 @@ pub mod funcs {
 
     #[cfg(target_os = "windows")]
     fn run_packer_install() {
+        println!("starting packer for windows");
         std::process::Command::new("powershell")
             // .arg("-c")
             .arg("nvim")
@@ -178,14 +179,15 @@ pub mod funcs {
 
     #[cfg(target_family = "unix")]
     fn run_packer_install() {
+        println!("starting packer for linux or macos");
         std::process::Command::new("sh")
             .arg("-c")
             .arg("nvim")
-            .arg("--headless")
+            .arg("-headless")
             .arg("-c")
-            .arg("'autocmd User PackerComplete quitall'")
+            .arg("autocmd User PackerComplete quitall")
             .arg("-c")
-            .arg("'PackerSync'")
+            .arg("PackerSync")
             .spawn()
             .expect("Error: Failed to run editor")
             .wait()

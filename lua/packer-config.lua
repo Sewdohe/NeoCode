@@ -40,7 +40,8 @@ if not status_ok then
 end
 
 packer.startup(function(use)
-  use 'wbthomason/packer.nvim'
+  -- use this commit for now, windows support is broken
+  use {'wbthomason/packer.nvim', commit = 'c5e98e3ca84843dbae47cd8f3a76bc38c6404241' }
 
   -- LSP and code navigation
   -- ------------------------------------
@@ -118,7 +119,6 @@ packer.startup(function(use)
 
   
   use "windwp/nvim-autopairs"
-  use "windwp/nvim-ts-autotag"
   use "ahmedkhalf/project.nvim"
   use "Shatur/neovim-session-manager"
 
