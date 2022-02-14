@@ -30,8 +30,8 @@ pub mod funcs {
             Ok(()) => {
                 println!("Old config back up complete")
             }
-            Err(err) => {
-                println!("Error: {}", err)
+            Err(_) => {
+                println!("You don't have an old config to back up. Skipping...")
             }
         }
     }

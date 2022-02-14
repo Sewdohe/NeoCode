@@ -10,9 +10,9 @@ ______ _             _
 --]]
 
 if package.config:sub(1,1) == "/" then
-  OperatingSystemystem = "unix"
+  OperatingSystem = "unix"
 else
-  OperatingSystemystem = "windows"
+  OperatingSystem = "windows"
 end
 
 -- after loading the basic settings, let's check if packer is
@@ -20,13 +20,14 @@ end
 local fn = vim.fn
 local install_path
 
-if OperatingSystemystem == "unix" then
+if OperatingSystem == "unix" then
   install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 else
   install_path = fn.stdpath('data')..'\\site\\pack\\packer\\start\\packer.nvim'
 end
 
 if fn.empty(fn.glob(install_path)) > 0 then
+  print("Installing packer to: " .. install_path)
   Packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
   print("installed packer")
   vim.cmd [[packadd packer.nvim]]
@@ -91,15 +92,8 @@ packer.startup(function(use)
    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
   use {
-    "SmiteshP/nvim-gps",
-    requires = "nvim-treesitter/nvim-treesitter"
-  }
-  use {
     'goolord/alpha-nvim',
-    requires = { 'kyazdani42/nvim-web-devicons' },
-    config = function ()
-        require'alpha'.setup(require'alpha.themes.startify'.config)
-    end
+    requires = { 'kyazdani42/nvim-web-devicons' }
   }
   use "lukas-reineke/indent-blankline.nvim"
   use {'stevearc/dressing.nvim'}

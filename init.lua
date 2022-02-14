@@ -25,7 +25,6 @@ require "visual"
 require "lsp"
 require "plugins.cmp"
 require "plugins.statusline"
-require "plugins.gps"
 require "plugins.nvim-tree"
 require "plugins.treesitter"
 require "plugins.bufferline"
@@ -37,8 +36,18 @@ require "plugins.autopairs"
 require "plugins.indent-blankline"
 require "plugins.dressing"
 
-require"fidget".setup{}
-require('nvim_comment').setup()
+-- Here we load plugins which we don't configure
+local status_ok, fidget = pcall(require, "fidget")
+if not status_ok then
+  return
+end
+fidget.setup{}
+
+local status_ok, nvim_comment = pcall(require, "nvim_comment")
+if not status_ok then
+  return
+end
+nvim_comment.setup()
 
 -- This plugin is shifting the cursor and making it hard to autocomplete to be useful
 -- require"plugins.nvim-lines".register_lsp_virtual_lines()
