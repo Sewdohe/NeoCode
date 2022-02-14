@@ -10,9 +10,9 @@ ______ _             _
 --]]
 
 if package.config:sub(1,1) == "/" then
-  Current_Os = "unix"
+  OperatingSystemystem = "unix"
 else
-  Current_Os = "windows"
+  OperatingSystemystem = "windows"
 end
 
 -- after loading the basic settings, let's check if packer is
@@ -20,7 +20,7 @@ end
 local fn = vim.fn
 local install_path
 
-if Current_Os == "unix" then
+if OperatingSystemystem == "unix" then
   install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 else
   install_path = fn.stdpath('data')..'\\site\\pack\\packer\\start\\packer.nvim'
@@ -64,6 +64,7 @@ packer.startup(function(use)
   use { "michaelb/sniprun", run = "bash ./install.sh" }
   use 'honza/vim-snippets'
   use 'terrortylor/nvim-comment'
+  use 'jose-elias-alvarez/null-ls.nvim'
 
   -- Syntax highlighter
   -- ---------------------
@@ -98,7 +99,10 @@ packer.startup(function(use)
     requires = { 'kyazdani42/nvim-web-devicons' },
     config = function ()
         require'alpha'.setup(require'alpha.themes.startify'.config)
-    end}
+    end
+  }
+  use "lukas-reineke/indent-blankline.nvim"
+  use {'stevearc/dressing.nvim'}
 
   -- Terminal emulator
   -- ---------------------

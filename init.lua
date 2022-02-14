@@ -34,6 +34,8 @@ require "plugins.project"
 require "plugins.session-manager"
 require "plugins.toggleterm"
 require "plugins.autopairs"
+require "plugins.indent-blankline"
+require "plugins.dressing"
 
 require"fidget".setup{}
 require('nvim_comment').setup()

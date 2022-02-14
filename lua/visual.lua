@@ -19,7 +19,7 @@ if not status_ok then
 end
 
 vim.cmd([[
-    set guifont=CaskaydiaCove\ Nerd\ Font:h12
+    set guifont=CaskaydiaCove\ Nerd\ Font:h14
 ]])
 
 vim.cmd[[colorscheme catppuccin]]

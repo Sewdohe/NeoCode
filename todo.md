@@ -1,0 +1,1 @@
+- [ ] make servers install by default
