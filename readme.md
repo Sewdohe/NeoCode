@@ -21,6 +21,7 @@ Installer works for:
 
 Telescope FZF Native:
 ```scoop install make```
+```scoop install gcc```
 
 Neovim Nightly:
 ```scoop bucket add versions```
@@ -29,6 +30,7 @@ Neovim Nightly:
 Neovide (reccomended):
 https://github.com/neovide/neovide
 
+(for building rust script from source)
 Rust Lang:
 https://www.rust-lang.org/tools/install
 
