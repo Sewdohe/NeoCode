@@ -17,13 +17,13 @@ Installer works for:
   - Windows 10/11
   - Mac OSX
 
-## Dependencies:
+## Dependencies [Windows]:
 
 Telescope FZF Native:
-```choco install mingw```
-```choco install make```
+```scoop install make```
 
 Neovim Nightly:
+```scoop bucket add versions```
 ```scoop install neovim-nightly```
 
 Neovide (reccomended):
@@ -49,6 +49,7 @@ have all the dependecies listed as they should be...if something is missing, ple
 - browse symbols: `<ctrl> o`
 - Show file tree `<ctrl> b`
 - rename symbol `F2`
+- switch selected tab: 'gt' and 'gy'
 
 ## TODO:
 - [ ] Set Neovide multigrid env var in installer script
