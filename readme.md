@@ -18,6 +18,7 @@ Installer works for:
   - Mac OSX
 
 ## Dependencies [Windows]:
+Enable developer mode in windows
 
 Telescope FZF Native:
 ```scoop install make```
