@@ -1,0 +1,1 @@
+C:\Users\ifEls\Code\nvim-config\configNectar\target\debug\config_nectar.exe: C:\Users\ifEls\Code\nvim-config\configNectar\src\install-packer.ps C:\Users\ifEls\Code\nvim-config\configNectar\src\main.rs

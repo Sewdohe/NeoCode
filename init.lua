@@ -35,6 +35,7 @@ require "plugins.toggleterm"
 require "plugins.autopairs"
 require "plugins.indent-blankline"
 require "plugins.dressing"
+require "plugins.neorg"
 
 -- Here we load plugins which we don't configure
 local status_ok, fidget = pcall(require, "fidget")

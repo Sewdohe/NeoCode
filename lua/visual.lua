@@ -14,12 +14,16 @@ local colorscheme = "catppuccin"
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
-  -- vim.notify("colorscheme " .. colorscheme .. " not found!")
-  return
+	-- vim.notify("colorscheme " .. colorscheme .. " not found!")
+	return
 end
 
 vim.cmd([[
     set guifont=Hurmit\ NF:h14
 ]])
 
-vim.cmd[[colorscheme catppuccin]]
+vim.g.neon_style = "doom"
+vim.g.neon_italic_keyword = true
+vim.g.neon_italic_function = true
+vim.g.neon_transparent = true
+vim.cmd([[colorscheme catppuccin]])
