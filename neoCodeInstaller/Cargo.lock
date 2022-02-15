@@ -3,6 +3,17 @@
 version = 3
 
 [[package]]
+name = "NeocodeInstaller"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "colored",
+ "powershell_script",
+ "predicates",
+ "run_script",
+]
+
+[[package]]
 name = "aho-corasick"
 version = "0.7.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -20,17 +31,6 @@ dependencies = [
  "hermit-abi",
  "libc",
  "winapi",
-]
-
-[[package]]
-name = "auto_nvim"
-version = "0.1.0"
-dependencies = [
- "clap",
- "colored",
- "powershell_script",
- "predicates",
- "run_script",
 ]
 
 [[package]]

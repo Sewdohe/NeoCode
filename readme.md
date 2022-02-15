@@ -10,6 +10,8 @@ to code!
 The config was made to be a simple as possible. I think any setting you could need to change would be found right
 where you expect it to be.
 
+![show-off](showoff.gif) / ! [](showoff.gif)
+
 Installer works for:
   - (most) linux distros
   - Windows 10/11

@@ -18,6 +18,7 @@ struct Args {
     install_packer: bool,
 }
 
+
 fn main() {
     let args = Args::parse();
     let uninstall = args.uninstall;
