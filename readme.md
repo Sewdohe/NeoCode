@@ -43,6 +43,13 @@ The install will be automatic and headlessly install all the needed plugins.
 This project is literally brand new, and I am working on it alone. Some things may not work, and I may not
 have all the dependecies listed as they should be...if something is missing, please let me know.
 
+## Commonly Used Keybinds:
+- Show errors: `<space> q`
+- go to next diagnostic: '[d' or ']d'
+- browse symbols: `<ctrl> o`
+- Show file tree `<ctrl> b`
+- rename symbol `F2`
+
 ## TODO:
 - [ ] Set Neovide multigrid env var in installer script
 - [ ] Have the installer install NERD front automatically (cross platform)
