@@ -76,6 +76,9 @@ packer.startup(function(use)
 	-- ---------------------
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 	use({ "romgrk/nvim-treesitter-context" })
+  use({'godlygeek/tabular'})
+  use({'preservim/vim-markdown'})
+  use {"ellisonleao/glow.nvim"}
 
 	-- Theme / UI
 	-- -----------------
