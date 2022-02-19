@@ -10,8 +10,21 @@
 --]]
 local opts = { noremap=true, silent=true }
 vim.api.nvim_set_keymap('n', '<C-b>', ':NvimTreeToggle<CR>', opts)
+
+-- Copy and paste like VS code
+vim.api.nvim_set_keymap('n', '<C-x>', 'dd', opts)
+vim.api.nvim_set_keymap('n', '<C-v>', 'p', opts)
+vim.api.nvim_set_keymap('i', '<C-v>', 'p', opts)
+
+-- jump forward and backwards in document using crtl + j or k
+vim.api.nvim_set_keymap('n', '<C-j>', '<C-f>', opts)
+vim.api.nvim_set_keymap('n', '<C-k>', '<C-b>', opts)
+
+-- switch tabs using gt and gy
+-- we can't really use ctrl+tab in the terminal, sadly
 vim.api.nvim_set_keymap('n', 'gt', ':BufferLineCyclePrev<CR>', opts)
 vim.api.nvim_set_keymap('n', 'gy', ':BufferLineCycleNext<CR>', opts)
+
 vim.api.nvim_set_keymap('n',
   '<leader><leader>f',
   ':Telescope find_files prompt_prefix=🔎<CR>',

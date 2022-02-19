@@ -83,6 +83,8 @@ packer.startup(function(use)
 	-- Theme / UI
 	-- -----------------
 	use({ "rafamadriz/neon", as = "neon" })
+  use 'Mofiqul/vscode.nvim'
+  use 'feline-nvim/feline.nvim'
 	use({
 		"catppuccin/nvim",
 		as = "catppuccin",
