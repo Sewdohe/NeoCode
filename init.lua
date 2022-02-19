@@ -24,8 +24,6 @@ require "packer-config"
 require "visual"
 require "lsp"
 require "plugins.cmp"
--- require "plugins.statusline"
--- require "plugins.feline"
 require "plugins.lualine"
 require "plugins.nvim-tree"
 require "plugins.treesitter"
@@ -38,6 +36,7 @@ require "plugins.autopairs"
 require "plugins.indent-blankline"
 require "plugins.dressing"
 require "plugins.neorg"
+require "plugins.legendary"
 
 -- Here we load plugins which we don't configure
 local status_ok, fidget = pcall(require, "fidget")

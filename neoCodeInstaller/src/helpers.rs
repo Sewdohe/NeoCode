@@ -315,8 +315,7 @@ pub mod funcs {
     pub fn check_dependencies() {
         use which::which;
         println!("Checking if scoop is installed");
-        let mut scoop_installed = false;
-
+        let mut _scoop_installed: bool = false;
         let result = which("scoop").unwrap();
         assert_eq!(result, PathBuf::from(get_home_dir()));
     }
