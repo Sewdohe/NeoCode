@@ -11,3 +11,4 @@ predicates = "1.0"
 run_script = "*"
 clap = { version = "3.0.14", features = ["derive"] }
 colored = "2"
+which = "4.2.4"

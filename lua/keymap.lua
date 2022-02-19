@@ -20,6 +20,21 @@ vim.api.nvim_set_keymap('i', '<C-v>', 'p', opts)
 vim.api.nvim_set_keymap('n', '<C-j>', '<C-f>', opts)
 vim.api.nvim_set_keymap('n', '<C-k>', '<C-b>', opts)
 
+vim.api.nvim_set_keymap('n', '<C-t>', ':ToggleTerm<CR>', opts)
+
+-- Use lazygit to handle github repos
+local status_ok, toggleterm = pcall(require, "toggleterm.terminal")
+if not status_ok then
+	return
+end
+local lazygit = toggleterm.Terminal:new({ cmd = "lazygit", hidden = true, dir = "git_dir" })
+
+function _lazygit_toggle()
+  lazygit:toggle()
+end
+
+vim.api.nvim_set_keymap("n", "<C-g>", "<cmd>lua _lazygit_toggle()<CR>", {noremap = true, silent = true})
+
 -- switch tabs using gt and gy
 -- we can't really use ctrl+tab in the terminal, sadly
 vim.api.nvim_set_keymap('n', 'gt', ':BufferLineCyclePrev<CR>', opts)

@@ -311,4 +311,13 @@ pub mod funcs {
             .wait()
             .expect("Error: Editor returned a non-zero status");
     }
+
+    pub fn check_dependencies() {
+        use which::which;
+        println!("Checking if scoop is installed");
+        let mut scoop_installed = false;
+
+        let result = which("scoop").unwrap();
+        assert_eq!(result, PathBuf::from(get_home_dir()));
+    }
 }

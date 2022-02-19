@@ -34,14 +34,15 @@ fn main() {
         println!("Config uninstalled.");
         return;
     } else {
-        let config_folder_path = funcs::determine_config_path(); 
-        funcs::backup_old_config(config_folder_path.clone());
-        funcs::symlink_config(config_folder_path.clone(), starting_dir);
-        if install_packer {
-            funcs::run_packer_install();
-        } else {
-            println!("{}", "SKIPPING STEP 3: --install_packer flag wasn't passed. Automatic packer install skipped.".blue().bold());
-        }
+        // let config_folder_path = funcs::determine_config_path(); 
+        // funcs::backup_old_config(config_folder_path.clone());
+        // funcs::symlink_config(config_folder_path.clone(), starting_dir);
+        // if install_packer {
+        //     funcs::run_packer_install();
+        // } else {
+        //     println!("{}", "SKIPPING STEP 3: --install_packer flag wasn't passed. Automatic packer install skipped.".blue().bold());
+        // }
+        funcs::check_dependencies();
     }
 }
 
