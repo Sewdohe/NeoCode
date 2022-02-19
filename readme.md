@@ -36,11 +36,11 @@ https://www.rust-lang.org/tools/install
 ## Instructions
 clone this repo somewhere easy to access on your pc. For example, I use ~\Code.
 
-cd into the Neovide install directory, and simply run `cargo run -- --install-packer`
+cd into the Neovide install directory, and simply run `./NeoCodeInstaller<yoursystem> --install-packer`
 
 The install will be automatic and headlessly install all the needed plugins.
 
-The project is still under development, and I am not making binaries yet, but they will come soon to provide TRUE one click installation!
+I just released the binaries today for Windows and Linux, please let me know if there are any issues with them!
 
 ## FAQ
 
