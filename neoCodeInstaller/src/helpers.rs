@@ -312,11 +312,21 @@ pub mod funcs {
             .expect("Error: Editor returned a non-zero status");
     }
 
-    pub fn check_dependencies() {
+    fn check_for_binary(binary_name: &str) {
         use which::which;
-        println!("Checking if scoop is installed");
-        let mut _scoop_installed: bool = false;
-        let result = which("scoop").unwrap();
-        assert_eq!(result, PathBuf::from(get_home_dir()));
+        println!("Checking if {} is installed", binary_name);
+        let mut is_installed: bool;
+        match which(binary_name) {
+            Ok(location) => {
+                println!("{} is installed! Located at: {}", binary_name, location.display());
+            },
+            Err(err) => {
+                println!("Uh oh! Looks like {} is not installed. Let's mark it for installation...", binary_name);
+            }
+        }
+    }
+
+    pub fn check_dependencies() {
+        check_for_binary("womba");
     }
 }
