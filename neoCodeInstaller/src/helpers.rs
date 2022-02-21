@@ -280,7 +280,13 @@ pub mod funcs {
                 .blue()
                 .bold()
         );
+
+        let mut scoop_path = get_home_dir();
+        scoop_path.push("scoop");
+        scoop_path.push("shims");
+
         std::process::Command::new("powershell")
+            .env("PATH", scoop_path.as_os_str())
             .arg("nvim")
             .arg("--headless")
             .arg("-c")
@@ -450,6 +456,7 @@ pub mod funcs {
                     println!("{} {}", "Error during neovim install: \n \n".blue().bold().underline(), output_string.red());
                     nvim_installed = false;
                 } else {
+                    println!("{}", "Neovim install completed".blue().bold());
                     nvim_installed = true;
                 }
             }
