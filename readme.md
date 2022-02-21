@@ -1,4 +1,4 @@
-[logo](neocode.png)
+![logo](neocode.png)
 
 # Neocode
   Sane, simple, and effective config dedicated to replicating the out-of-box experience of vscode in Neovim.
