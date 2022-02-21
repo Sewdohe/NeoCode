@@ -6,6 +6,8 @@ pub mod funcs {
     use std::path::Path;
     use std::path::PathBuf;
     use Result::Err;
+    // use std::{thread, time};
+    // use powershell_script;
 
     #[cfg(target_os = "windows")]
     use std::os::windows::fs::symlink_dir;
@@ -312,21 +314,134 @@ pub mod funcs {
             .expect("Error: Editor returned a non-zero status");
     }
 
-    fn check_for_binary(binary_name: &str) {
+    fn check_for_binary(binary_name: &str) -> bool {
         use which::which;
         println!("Checking if {} is installed", binary_name);
-        let mut is_installed: bool;
+        let is_installed: bool;
         match which(binary_name) {
             Ok(location) => {
-                println!("{} is installed! Located at: {}", binary_name, location.display());
-            },
-            Err(err) => {
-                println!("Uh oh! Looks like {} is not installed. Let's mark it for installation...", binary_name);
+                println!(
+                    "{} is installed! Located at: {}",
+                    binary_name,
+                    location.display()
+                );
+                is_installed = true;
+                return is_installed;
+            }
+            Err(_err) => {
+                println!(
+                    "Uh oh! Looks like {} is not installed. Let's mark it for installation...",
+                    binary_name
+                );
+                is_installed = false;
+                return is_installed;
             }
         }
     }
 
+    // Check for dependencies for windows
+    #[cfg(target_os = "windows")]
     pub fn check_dependencies() {
-        check_for_binary("womba");
+        // list of deps and if they are installed or not
+
+        use core::panic;
+        let mut scoop_path = get_home_dir();
+        scoop_path.push("scoop");
+        scoop_path.push("shims");
+
+        let mut scoop_installed = check_for_binary("scoop");
+        let mut nvim_installed = check_for_binary("nvim");
+        let mut gcc_installed = check_for_binary("gcc");
+        let mut make_installed = check_for_binary("make");
+
+        if !scoop_installed {
+            // iwr -useb get.scoop.sh | iex
+            std::process::Command::new("powershell")
+                .arg("iwr")
+                .arg("-useb")
+                .arg("get.scoop.sh")
+                .arg("| iex")
+                .spawn()
+                .expect("Error: Failed to run scoop installer")
+                .wait()
+                .expect("Error: Something went wrong");
+
+            //install scoop's git, we need it to use buckets
+            // the regular git doesn't seem to do the job
+            std::process::Command::new("powershell")
+            .env("PATH", scoop_path.as_os_str())
+            .arg("scoop")
+            .arg("install")
+            .arg("git")
+            .spawn()
+            .expect("Error: Failed to install git")
+            .wait()
+            .expect("Error: Something went wrong");
+
+            std::process::Command::new("powershell")
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("bucket")
+                .arg("add")
+                .arg("versions")
+                .spawn()
+                .expect("Error: Failed to run scoop installer")
+                .wait()
+                .expect("Error: Something went wrong");
+
+            println!("{}", "Scoop install completed successfully".blue());
+            scoop_installed = true;
+
+        }
+
+        if scoop_installed {
+            if !gcc_installed {
+                std::process::Command::new("powershell")
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("install")
+                .arg("gcc")
+                .spawn()
+                .expect("Error: Failed to install gcc")
+                .wait()
+                .expect("Error: Something went wrong");
+
+                gcc_installed = true;
+            }
+
+            if !make_installed {
+                std::process::Command::new("powershell")
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("install")
+                .arg("make")
+                .spawn()
+                .expect("Error: Failed to install gcc")
+                .wait()
+                .expect("Error: Something went wrong");
+
+                make_installed = true;
+            }
+
+            if !nvim_installed {
+                std::process::Command::new("powershell")
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("install")
+                .arg("neovim-nightly")
+                .spawn()
+                .expect("Error: Failed to install neovim")
+                .wait()
+                .expect("Error: Something went wrong");
+
+                nvim_installed = true;
+            }
+        }
+        
+        if scoop_installed && make_installed && gcc_installed && nvim_installed {
+            println!("{}", "All deps. are met! Time to configure...".blue());
+        } else {
+            panic!("All deps didn't install! ABORT!!");
+        }
     }
 }

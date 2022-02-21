@@ -38,6 +38,8 @@ fn main() {
         return;
     } else {
         if !testing {
+            funcs::check_dependencies();
+            
             let config_folder_path = funcs::determine_config_path();
             funcs::backup_old_config(config_folder_path.clone());
             funcs::symlink_config(config_folder_path.clone(), starting_dir);
@@ -47,6 +49,5 @@ fn main() {
                 println!("{}", "SKIPPING STEP 3: --install_packer flag wasn't passed. Automatic packer install skipped.".blue().bold());
             }
         }
-        funcs::check_dependencies();
     }
 }

@@ -3,18 +3,6 @@
 version = 3
 
 [[package]]
-name = "NeocodeInstaller"
-version = "0.1.0"
-dependencies = [
- "clap",
- "colored",
- "powershell_script",
- "predicates",
- "run_script",
- "which",
-]
-
-[[package]]
 name = "aho-corasick"
 version = "0.7.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -199,6 +187,18 @@ name = "memchr"
 version = "2.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "308cc39be01b73d0d18f82a0e7b2a3df85245f84af96fdddc5d202d27e47b86a"
+
+[[package]]
+name = "neocode_installer"
+version = "0.1.0"
+dependencies = [
+ "clap",
+ "colored",
+ "powershell_script",
+ "predicates",
+ "run_script",
+ "which",
+]
 
 [[package]]
 name = "normalize-line-endings"
