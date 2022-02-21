@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use Result::Err;
 use Result::Ok;
 mod helpers;
+pub mod installers;
 use colored::*;
 pub use helpers::funcs;
 
@@ -19,6 +20,9 @@ struct Args {
 
     #[clap(short, long)]
     testing: bool,
+
+    #[clap(short, long)]
+    deps: bool
 }
 
 fn main() {
@@ -26,6 +30,7 @@ fn main() {
     let uninstall = args.uninstall;
     let install_packer = args.install_packer;
     let testing = args.testing;
+    let deps = args.deps;
 
     let starting_dir: PathBuf = match env::current_dir() {
         Ok(val) => val,
@@ -38,6 +43,10 @@ fn main() {
         return;
     } else {
         if !testing {
+            if deps {
+                funcs::check_dependencies();
+            }
+            
             let config_folder_path = funcs::determine_config_path();
             funcs::backup_old_config(config_folder_path.clone());
             funcs::symlink_config(config_folder_path.clone(), starting_dir);
