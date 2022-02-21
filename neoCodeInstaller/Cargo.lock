@@ -194,7 +194,6 @@ version = "0.1.0"
 dependencies = [
  "clap",
  "colored",
- "powershell_script",
  "predicates",
  "run_script",
  "which",
@@ -223,12 +222,6 @@ checksum = "8e22443d1643a904602595ba1cd8f7d896afe56d26712531c5ff73a15b2fbf64"
 dependencies = [
  "memchr",
 ]
-
-[[package]]
-name = "powershell_script"
-version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "36d62894f5590e88d99d0d82918742ba8e5bff1985af15d4906b6a65f635adb2"
 
 [[package]]
 name = "ppv-lite86"

@@ -6,6 +6,7 @@ pub mod funcs {
     use std::path::Path;
     use std::path::PathBuf;
     use Result::Err;
+    use crate::installers::scripts;
     // use std::{thread, time};
     // use powershell_script;
 
@@ -345,6 +346,7 @@ pub mod funcs {
         // list of deps and if they are installed or not
 
         use core::panic;
+        use std::process::Stdio;
         let mut scoop_path = get_home_dir();
         scoop_path.push("scoop");
         scoop_path.push("shims");
@@ -424,17 +426,32 @@ pub mod funcs {
             }
 
             if !nvim_installed {
-                std::process::Command::new("powershell")
+                let nvim_installer = std::process::Command::new("powershell")
                 .env("PATH", scoop_path.as_os_str())
                 .arg("scoop")
                 .arg("install")
                 .arg("neovim-nightly")
+                .stdout(Stdio::piped())
                 .spawn()
                 .expect("Error: Failed to install neovim")
-                .wait()
+                .wait_with_output()
                 .expect("Error: Something went wrong");
+                
 
-                nvim_installed = true;
+                let output = nvim_installer.stdout;
+                
+
+                let output_string = String::from_utf8(output).unwrap();
+
+                
+
+                //todo check output for error
+                if output_string.contains("ERROR") {
+                    println!("{} {}", "Error during neovim install: \n \n".blue().bold().underline(), output_string.red());
+                    nvim_installed = false;
+                } else {
+                    nvim_installed = true;
+                }
             }
         }
         

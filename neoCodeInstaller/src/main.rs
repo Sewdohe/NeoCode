@@ -4,6 +4,7 @@ use std::path::PathBuf;
 use Result::Err;
 use Result::Ok;
 mod helpers;
+pub mod installers;
 use colored::*;
 pub use helpers::funcs;
 
