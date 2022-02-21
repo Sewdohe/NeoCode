@@ -46,7 +46,8 @@ fn main() {
             } else {
                 println!("{}", "SKIPPING STEP 3: --install_packer flag wasn't passed. Automatic packer install skipped.".blue().bold());
             }
+        } else {
+            funcs::check_dependencies();
         }
-        funcs::check_dependencies();
     }
 }
