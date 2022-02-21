@@ -12,6 +12,11 @@ Installer works for:
   - Windows 10/11
   - Mac OSX
 
+## Community
+This project is actually growing! I'm stoked!! Lets chat about it and discuss it's furlture:
+https://discord.gg/9tZq3WrU4p
+
+
 ## Dependencies [Windows]:
 Make sure to enable developer mode.
 
@@ -33,6 +38,8 @@ https://github.com/neovide/neovide
 Rust Lang:
 https://www.rust-lang.org/tools/install
 
+Dependencies soon to be a thing of the past as inget closer to releasing the auto-deps branch!!!
+
 ## Instructions
 clone this repo somewhere easy to access on your pc. For example, I use ~\Code.
 
@@ -52,6 +59,7 @@ type `TSInstall ` and press `<tab>` and you will get an autocomplete window of a
 
 ## State of project
 This project is literally brand new, and I am working on it alone. Some things may not work, and I may not have all the dependecies listed as they should be...if something is missing, please let me know.
+
 ## Commonly Used Keybinds:
 - Show errors: `<space> q`
 - move to next / prev diagnostic: `[d` or `]d`
