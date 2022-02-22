@@ -40,7 +40,7 @@ local custom_mappings = {
   { "gt", "<PLUG>(cokeline-focus-prev)", opts = opts, description = "Next Tab"},
   { "gy", "<PLUG>(cokeline-focus-next)", opts = opts, description = "Next Tab"},
   -- ease of use 
-  {"jk", "<ESC>", opts = opts, description = "Exit insert mode / ESC key"},
+  -- {"jk", "<ESC>", opts = opts, description = "Exit insert mode / ESC key"},
   {"c", ":bdelete<CR>", opts = opts, description = "Close current buffer / tab"},
   {"<c-s>", ":w<CR>", opts = {noremap = true, silent = false}, description = "Save file"}
 }
