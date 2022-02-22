@@ -63,12 +63,33 @@ type `TSInstall ` and press `<tab>` and you will get an autocomplete window of a
 This project is literally brand new, and I am working on it alone. Some things may not work, and I may not have all the dependecies listed as they should be...if something is missing, please let me know.
 
 ## Commonly Used Keybinds:
+### VS Code Alternaitve Features:
+* Command Pallete
+I can't use crtl+shift+p as keybind in vim, so the command pallette is used with `crtl+k`
+* Quick Open
+Quick open is used to quickly open files in a directory. Call it with `crtl-p`.
+* Sidebar Toggle
+Vim doesn't have a sidebar to hold differnt features. We'll use `crtl+b` to open the Filetree as a sidebar.
+* Commenting / Uncommenting
+Use `<leader><leader>c` to comment a line or multiple lines. The leader key is the , key on your keyboard. So the key chord would be `,,c`.
+* Show Symbols
+Press `ctrl+o` to view the symbols sidebar. This lets you browse code by the functions, essentially.
+* Global Find / Find in Project
+This feature is mapped to `<leader><leader>g` the G is for "live-**G**rep". Grep is a term that vimmers use to say searching, basically.
+* Indent / Unindent Lines
+Use the `<` and `>` keys to indent and un-indent text.
+* Search open buffers
+Use `<leader><leader>b` to search and quickly open an already open buffer.
+* Formating Documents
+Use `<leader><leader>f` to auto-format a document using the language server.
+
 - Show errors: `<space> q`
 - move to next / prev diagnostic: `[d` or `]d`
 - browse symbols: `<ctrl> o`
 - Show file tree `<ctrl> b`
 - rename symbol `F2`
 - switch selected tab: `gt` and `gy`
+- 
 
 ## TODO:
 - [ ] Set Neovide multigrid env var in installer script
