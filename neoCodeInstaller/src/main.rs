@@ -32,8 +32,8 @@ fn main() {
     let testing = args.testing;
     let deps = args.deps;
 
-    let starting_dir: PathBuf = match env::current_dir() {
-        Ok(val) => val,
+    let starting_dir: PathBuf = match env::current_exe() {
+        Ok(val) => val.parent().unwrap().to_path_buf(),
         Err(_err) => PathBuf::new(),
     };
 
