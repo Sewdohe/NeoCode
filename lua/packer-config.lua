@@ -76,16 +76,20 @@ packer.startup(function(use)
 	-- ---------------------
 	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
 	use({ "romgrk/nvim-treesitter-context" })
-  use({'godlygeek/tabular'})
-  use({'preservim/vim-markdown'})
-  use {"ellisonleao/glow.nvim"}
+	use({ "godlygeek/tabular" })
+	use({ "preservim/vim-markdown" })
+	use({ "ellisonleao/glow.nvim" })
 
 	-- Theme / UI
 	-- -----------------
 	use({ "rafamadriz/neon", as = "neon" })
-  use 'Mofiqul/vscode.nvim'
-  use 'feline-nvim/feline.nvim'
-  use({'mrjones2014/legendary.nvim'})
+	use("Mofiqul/vscode.nvim")
+	use("feline-nvim/feline.nvim")
+	use({ "mrjones2014/legendary.nvim" })
+	use({
+		"noib3/nvim-cokeline",
+		requires = "kyazdani42/nvim-web-devicons", -- If you want devicons
+	})
 	use({
 		"catppuccin/nvim",
 		as = "catppuccin",
