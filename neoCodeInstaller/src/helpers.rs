@@ -346,6 +346,11 @@ pub mod funcs {
         }
     }
 
+    // Currently empty, allows compilation on macos.
+    #[cfg(target_os = "macos")]
+    pub fn check_dependencies() {
+    }
+
     // Check for dependencies for windows
     #[cfg(target_os = "windows")]
     pub fn check_dependencies() {
