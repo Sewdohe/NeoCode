@@ -27,8 +27,8 @@ local custom_mappings = {
 	{ "<C-v>", "<C-b>", opts = opts, description = "Jump backward in document" },
 	-- call lazygit with control g
 	-- { '<C-g>', _lazygit_toggle, opts = opts, description = 'Toggle LazyGit terminal' },
-	{ "gt", ":BufferLineCyclePrev<CR>", opts = opts, description = "Previous tab" },
-	{ "gy", ":BufferLineCycleNext<CR>", opts = opts, description = "Next tab" },
+	{ "gt", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Previous tab" },
+	{ "gy", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next tab" },
 	{ "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
 	{ "<C-o>", ":AerialToggle right<CR>", opts = opts, description = "Browse Symbols" },
   -- Commenting

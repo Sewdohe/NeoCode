@@ -71,6 +71,10 @@ packer.startup(function(use)
 	use({ "honza/vim-snippets" })
 	use({ "terrortylor/nvim-comment" })
 	use({ "jose-elias-alvarez/null-ls.nvim" })
+  use({
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+  })
 
 	-- Syntax highlighter
 	-- ---------------------
