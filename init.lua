@@ -52,6 +52,12 @@ if not status_ok then
 end
 nvim_comment.setup()
 
+local status_ok, todo_comments = pcall(require, "todo-comments")
+if not status_ok then
+  return
+end
+todo_comments.setup()
+
 -- This plugin is shifting the cursor and making it hard to autocomplete to be useful
 -- require"plugins.nvim-lines".register_lsp_virtual_lines()
 
