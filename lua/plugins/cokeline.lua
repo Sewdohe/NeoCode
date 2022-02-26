@@ -1,16 +1,22 @@
-local get_hex = require('cokeline/utils').get_hex
-
 local yellow = vim.g.terminal_color_3
+local status_ok, cokeline = pcall(require, "cokeline")
+if not status_ok then
+  return
+end
+local status_ok, utils= pcall(require, "cokeline/utils")
+if not status_ok then
+  return
+end
 
-require('cokeline').setup({
+cokeline.setup({
   default_hl = {
     focused = {
-      fg = get_hex('Normal', 'fg'),
-      bg = get_hex('ColorColumn', 'bg'),
+      fg = utils.get_hex('Normal', 'fg'),
+      bg = utils.get_hex('ColorColumn', 'bg'),
     },
     unfocused = {
-      fg = get_hex('Comment', 'fg'),
-      bg = get_hex('ColorColumn', 'bg'),
+      fg = utils.get_hex('Comment', 'fg'),
+      bg = utils.get_hex('ColorColumn', 'bg'),
     },
   },
 
@@ -22,7 +28,7 @@ require('cokeline').setup({
           text = '  NvimTree',
           hl = {
             fg = yellow,
-            bg = get_hex('NvimTreeNormal', 'bg'),
+            bg = utils.get_hex('NvimTreeNormal', 'bg'),
             style = 'bold'
           }
         },
