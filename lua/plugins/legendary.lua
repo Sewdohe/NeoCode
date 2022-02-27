@@ -23,8 +23,8 @@ local custom_mappings = {
 	{ "<C-v>", "p", mode = "n", opts = opts },
 	{ "<C-k>", legendary.find, description = "Search key bindings" },
 	-- Document jumping since we re-bind file tree to C-b
-	{ "<C-j>", "<C-f>", opts = opts, description = "Jump forward in document" },
-	{ "<C-v>", "<C-b>", opts = opts, description = "Jump backward in document" },
+	{ "J", "<C-f>", opts = opts, description = "Jump forward in document" },
+	{ "K", "<C-b>", opts = opts, description = "Jump backward in document" },
 	-- call lazygit with control g
 	-- { '<C-g>', _lazygit_toggle, opts = opts, description = 'Toggle LazyGit terminal' },
 	{ "gt", ":BufferLineCyclePrev<CR>", opts = opts, description = "Previous tab" },
@@ -39,9 +39,11 @@ local custom_mappings = {
 	{ "<C-[", "zc", mode = 'n', opts = opts, description = "Fold In" },
   { "gt", "<PLUG>(cokeline-focus-prev)", opts = opts, description = "Next Tab"},
   { "gy", "<PLUG>(cokeline-focus-next)", opts = opts, description = "Next Tab"},
-  -- ease of use 
-  -- {"jk", "<ESC>", opts = opts, description = "Exit insert mode / ESC key"},
-  {"c", ":bdelete<CR>", opts = opts, description = "Close current buffer / tab"},
+  { "H", "<PLUG>(cokeline-focus-prev)", opts = opts, description = "Next Tab (alternate)"},
+  { "L", "<PLUG>(cokeline-focus-next)", opts = opts, description = "Next Tab (alternate)"},
+  -- ease of use
+  {"qq", "<ESC>", mode = "i", opts = opts, description = "Exit insert mode / ESC key"},
+  {"qb", ":bdelete<CR>", opts = opts, description = "Close current buffer / tab"},
   {"<c-s>", ":w<CR>", opts = {noremap = true, silent = false}, description = "Save file"}
 }
 
