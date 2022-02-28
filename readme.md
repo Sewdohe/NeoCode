@@ -130,7 +130,7 @@ Use `[d` or `]d`.
 `shift+j` and `shift+k`
 * **Switch Windows:**
 `ctrl+w then h,j,k, or l`
-* **close buffer:**
+* **close buffer/tab:**
 `qb`
 * **Quick-exit Insert Mode:**
 `qq`
