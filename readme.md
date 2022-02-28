@@ -24,12 +24,12 @@ https://discord.gg/9tZq3WrU4p
 
 ### Windows:
 
-Simply use the --deps flag on the installer and it will automaticallt get all your dependencies for you! Still, if you prefer to do that sort of thing yourself, check below:
+Simply use the `--deps` flag on the installer and it will automaticallt get all your dependencies for you! Still, if you prefer to do that sort of thing yourself, check below:
 
 Make sure to enable developer mode.
 
 Scoop package manager:
-https://scoop.sh/
+`iwr -useb get.scoop.sh | iex`
 
 Ripgrep for Live-grepping (find in project)
 `scoop install ripgrep`
@@ -52,7 +52,7 @@ Simply use the --deps flag on the installer and it will automaticallt get all yo
 Make sure to enable developer mode.
 
 Homebrew package manager:
-https://scoop.sh/
+`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 
 Ripgrep for Live-grepping (find in project)
 `brew install ripgrep`
