@@ -341,7 +341,7 @@ pub mod funcs {
     }
 
     // Currently empty, allows compilation on macos.
-    #[cfg(target_os = "macos")]
+    #[cfg(target_family = "unix")]
     pub fn check_dependencies() {
         let mut brew_installed = check_for_binary("brew");
         let mut nvim_installed = check_for_binary("nvim");
