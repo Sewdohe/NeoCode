@@ -37,8 +37,8 @@ local custom_mappings = {
   -- folding
 	{ "<C-]", "za", mode = 'n', opts = opts, description = "Fold Out" },
 	{ "<C-[", "zc", mode = 'n', opts = opts, description = "Fold In" },
-  { "gt", "<PLUG>(cokeline-focus-prev)", opts = opts, description = "Next Tab"},
-  { "gy", "<PLUG>(cokeline-focus-next)", opts = opts, description = "Next Tab"},
+  { "gt", ":BufferLineCyclePrev<CR>", opts = opts, description = "Next Tab"},
+  { "gy", ":BufferLineCycleNext<CR>", opts = opts, description = "Next Tab"},
   { "H", ":BufferLineCyclePrev<CR>", opts = opts, description = "Next Tab (alternate)"},
   { "L", ":BufferLineCycleNext<CR>", opts = opts, description = "Next Tab (alternate)"},
   -- ease of use
