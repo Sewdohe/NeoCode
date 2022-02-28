@@ -27,12 +27,14 @@ Make sure to enable developer mode.
 Scoop package manager:
 https://scoop.sh/
 
-Build tools for Telescope FZF Native:
-`scoop install make`
-`scoop install gcc`
-
 Ripgrep for Live-grepping (find in project)
 `scoop install ripgrep`
+
+FZF for file searching
+`scoop install fzf`
+
+Lazygit for working with git in the terminal
+`scoop install fzf`
 
 Neovim Nightly:
 `scoop bucket add versions`
@@ -92,8 +94,11 @@ Use `<leader><leader>f` to auto-format a document using the language server.
 Use `[d` or `]d`.
 * **Rename Symbol:**
 `F2`
+
 ### UI Navigation
 
+* **Popup Terminal:**
+`ctrl + \` will give you a floating terminal that you can run commands in
 * **Switch Tabs:**
 `gt` and `gy` OR `shift+h` and `shift+y`
 * **Jump up or down by pages:**
@@ -106,7 +111,7 @@ Use `[d` or `]d`.
 `qq`
 
 ## TODO:
-- [ ] Set Neovide multigrid env var in installer script
+- [x] Set Neovide multigrid env var in installer script
 - [ ] Have the installer install NERD front automatically (cross platform)
 - [ ] (maybe) ship Neovide binary inside the installer to futher simplify the setup
 - [ ] Set list of default installed language servers and treesitter parsers
