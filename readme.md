@@ -20,7 +20,11 @@ This project is actually growing! I'm stoked!! Lets chat about it and discuss it
 https://discord.gg/9tZq3WrU4p
 
 
-## Dependencies [Windows]:
+## Dependencies:
+
+### Windows:
+
+Simply use the --deps flag on the installer and it will automaticallt get all your dependencies for you! Still, if you prefer to do that sort of thing yourself, check below:
 
 Make sure to enable developer mode.
 
@@ -34,16 +38,37 @@ FZF for file searching
 `scoop install fzf`
 
 Lazygit for working with git in the terminal
+`scoop bucket add extras`
 `scoop install fzf`
 
 Neovim Nightly:
 `scoop bucket add versions`
 `scoop install neovim-nightly`
 
+### MacOS:
+
+Simply use the --deps flag on the installer and it will automaticallt get all your dependencies for you! Still, if you prefer to do that sort of thing yourself, check below:
+
+Make sure to enable developer mode.
+
+Homebrew package manager:
+https://scoop.sh/
+
+Ripgrep for Live-grepping (find in project)
+`brew install ripgrep`
+
+FZF for file searching
+`brew install fzf`
+
+Lazygit for working with git in the terminal
+`brew install fzf`
+
+Neovim Nightly:
+Instructions coming soon!
+
 Neovide (reccomended):
 https://github.com/neovide/neovide
 
-Dependencies soon to be a thing of the past as inget closer to releasing the auto-deps branch!!!
 
 ## Instructions
 
