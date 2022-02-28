@@ -61,4 +61,4 @@ nvim_comment.setup()
 -- require"plugins.nvim-lines".register_lsp_virtual_lines()
 
 -- Load user custom configs here, lastly, to override configs from the repo
-require("usercustom")
+require "usercustom"
