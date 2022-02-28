@@ -43,7 +43,7 @@ local custom_mappings = {
   { "L", ":BufferLineCycleNext<CR>", opts = opts, description = "Next Tab (alternate)"},
   -- ease of use
   {"qq", "<ESC>", mode = "i", opts = opts, description = "Exit insert mode / ESC key"},
-  {"qb", ":bdelete<CR>", opts = opts, description = "Close current buffer / tab"},
+  {"qb", ":Bdelete<CR>", opts = opts, description = "Close current buffer / tab"},
   {"<c-s>", ":w<CR>", opts = {noremap = true, silent = false}, description = "Save file"}
 }
 
