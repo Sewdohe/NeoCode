@@ -136,9 +136,9 @@ M.on_attach = function(client, bufnr)
 			max_height = 100,
 			min_height = 4,
 			-- row and col depreciated in favor of override
-			-- override = function()
-			--   return { row = 1, col = 0}
-			--   end,
+			override = function()
+			  return { row = 2, col = 2}
+			  end,
 		},
 
 		lsp = {

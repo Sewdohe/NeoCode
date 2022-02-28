@@ -381,6 +381,7 @@ pub mod funcs {
         let mut make_installed = check_for_binary("make");
         let mut ripgrep_installed = check_for_binary("rg");
         let mut fzf_installed = check_for_binary("fzf");
+        let mut lazygit_installed = check_for_binary("lazygit");
 
         if !scoop_installed {
             // iwr -useb get.scoop.sh | iex
@@ -406,12 +407,25 @@ pub mod funcs {
                 .wait()
                 .expect("Error: Something went wrong");
 
+            // we need the versions bucket in order to install neovim
             std::process::Command::new("powershell")
                 .env("PATH", scoop_path.as_os_str())
                 .arg("scoop")
                 .arg("bucket")
                 .arg("add")
                 .arg("versions")
+                .spawn()
+                .expect("Error: Failed to run scoop installer")
+                .wait()
+                .expect("Error: Something went wrong");
+
+            // add extras bucket to get lazygit
+            std::process::Command::new("powershell")
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("bucket")
+                .arg("add")
+                .arg("extras")
                 .spawn()
                 .expect("Error: Failed to run scoop installer")
                 .wait()
@@ -447,7 +461,7 @@ pub mod funcs {
                     .wait()
                     .expect("Error: Something went wrong");
 
-                gcc_installed = true;
+                fzf_installed = true;
             }
 
             if !ripgrep_installed {
@@ -462,6 +476,20 @@ pub mod funcs {
                     .expect("Error: Something went wrong");
 
                 ripgrep_installed = true;
+            }
+
+            if !lazygit_installed {
+                std::process::Command::new("powershell")
+                    .env("PATH", scoop_path.as_os_str())
+                    .arg("scoop")
+                    .arg("install")
+                    .arg("lazygit")
+                    .spawn()
+                    .expect("Error: Failed to install gcc")
+                    .wait()
+                    .expect("Error: Something went wrong");
+
+                lazygit_installed = true;
             }
 
             if !make_installed {
@@ -513,7 +541,7 @@ pub mod funcs {
             }
         }
 
-        if scoop_installed && make_installed && gcc_installed && nvim_installed && ripgrep_installed
+        if scoop_installed && make_installed && gcc_installed && nvim_installed && ripgrep_installed && fzf_installed && lazygit_installed
         {
             println!("{}", "All deps. are met! Time to configure...".blue());
         } else {

@@ -31,7 +31,6 @@ fn main() {
     let install_packer = args.install_packer;
     let testing = args.testing;
     let deps = args.deps;
-    let unused = "woops";
 
     let starting_dir: PathBuf = match env::current_exe() {
         Ok(val) => val.parent().unwrap().to_path_buf(),
