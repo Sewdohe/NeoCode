@@ -146,7 +146,13 @@ packer.startup(function(use)
 	use({ "windwp/nvim-autopairs" })
 	use({ "ahmedkhalf/project.nvim" })
 	use({ "Shatur/neovim-session-manager" })
-  use(require"usercustom.customplugins")
+
+  local userplugins = require"usercustom.customplugins"
+  for _, value in ipairs(userplugins) do
+    use({value})
+  end
+
+  -- use(require"usercustom.customplugins")
 
 	if Packer_bootstrap then
 		print("running sync")
