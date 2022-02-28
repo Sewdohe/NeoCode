@@ -347,8 +347,8 @@ pub mod funcs {
         // NOTE: Check if macOS dependencies are installed
 
         use core::panic;
-        use std::process::Stdio;
-        let mut bin_path = PathBuf::from(r"/usr/local/bin/");
+        // use std::process::Stdio;
+        // let mut bin_path = PathBuf::from(r"/usr/local/bin/");
 
         let mut nvim_installed = check_for_binary("nvim");
         let mut fzf_installed = check_for_binary("fzf");
@@ -365,6 +365,8 @@ pub mod funcs {
             std::process::Command::new("brew")
                 .arg("install")
                 .arg("neovim-nightly")
+                .arg("--cask")
+                .arg("--no-quarantine")
                 .spawn()
                 .expect("Error: failed to install neovim-nightly");
             nvim_installed = true;
