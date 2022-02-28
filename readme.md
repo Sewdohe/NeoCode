@@ -15,11 +15,13 @@ Installer works for:
   - Mac OSX
 
 ## Community
+
 This project is actually growing! I'm stoked!! Lets chat about it and discuss it's furlture:
 https://discord.gg/9tZq3WrU4p
 
 
 ## Dependencies [Windows]:
+
 Make sure to enable developer mode.
 
 Scoop package manager:
@@ -29,6 +31,9 @@ Build tools for Telescope FZF Native:
 `scoop install make`
 `scoop install gcc`
 
+Ripgrep for Live-grepping (find in project)
+`scoop install ripgrep`
+
 Neovim Nightly:
 `scoop bucket add versions`
 `scoop install neovim-nightly`
@@ -36,16 +41,15 @@ Neovim Nightly:
 Neovide (reccomended):
 https://github.com/neovide/neovide
 
-(for building rust script from source)
-Rust Lang:
-https://www.rust-lang.org/tools/install
-
 Dependencies soon to be a thing of the past as inget closer to releasing the auto-deps branch!!!
 
 ## Instructions
+
 clone this repo somewhere easy to access on your pc. For example, I use ~\Code.
 
 cd into the Neovide install directory, and simply run `./NeoCodeInstaller<yoursystem> --install-packer`
+
+If running Windows (other systems to come VERY soon) then also add the `--deps` flag to have the installer grab scoop package manager and download everything you need for this config.
 
 The install will be automatic and headlessly install all the needed plugins.
 
@@ -63,7 +67,9 @@ type `TSInstall ` and press `<tab>` and you will get an autocomplete window of a
 This project is literally brand new, and I am working on it alone. Some things may not work, and I may not have all the dependecies listed as they should be...if something is missing, please let me know.
 
 ## Commonly Used Keybinds:
+
 ### VS Code Alternaitve Features:
+
 * **Command Pallete:**
 I can't use crtl+shift+p as keybind in vim, so the command pallette is used with `crtl+k`
 * **Quick Open:**
@@ -86,8 +92,18 @@ Use `<leader><leader>f` to auto-format a document using the language server.
 Use `[d` or `]d`.
 * **Rename Symbol:**
 `F2`
+### UI Navigation
+
 * **Switch Tabs:**
-`gt` and `gy`
+`gt` and `gy` OR `shift+h` and `shift+y`
+* **Jump up or down by pages:**
+`shift+j` and `shift+k`
+* **Switch Windows:**
+`ctrl+w then h,j,k, or l`
+* **close buffer:**
+`qb`
+* **Quick-exit Insert Mode:**
+`qq`
 
 ## TODO:
 - [ ] Set Neovide multigrid env var in installer script

@@ -6,9 +6,6 @@ pub mod funcs {
     use std::path::Path;
     use std::path::PathBuf;
     use Result::Err;
-    use crate::installers::scripts;
-    // use std::{thread, time};
-    // use powershell_script;
 
     #[cfg(target_os = "windows")]
     use std::os::windows::fs::symlink_dir;
@@ -19,6 +16,7 @@ pub mod funcs {
     pub fn backup_old_config(config_path: PathBuf) {
         println!("{}", "\n \nSTEP 1: Backing up old config".blue().bold());
         println!("{} {}", "Current OS is", env::consts::OS); // Prints the current OS.
+        
 
         // Change process directory to the systems config folder
         match env::set_current_dir(config_path.as_path()) {
@@ -249,9 +247,6 @@ pub mod funcs {
 
         config_dir.push(".config");
 
-        // println!("data dir for linux: {}", data_dir.display());
-        // println!("config dir for linux: {}", config_dir.display());
-
         match env::set_current_dir(config_dir.as_path()) {
             Ok(()) => println!("Changed dir to config: {}", config_dir.display()),
             Err(err) => println!("Error: Couldn't change to config folder: {}", err),
@@ -347,7 +342,7 @@ pub mod funcs {
     }
 
     // Currently empty, allows compilation on macos.
-    #[cfg(target_os = "macos")]
+    #[cfg(target_family = "unix")]
     pub fn check_dependencies() {
         // NOTE: Check if macOS dependencies are installed
 
@@ -403,8 +398,6 @@ pub mod funcs {
     // Check for dependencies for windows
     #[cfg(target_os = "windows")]
     pub fn check_dependencies() {
-        // list of deps and if they are installed or not
-
         use core::panic;
         use std::process::Stdio;
         let mut scoop_path = get_home_dir();
@@ -415,6 +408,9 @@ pub mod funcs {
         let mut nvim_installed = check_for_binary("nvim");
         let mut gcc_installed = check_for_binary("gcc");
         let mut make_installed = check_for_binary("make");
+        let mut ripgrep_installed = check_for_binary("rg");
+        let mut fzf_installed = check_for_binary("fzf");
+        let mut lazygit_installed = check_for_binary("lazygit");
 
         if !scoop_installed {
             // iwr -useb get.scoop.sh | iex
@@ -431,15 +427,16 @@ pub mod funcs {
             //install scoop's git, we need it to use buckets
             // the regular git doesn't seem to do the job
             std::process::Command::new("powershell")
-            .env("PATH", scoop_path.as_os_str())
-            .arg("scoop")
-            .arg("install")
-            .arg("git")
-            .spawn()
-            .expect("Error: Failed to install git")
-            .wait()
-            .expect("Error: Something went wrong");
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("install")
+                .arg("git")
+                .spawn()
+                .expect("Error: Failed to install git")
+                .wait()
+                .expect("Error: Something went wrong");
 
+            // we need the versions bucket in order to install neovim
             std::process::Command::new("powershell")
                 .env("PATH", scoop_path.as_os_str())
                 .arg("scoop")
@@ -451,72 +448,130 @@ pub mod funcs {
                 .wait()
                 .expect("Error: Something went wrong");
 
+            // add extras bucket to get lazygit
+            std::process::Command::new("powershell")
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("bucket")
+                .arg("add")
+                .arg("extras")
+                .spawn()
+                .expect("Error: Failed to run scoop installer")
+                .wait()
+                .expect("Error: Something went wrong");
+
             println!("{}", "Scoop install completed successfully".blue());
             scoop_installed = true;
-
         }
 
         if scoop_installed {
             if !gcc_installed {
                 std::process::Command::new("powershell")
-                .env("PATH", scoop_path.as_os_str())
-                .arg("scoop")
-                .arg("install")
-                .arg("gcc")
-                .spawn()
-                .expect("Error: Failed to install gcc")
-                .wait()
-                .expect("Error: Something went wrong");
+                    .env("PATH", scoop_path.as_os_str())
+                    .arg("scoop")
+                    .arg("install")
+                    .arg("gcc")
+                    .spawn()
+                    .expect("Error: Failed to install gcc")
+                    .wait()
+                    .expect("Error: Something went wrong");
 
                 gcc_installed = true;
             }
 
+            if !fzf_installed {
+                std::process::Command::new("powershell")
+                    .env("PATH", scoop_path.as_os_str())
+                    .arg("scoop")
+                    .arg("install")
+                    .arg("fzf")
+                    .spawn()
+                    .expect("Error: Failed to install gcc")
+                    .wait()
+                    .expect("Error: Something went wrong");
+
+                fzf_installed = true;
+            }
+
+            if !ripgrep_installed {
+                std::process::Command::new("powershell")
+                    .env("PATH", scoop_path.as_os_str())
+                    .arg("scoop")
+                    .arg("install")
+                    .arg("ripgrep")
+                    .spawn()
+                    .expect("Error: Failed to install gcc")
+                    .wait()
+                    .expect("Error: Something went wrong");
+
+                ripgrep_installed = true;
+            }
+
+            if !lazygit_installed {
+                std::process::Command::new("powershell")
+                    .env("PATH", scoop_path.as_os_str())
+                    .arg("scoop")
+                    .arg("install")
+                    .arg("lazygit")
+                    .spawn()
+                    .expect("Error: Failed to install gcc")
+                    .wait()
+                    .expect("Error: Something went wrong");
+
+                lazygit_installed = true;
+            }
+
             if !make_installed {
                 std::process::Command::new("powershell")
-                .env("PATH", scoop_path.as_os_str())
-                .arg("scoop")
-                .arg("install")
-                .arg("make")
-                .spawn()
-                .expect("Error: Failed to install gcc")
-                .wait()
-                .expect("Error: Something went wrong");
+                    .env("PATH", scoop_path.as_os_str())
+                    .arg("scoop")
+                    .arg("install")
+                    .arg("make")
+                    .spawn()
+                    .expect("Error: Failed to install gcc")
+                    .wait()
+                    .expect("Error: Something went wrong");
 
                 make_installed = true;
             }
 
             if !nvim_installed {
+                // install neovim-nightly from the versions bucket
                 let nvim_installer = std::process::Command::new("powershell")
-                .env("PATH", scoop_path.as_os_str())
-                .arg("scoop")
-                .arg("install")
-                .arg("neovim-nightly")
-                .stdout(Stdio::piped())
-                .spawn()
-                .expect("Error: Failed to install neovim")
-                .wait_with_output()
-                .expect("Error: Something went wrong");
-                
+                    .env("PATH", scoop_path.as_os_str())
+                    .env("NEOVIDE_MULTIGRID", "") // set multigrid in case the user uses Neovide
+                    .arg("scoop")
+                    .arg("install")
+                    .arg("neovim-nightly")
+                    .stdout(Stdio::piped())
+                    .spawn()
+                    .expect("Error: Failed to install neovim")
+                    .wait_with_output()
+                    .expect("Error: Something went wrong");
 
+                // store output, convert to a string, and check for "ERROR"
                 let output = nvim_installer.stdout;
-                
-
                 let output_string = String::from_utf8(output).unwrap();
-
-                
-
-                //todo check output for error
                 if output_string.contains("ERROR") {
-                    println!("{} {}", "Error during neovim install: \n \n".blue().bold().underline(), output_string.red());
+                    println!(
+                        "{} {}",
+                        "Error during neovim install: \n \n"
+                            .blue()
+                            .bold()
+                            .underline(),
+                        output_string.red()
+                    );
                     nvim_installed = false;
                 } else {
+                    // No error, install was good
                     println!("{}", "Neovim install completed".blue().bold());
                     nvim_installed = true;
                 }
             }
         }
-        
-        if scoop_installed && make_installed && gcc_installed && nvim_installed {
+
+        if scoop_installed && make_installed && gcc_installed && nvim_installed && ripgrep_installed && fzf_installed && lazygit_installed
+        {
             println!("{}", "All deps. are met! Time to configure...".blue());
         } else {
             panic!("All deps didn't install! ABORT!!");

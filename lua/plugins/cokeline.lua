@@ -1,10 +1,10 @@
 local yellow = vim.g.terminal_color_3
-local status_ok, cokeline = pcall(require, "cokeline")
-if not status_ok then
+local cokeline_okay, cokeline = pcall(require, "cokeline")
+if not cokeline_okay then
   return
 end
-local status_ok, utils= pcall(require, "cokeline/utils")
-if not status_ok then
+local utils_okay, utils= pcall(require, "cokeline/utils")
+if not utils_okay then
   return
 end
 

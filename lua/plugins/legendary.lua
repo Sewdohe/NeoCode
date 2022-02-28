@@ -5,15 +5,15 @@ end
 
 local opts = { noremap = true, silent = true }
 -- Use lazygit to handle github repos
--- local status_ok, toggleterm = pcall(require, "toggleterm.terminal")
--- if not status_ok then
--- 	return
--- end
--- local lazygit = toggleterm.Terminal:new({ cmd = "lazygit", hidden = true, dir = "git_dir" })
---
--- local function _lazygit_toggle()
---   lazygit:toggle()
--- end
+local status_ok, toggleterm = pcall(require, "toggleterm.terminal")
+if not status_ok then
+	return
+end
+local lazygit = toggleterm.Terminal:new({ cmd = "lazygit", hidden = true, dir = "git_dir" })
+
+local function _lazygit_toggle()
+  lazygit:toggle()
+end
 
 local custom_mappings = {
 	{ "<C-b>", ":NvimTreeToggle<CR>", description = "Toggle file tree", opts = opts },
@@ -23,10 +23,10 @@ local custom_mappings = {
 	{ "<C-v>", "p", mode = "n", opts = opts },
 	{ "<C-k>", legendary.find, description = "Search key bindings" },
 	-- Document jumping since we re-bind file tree to C-b
-	{ "<C-j>", "<C-f>", opts = opts, description = "Jump forward in document" },
-	{ "<C-v>", "<C-b>", opts = opts, description = "Jump backward in document" },
+	{ "J", "<C-f>", opts = opts, description = "Jump forward in document" },
+	{ "K", "<C-b>", opts = opts, description = "Jump backward in document" },
 	-- call lazygit with control g
-	-- { '<C-g>', _lazygit_toggle, opts = opts, description = 'Toggle LazyGit terminal' },
+	{ '<C-g>', _lazygit_toggle, opts = opts, description = 'Toggle LazyGit terminal' },
 	{ "gt", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Previous tab" },
 	{ "gy", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next tab" },
 	{ "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
@@ -39,15 +39,18 @@ local custom_mappings = {
 	{ "<C-[", "zc", mode = 'n', opts = opts, description = "Fold In" },
   { "gt", "<PLUG>(cokeline-focus-prev)", opts = opts, description = "Next Tab"},
   { "gy", "<PLUG>(cokeline-focus-next)", opts = opts, description = "Next Tab"},
-  -- ease of use 
-  -- {"jk", "<ESC>", opts = opts, description = "Exit insert mode / ESC key"},
-  {"c", ":bdelete<CR>", opts = opts, description = "Close current buffer / tab"},
+  { "H", ":BufferLineCyclePrev<CR>", opts = opts, description = "Next Tab (alternate)"},
+  { "L", ":BufferLineCycleNext<CR>", opts = opts, description = "Next Tab (alternate)"},
+  -- ease of use
+  {"qq", "<ESC>", mode = "i", opts = opts, description = "Exit insert mode / ESC key"},
+  {"qb", ":bdelete<CR>", opts = opts, description = "Close current buffer / tab"},
   {"<c-s>", ":w<CR>", opts = {noremap = true, silent = false}, description = "Save file"}
 }
 
 local commands = {
   -- You can also use legendar.nvim to create commands!
-  { ':DoSomething', ':echo "something"', description = 'Do something!' }
+  { ':DoSomething', ':echo "something"', description = 'Do something!' },
+  { ':Reload', ':so ./init.lua', description = 'Refresh Config' }
 }
 
 legendary.setup({
