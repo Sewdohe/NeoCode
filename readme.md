@@ -90,6 +90,41 @@ type `:LspInstall` while the file is open and it should find a language server f
 - How do I get syntax support for a language?
 type `TSInstall ` and press `<tab>` and you will get an autocomplete window of available parsers.
 
+## How to add custom configuration
+
+The setup is now capable of using custom code without it getting overridden when syncing newest
+changes. The user's custom config folder should be located under the lua folder, called
+`userCustom`. Inside the userCustom folder there should be an init.lua file, as well as a
+customplugins.lua file. The contents of the file should be as follows:
+
+customplugins.lua:
+```
+-- put your custom lua plugins in this lua table to be loaded last by packer
+return {
+  "rebelot/kanagawa.nvim",
+  "windwp/windline.nvim"
+}
+```
+
+customplugins is just a list of packer repos that you want to be sourced after the plugin defaults.
+
+init.lua
+```
+-- use pcalls in this file to require custom config files,
+-- that way if anyone syncs the repo and doesn't have that file they won't get errors
+
+local plugin_okay, plugin = pcall(require, "userCustom.<customFileName>")
+if not custom_okay then
+  return
+end
+```
+
+Inside init.lua, you'll call any custom LUA files that you've written. For example, if you wanted a
+custom theme, just make a copy of visual.lua, place it in userCustom folder, and require it inside
+of init.lua. At the end of the plugin loading of the main init.lua, it will call all of your custom
+configs. These files are not tracked by git and therefor will persist even when you grab the newest
+updates from the github repo!
+
 ## State of project
 This project is literally brand new, and I am working on it alone. Some things may not work, and I may not have all the dependecies listed as they should be...if something is missing, please let me know.
 

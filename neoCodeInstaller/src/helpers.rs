@@ -3,6 +3,7 @@ pub mod funcs {
     use predicates::prelude::*;
     use std::env;
     use std::fs;
+    use std::fs::create_dir;
     use std::path::Path;
     use std::path::PathBuf;
     use Result::Err;
@@ -629,5 +630,13 @@ pub mod funcs {
         } else {
             panic!("All deps didn't install! ABORT!!");
         }
+    }
+
+    pub fn create_usercustom(custom_path: PathBuf) {
+        let config_dir = custom_path.parent().unwrap();
+        env::set_current_dir(config_dir).unwrap();
+        create_dir("userCustom").unwrap();
+
+        // TODO: Inject userCustom template files here
     }
 }

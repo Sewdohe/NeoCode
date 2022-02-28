@@ -22,7 +22,10 @@ struct Args {
     testing: bool,
 
     #[clap(short, long)]
-    deps: bool
+    deps: bool,
+
+    #[clap(short, long)]
+    create_user: bool
 }
 
 fn main() {
@@ -31,6 +34,7 @@ fn main() {
     let install_packer = args.install_packer;
     let testing = args.testing;
     let deps = args.deps;
+    let create_user = args.create_user;
 
     let starting_dir: PathBuf = match env::current_exe() {
         Ok(val) => val.parent().unwrap().to_path_buf(),
@@ -46,8 +50,10 @@ fn main() {
             if deps {
                 funcs::check_dependencies();
             }
-            
             let config_folder_path = funcs::determine_config_path();
+            if create_user {
+                funcs::create_usercustom(starting_dir.clone());
+            }
             funcs::backup_old_config(config_folder_path.clone());
             funcs::symlink_config(config_folder_path.clone(), starting_dir);
             if install_packer {
