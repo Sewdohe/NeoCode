@@ -143,10 +143,10 @@ packer.startup(function(use)
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
 	})
-
 	use({ "windwp/nvim-autopairs" })
 	use({ "ahmedkhalf/project.nvim" })
 	use({ "Shatur/neovim-session-manager" })
+  use(require"usercustom.customplugins")
 
 	if Packer_bootstrap then
 		print("running sync")

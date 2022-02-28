@@ -39,7 +39,7 @@ FZF for file searching
 
 Lazygit for working with git in the terminal
 `scoop bucket add extras`
-`scoop install fzf`
+`scoop install lazygit`
 
 Neovim Nightly:
 `scoop bucket add versions`
@@ -61,7 +61,7 @@ FZF for file searching
 `brew install fzf`
 
 Lazygit for working with git in the terminal
-`brew install fzf`
+`brew install lazygit`
 
 Neovim Nightly:
 Instructions coming soon!

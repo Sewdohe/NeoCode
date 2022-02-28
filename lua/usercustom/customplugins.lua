@@ -1,1 +1,4 @@
--- TODO: Figure a way to let users specify github links to have packer sync them
+-- put your custom lua plugins in this lua table to be loaded last by packer
+return {
+  "rebelot/kanagawa.nvim",
+}
