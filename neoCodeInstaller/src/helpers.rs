@@ -379,6 +379,7 @@ pub mod funcs {
         let mut gcc_installed = check_for_binary("gcc");
         let mut make_installed = check_for_binary("make");
         let mut ripgrep_installed = check_for_binary("rg");
+        let mut fzf_installed = check_for_binary("fzf");
 
         if !scoop_installed {
             // iwr -useb get.scoop.sh | iex
@@ -426,6 +427,20 @@ pub mod funcs {
                     .arg("scoop")
                     .arg("install")
                     .arg("gcc")
+                    .spawn()
+                    .expect("Error: Failed to install gcc")
+                    .wait()
+                    .expect("Error: Something went wrong");
+
+                gcc_installed = true;
+            }
+
+            if !fzf_installed {
+                std::process::Command::new("powershell")
+                    .env("PATH", scoop_path.as_os_str())
+                    .arg("scoop")
+                    .arg("install")
+                    .arg("fzf")
                     .spawn()
                     .expect("Error: Failed to install gcc")
                     .wait()
