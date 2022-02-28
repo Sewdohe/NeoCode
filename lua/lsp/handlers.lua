@@ -127,10 +127,14 @@ require("aerial").setup({
   },
   float = {
     border = "rounded",
-    row = 1,
-    col = 0,
+    -- row = 1,
+    -- col = 0,
     max_height = 100,
     min_height = 4,
+    -- row and col depreciated in favor of override
+    -- override = function()
+    --   return { row = 1, col = 0}
+    --   end,
   },
 
   lsp = {

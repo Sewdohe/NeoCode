@@ -49,7 +49,8 @@ local custom_mappings = {
 
 local commands = {
   -- You can also use legendar.nvim to create commands!
-  { ':DoSomething', ':echo "something"', description = 'Do something!' }
+  { ':DoSomething', ':echo "something"', description = 'Do something!' },
+  { ':rc', ':so ./init.lua', description = 'Refresh Config' }
 }
 
 legendary.setup({

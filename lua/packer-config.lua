@@ -71,10 +71,10 @@ packer.startup(function(use)
 	use({ "honza/vim-snippets" })
 	use({ "terrortylor/nvim-comment" })
 	use({ "jose-elias-alvarez/null-ls.nvim" })
-  use({
-    "folke/todo-comments.nvim",
-    requires = "nvim-lua/plenary.nvim",
-  })
+	use({
+		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
+	})
 
 	-- Syntax highlighter
 	-- ---------------------
@@ -88,6 +88,7 @@ packer.startup(function(use)
 	-- -----------------
 	use({ "rafamadriz/neon", as = "neon" })
 	use("Mofiqul/vscode.nvim")
+	use({ "ellisonleao/gruvbox.nvim" })
 	use("feline-nvim/feline.nvim")
 	use({ "mrjones2014/legendary.nvim" })
 	use({
@@ -136,7 +137,6 @@ packer.startup(function(use)
 	use({ "nvim-lua/plenary.nvim" })
 	use({ "junegunn/fzf" })
 	use({ "junegunn/fzf.vim" })
-	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use({ "ibhagwan/fzf-lua", requires = { "kyazdani42/nvim-web-devicons" } })
 	use({
 		"nvim-telescope/telescope.nvim",

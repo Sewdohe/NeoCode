@@ -111,11 +111,9 @@ telescope.setup {
     },
     ["ui-select"] = {
       require("telescope.themes").get_dropdown {
-        previewer = false,
+        previewer = true,
         -- even more opts
       },
     },
   },
 }
-
-require('telescope').load_extension('fzy_native')
