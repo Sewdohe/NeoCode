@@ -91,6 +91,7 @@ packer.startup(function(use)
 	use({ "ellisonleao/gruvbox.nvim" })
 	use("feline-nvim/feline.nvim")
 	use({ "mrjones2014/legendary.nvim" })
+  use 'famiu/bufdelete.nvim'
 	use({
 		"noib3/nvim-cokeline",
 		requires = "kyazdani42/nvim-web-devicons", -- If you want devicons

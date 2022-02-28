@@ -16,6 +16,7 @@ pub mod funcs {
     pub fn backup_old_config(config_path: PathBuf) {
         println!("{}", "\n \nSTEP 1: Backing up old config".blue().bold());
         println!("{} {}", "Current OS is", env::consts::OS); // Prints the current OS.
+        
 
         // Change process directory to the systems config folder
         match env::set_current_dir(config_path.as_path()) {
