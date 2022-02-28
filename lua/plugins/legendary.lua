@@ -30,7 +30,7 @@ local custom_mappings = {
 	{ "gt", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Previous tab" },
 	{ "gy", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next tab" },
 	{ "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
-	{ "<C-o>", ":AerialToggle right<CR>", opts = opts, description = "Browse Symbols" },
+	{ "<C-o>", ":SymbolsOutline<CR>", opts = opts, description = "Browse Symbols" },
   -- Commenting
 	{ "<leader><leader>c", ":CommentToggle<CR>", mode = 'v', opts = opts, description = "Toggle Comment" },
 	{ "<leader><leader>c", ":CommentToggle<CR>", mode = 'n', opts = opts, description = "Toggle Comment" },
