@@ -17,7 +17,6 @@ pub mod funcs {
     pub fn backup_old_config(config_path: PathBuf) {
         println!("{}", "\n \nSTEP 1: Backing up old config".blue().bold());
         println!("{} {}", "Current OS is", env::consts::OS); // Prints the current OS.
-        
 
         // Change process directory to the systems config folder
         match env::set_current_dir(config_path.as_path()) {
@@ -351,47 +350,58 @@ pub mod funcs {
         // use std::process::Stdio;
         // let mut bin_path = PathBuf::from(r"/usr/local/bin/");
 
+        let mut brew_installed = check_for_binary("brew");
         let mut nvim_installed = check_for_binary("nvim");
         let mut fzf_installed = check_for_binary("fzf");
         let mut ripgrep_installed = check_for_binary("rg");
 
-        if !nvim_installed {
-            //NOTE: Tap custom repo to get nightly builds
-            std::process::Command::new("brew")
-                .arg("tap")
-                .arg("brukberhane/homebrew-brew")
+        if !brew_installed {
+            std::process::Command::new("bash")
+                .arg("-c")
+                .arg("\"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"")
                 .spawn()
-                .expect("Error: failed to tap 'brukberhane/brew'");
-
-            std::process::Command::new("brew")
-                .arg("install")
-                .arg("neovim-nightly")
-                .arg("--cask")
-                .arg("--no-quarantine")
-                .spawn()
-                .expect("Error: failed to install neovim-nightly");
-            nvim_installed = true;
+                .expect("Error: failed to install Homebrew");
         }
 
-        if !fzf_installed {
-            std::process::Command::new("brew")
-                .arg("install")
-                .arg("fzf")
-                .spawn()
-                .expect("Error: failed to install fzf");
-            fzf_installed = true;
+        if brew_installed {
+            if !nvim_installed {
+                //NOTE: Tap custom repo to get nightly builds
+                std::process::Command::new("brew")
+                    .arg("tap")
+                    .arg("brukberhane/homebrew-brew")
+                    .spawn()
+                    .expect("Error: failed to tap 'brukberhane/brew'");
+
+                std::process::Command::new("brew")
+                    .arg("install")
+                    .arg("neovim-nightly")
+                    .arg("--cask")
+                    .arg("--no-quarantine")
+                    .spawn()
+                    .expect("Error: failed to install neovim-nightly");
+                nvim_installed = true;
+            }
+
+            if !fzf_installed {
+                std::process::Command::new("brew")
+                    .arg("install")
+                    .arg("fzf")
+                    .spawn()
+                    .expect("Error: failed to install fzf");
+                fzf_installed = true;
+            }
+
+            if !ripgrep_installed {
+                std::process::Command::new("brew")
+                    .arg("install")
+                    .arg("ripgrep")
+                    .spawn()
+                    .expect("Error: failed to install ripgrep");
+                ripgrep_installed = true;
+            }
         }
 
-        if !ripgrep_installed {
-            std::process::Command::new("brew")
-                .arg("install")
-                .arg("ripgrep")
-                .spawn()
-                .expect("Error: failed to install ripgrep");
-            ripgrep_installed = true;
-        }
-
-        if nvim_installed && fzf_installed && ripgrep_installed {
+        if brew_installed && nvim_installed && fzf_installed && ripgrep_installed {
             println!("{}", "All deps are met! Time to configure...".blue());
         } else {
             panic!("All deps didn't install! ABORT!");
@@ -626,7 +636,13 @@ pub mod funcs {
             }
         }
 
-        if scoop_installed && make_installed && gcc_installed && nvim_installed && ripgrep_installed && fzf_installed && lazygit_installed
+        if scoop_installed
+            && make_installed
+            && gcc_installed
+            && nvim_installed
+            && ripgrep_installed
+            && fzf_installed
+            && lazygit_installed
         {
             println!("{}", "All deps. are met! Time to configure...".blue());
         } else {
