@@ -3,7 +3,6 @@ pub mod scripts {
     use crate::helpers::funcs;
 
     pub fn install_neovim() {
-        use core::panic;
         use std::process::Stdio;
 
         let mut scoop_path = funcs::get_home_dir();

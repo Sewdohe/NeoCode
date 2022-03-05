@@ -1,5 +1,4 @@
 neoCodeInstaller/target/
 plugin
 lua/usercustom/*.lua
-!init.lua
-!customplugins.lua
+lua/user/
