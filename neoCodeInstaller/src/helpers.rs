@@ -47,6 +47,19 @@ pub mod funcs {
         }
     }
 
+    pub fn clone_config_repo() {
+        let repo_url = "https://github.com/Sewdohe/NeoCode";
+        std::process::Command::new("powershell")
+            .arg("git")
+            .arg("clone")
+            .arg(repo_url)
+            .arg("Neocode")
+            .spawn()
+            .expect("Error: couldn't clone repo")
+            .wait()
+            .expect("Error: please try again");
+    }
+
     pub fn determine_config_path() -> PathBuf {
         let os = env::consts::OS;
         let mut config_path = get_home_dir();
@@ -71,6 +84,8 @@ pub mod funcs {
     }
 
     pub fn symlink_config(mut config_path: PathBuf, starting_dir: PathBuf) {
+        clone_config_repo();
+
         println!(
             "{}",
             "STEP 2: Symlinking NeoCode config to config directory: "
@@ -100,11 +115,10 @@ pub mod funcs {
         if os == "windows" {
             println!(
                 "trying to [windows] symlink {} to {}",
-                dir.display(),
+                "Neocode folder",
                 config_path.display()
             );
 
-            // TODO: Check if symlink exists already
             // assert that the nvim directory isn't already a symlink
             let predicate_fn = predicate::path::is_symlink();
             assert_eq!(
@@ -113,7 +127,7 @@ pub mod funcs {
                 "Looks like your nvim directory is already symlinked!"
             );
 
-            match symlink_dir(dir, config_path.as_path()) {
+            match symlink_dir("Neocode", config_path.as_path()) {
                 Ok(()) => println!("{}", "Symlink done ------------------- \n \n".blue().bold()),
                 Err(err) => println!("{} {}", "Error Symlink: {}".red().bold(), err),
             }
@@ -669,8 +683,17 @@ pub mod funcs {
         env::set_current_dir(custom_path).unwrap();
 
         match copy_dir_all(template_dir.as_path(), config_dir.as_path()) {
-            Ok(()) => println!("{}", "Copied user template into config directory!".blue().bold()),
-            Err(err) => println!("{} {}", "Couldn't copy user template into config directory! \n ".red().bold(), err)
+            Ok(()) => println!(
+                "{}",
+                "Copied user template into config directory!".blue().bold()
+            ),
+            Err(err) => println!(
+                "{} {}",
+                "Couldn't copy user template into config directory! \n "
+                    .red()
+                    .bold(),
+                err
+            ),
         }
     }
 }

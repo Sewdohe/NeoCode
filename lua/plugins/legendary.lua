@@ -45,6 +45,7 @@ local custom_mappings = {
 	{ "qq", "<ESC>", mode = "i", opts = opts, description = "Exit insert mode / ESC key" },
 	{ "qb", ":Bdelete<CR>", opts = opts, description = "Close current buffer / tab" },
 	{ "<c-s>", ":w<CR>", opts = { noremap = true, silent = false }, description = "Save file" },
+	{ "<c-s>", ":w<CR>", mode = "i", opts = { noremap = true, silent = false }, description = "Save file" },
   -- LSP completion and diagnostics
   {"<leader><leader>t", ":TroubleToggle document_diagnostics<CR>", opts = opts, description = "lsp: View Diagnostics List"},
   {"<leader><leader>T", ":TroubleToggle workspace_diagnostics<CR>", opts = opts, description = "lsp: View Workspace Diagnostics List"},
