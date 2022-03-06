@@ -94,8 +94,8 @@ type `TSInstall ` and press `<tab>` and you will get an autocomplete window of a
 
 The setup is now capable of using custom code without it getting overridden when syncing newest
 changes. The user's custom config folder should be located under the lua folder, called
-`userCustom`. Inside the userCustom folder there should be an init.lua file, as well as a
-customplugins.lua file. The contents of the file should be as follows:
+`user`. Inside the user folder there should be an init.lua file, as well as 
+customplugins.lua, keybinds.lua and settings.lua files. The contents of the file should be as follows:
 
 customplugins.lua:
 ```
@@ -113,14 +113,14 @@ init.lua
 -- use pcalls in this file to require custom config files,
 -- that way if anyone syncs the repo and doesn't have that file they won't get errors
 
-local plugin_okay, plugin = pcall(require, "userCustom.<customFileName>")
+local plugin_okay, plugin = pcall(require, "user.<customFileName>")
 if not custom_okay then
   return
 end
 ```
 
 Inside init.lua, you'll call any custom LUA files that you've written. For example, if you wanted a
-custom theme, just make a copy of visual.lua, place it in userCustom folder, and require it inside
+custom theme, just make a copy of visual.lua, place it in user folder, and require it inside
 of init.lua. At the end of the plugin loading of the main init.lua, it will call all of your custom
 configs. These files are not tracked by git and therefor will persist even when you grab the newest
 updates from the github repo!

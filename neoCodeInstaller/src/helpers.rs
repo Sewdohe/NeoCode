@@ -3,7 +3,7 @@ pub mod funcs {
     use predicates::prelude::*;
     use std::env;
     use std::fs;
-    use std::fs::create_dir;
+    use std::io;
     use std::path::Path;
     use std::path::PathBuf;
 
@@ -253,7 +253,7 @@ pub mod funcs {
 
         match std::fs::remove_file("nvim") {
             Ok(_) => println!("Deleted config folder symlink"),
-            Err(err) => println!(
+            Err(_err) => println!(
                 "{}",
                 "Err: No symlinked nvim config folder to remove"
                     .red()
@@ -262,7 +262,7 @@ pub mod funcs {
         }
         match fs::remove_dir_all(data_dir) {
             Ok(_) => println!("Deleted data folder"),
-            Err(err) => println!("{}", "Err: No data dir to delete".red().bold()),
+            Err(_err) => println!("{}", "Err: No data dir to delete".red().bold()),
         }
     }
 
@@ -360,6 +360,7 @@ pub mod funcs {
                 .arg("\"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"")
                 .spawn()
                 .expect("Error: failed to install Homebrew");
+            brew_installed = true;
         }
 
         if brew_installed {
@@ -649,14 +650,30 @@ pub mod funcs {
         }
     }
 
+    fn copy_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> io::Result<()> {
+        fs::create_dir_all(&dst)?;
+        for entry in fs::read_dir(src)? {
+            let entry = entry?;
+            let ty = entry.file_type()?;
+            if ty.is_dir() {
+                copy_dir_all(entry.path(), dst.as_ref().join(entry.file_name()))?;
+            } else {
+                fs::copy(entry.path(), dst.as_ref().join(entry.file_name()))?;
+            }
+        }
+        Ok(())
+    }
+
     pub fn create_usercustom(custom_path: PathBuf) {
-        use fs_extra::dir::*;
-        use fs_extra::error::*;
+        let mut config_dir = custom_path.clone();
+        config_dir.push("../lua/user");
+        let mut template_dir = custom_path.clone();
+        template_dir.push("user-template");
+        env::set_current_dir(custom_path).unwrap();
 
-        let config_dir = custom_path.parent().unwrap();
-        env::set_current_dir(config_dir).unwrap();
-        create_dir("userCustom").unwrap();
-
-        // TODO: Inject userCustom template files here
+        match copy_dir_all(template_dir.as_path(), config_dir.as_path()) {
+            Ok(()) => println!("{}", "Copied user template into config directory!".blue().bold()),
+            Err(err) => println!("{} {}", "Couldn't copy user template into config directory! \n ".red().bold(), err)
+        }
     }
 }

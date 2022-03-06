@@ -148,8 +148,7 @@ packer.startup(function(use)
 	use({ "ahmedkhalf/project.nvim" })
 	use({ "Shatur/neovim-session-manager" })
 
-  -- This line load the user's custom plugins
-  local userplugins = require"usercustom.customplugins"
+  local userplugins = require"user.plugins"
   for _, value in ipairs(userplugins) do
     use({value})
   end

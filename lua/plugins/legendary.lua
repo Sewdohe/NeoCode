@@ -44,14 +44,28 @@ local custom_mappings = {
   -- ease of use
   {"qq", "<ESC>", mode = "i", opts = opts, description = "Exit insert mode / ESC key"},
   {"qb", ":Bdelete<CR>", opts = opts, description = "Close current buffer / tab"},
-  {"<c-s>", ":w<CR>", opts = {noremap = true, silent = false}, description = "Save file"}
+  {"<c-s>", ":w<CR>", opts = {noremap = true, silent = false}, description = "Save file"},
 }
+
+local status_ok, user_mappings = pcall(require, "user.keybinds")
+if status_ok then
+  for _,v in pairs(user_mappings) do
+    table.insert(custom_mappings, v)
+  end
+end
 
 local commands = {
   -- You can also use legendar.nvim to create commands!
   { ':DoSomething', ':echo "something"', description = 'Do something!' },
   { ':Reload', ':so ./init.lua', description = 'Refresh Config' }
 }
+
+local status_ok, user_commands = pcall(require, "user.commands")
+if status_ok then
+  for _,v in pairs(user_commands) do
+    table.insert(commands, v)
+  end
+end
 
 legendary.setup({
 	-- Include builtins by default, set to false to disable
