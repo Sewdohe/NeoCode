@@ -47,15 +47,22 @@ fn main() {
         return;
     } else {
         if !testing {
+            let config_folder_path = funcs::determine_config_path();
+
             if deps {
+                // install deps if the user so wishes
                 funcs::check_dependencies();
             }
-            let config_folder_path = funcs::determine_config_path();
+
             if create_user {
+                // if this flag is passed, create the custom user directory
                 funcs::create_usercustom(starting_dir.clone());
             }
+            // backup the old config (if there is one)
             funcs::backup_old_config(config_folder_path.clone());
+            // symlink the new config (this one)
             funcs::symlink_config(config_folder_path.clone(), starting_dir);
+            // headlessly run packer sync if the user wants it 
             if install_packer {
                 funcs::run_packer_install();
             } else {

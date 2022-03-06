@@ -6,7 +6,6 @@ pub mod funcs {
     use std::fs::create_dir;
     use std::path::Path;
     use std::path::PathBuf;
-    use Result::Err;
 
     #[cfg(target_os = "windows")]
     use std::os::windows::fs::symlink_dir;
@@ -17,7 +16,6 @@ pub mod funcs {
     pub fn backup_old_config(config_path: PathBuf) {
         println!("{}", "\n \nSTEP 1: Backing up old config".blue().bold());
         println!("{} {}", "Current OS is", env::consts::OS); // Prints the current OS.
-        
 
         // Change process directory to the systems config folder
         match env::set_current_dir(config_path.as_path()) {
@@ -626,7 +624,13 @@ pub mod funcs {
             }
         }
 
-        if scoop_installed && make_installed && gcc_installed && nvim_installed && ripgrep_installed && fzf_installed && lazygit_installed
+        if scoop_installed
+            && make_installed
+            && gcc_installed
+            && nvim_installed
+            && ripgrep_installed
+            && fzf_installed
+            && lazygit_installed
         {
             println!("{}", "All deps. are met! Time to configure...".blue());
         } else {
@@ -635,6 +639,9 @@ pub mod funcs {
     }
 
     pub fn create_usercustom(custom_path: PathBuf) {
+        use fs_extra::dir::*;
+        use fs_extra::error::*;
+
         let config_dir = custom_path.parent().unwrap();
         env::set_current_dir(config_dir).unwrap();
         create_dir("userCustom").unwrap();

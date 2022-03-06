@@ -148,12 +148,11 @@ packer.startup(function(use)
 	use({ "ahmedkhalf/project.nvim" })
 	use({ "Shatur/neovim-session-manager" })
 
+  -- This line load the user's custom plugins
   local userplugins = require"usercustom.customplugins"
   for _, value in ipairs(userplugins) do
     use({value})
   end
-
-  -- use(require"usercustom.customplugins")
 
 	if Packer_bootstrap then
 		print("running sync")
