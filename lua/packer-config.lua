@@ -153,8 +153,6 @@ packer.startup(function(use)
     use({value})
   end
 
-  -- use(require"usercustom.customplugins")
-
 	if Packer_bootstrap then
 		print("running sync")
 		require("packer").sync()

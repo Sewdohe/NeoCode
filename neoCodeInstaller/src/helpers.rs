@@ -6,7 +6,6 @@ pub mod funcs {
     use std::io;
     use std::path::Path;
     use std::path::PathBuf;
-    use Result::Err;
 
     #[cfg(target_os = "windows")]
     use std::os::windows::fs::symlink_dir;
