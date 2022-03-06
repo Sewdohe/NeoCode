@@ -152,10 +152,16 @@ packer.startup(function(use)
 	use({ "ahmedkhalf/project.nvim" })
 	use({ "Shatur/neovim-session-manager" })
 
-	local userplugins = require("user.plugins")
-	for _, value in ipairs(userplugins) do
-		use({ value })
+	local user_ok, user = pcall(require, "user")
+	if not user_ok then
+		print("No custom user config")
+	else
+		print("loading custom config...")
+		for _, value in ipairs(user) do
+			use({ value })
+		end
 	end
+
 
 	if Packer_bootstrap then
 		print("running sync")
