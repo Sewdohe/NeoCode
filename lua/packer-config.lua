@@ -62,6 +62,10 @@ packer.startup(function(use)
 	use({ "ray-x/lsp_signature.nvim" })
 	use({ "hrsh7th/cmp-nvim-lua" })
 	use({ "folke/lua-dev.nvim" })
+	use({
+		"folke/trouble.nvim",
+		requires = "kyazdani42/nvim-web-devicons",
+	})
 	-- Can't figure out how to make this one work...
 	-- use {'jubnzv/virtual-types.nvim', as = "virtual-types"}
 	use({ "j-hui/fidget.nvim" })
@@ -89,7 +93,7 @@ packer.startup(function(use)
 	use({ "rafamadriz/neon", as = "neon" })
 	use("Mofiqul/vscode.nvim")
 	use({ "ellisonleao/gruvbox.nvim" })
-  use({"simrat39/symbols-outline.nvim"})
+	use({ "simrat39/symbols-outline.nvim" })
 	use("feline-nvim/feline.nvim")
 	use({ "mrjones2014/legendary.nvim" })
 	use("famiu/bufdelete.nvim")
@@ -148,10 +152,10 @@ packer.startup(function(use)
 	use({ "ahmedkhalf/project.nvim" })
 	use({ "Shatur/neovim-session-manager" })
 
-  local userplugins = require"user.plugins"
-  for _, value in ipairs(userplugins) do
-    use({value})
-  end
+	local userplugins = require("user.plugins")
+	for _, value in ipairs(userplugins) do
+		use({ value })
+	end
 
 	if Packer_bootstrap then
 		print("running sync")

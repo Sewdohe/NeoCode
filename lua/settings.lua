@@ -49,6 +49,8 @@ vim.opt.shortmess:append "c"
 vim.g.mapleader = ','
 -- better session options
 vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+vim.o.breakindent = true;
+vim.o.completeopt = 'menuone,noselect'
 
 -- iterate through the options and set them
 for key, value in pairs(settings) do

@@ -213,9 +213,6 @@ pub mod funcs {
         config_dir.push("Local");
         config_dir.push("nvim");
 
-        // println!("data dir for windows: {}", data_dir.display());
-        // println!("config dir for windows: {}", config_dir.display());
-
         match fs::remove_dir(config_dir) {
             Ok(_) => println!("Deleted config folder symlink"),
             Err(_) => println!(

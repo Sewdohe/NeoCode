@@ -3,6 +3,9 @@ if not status_ok then
   return
 end
 
+-- Show LSP diagnostic on hovering the cursor
+vim.o.updatetime = 250
+vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 
 require "lsp.lsp-installer"
 require("lsp.handlers").setup()
