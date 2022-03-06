@@ -93,6 +93,9 @@ packer.startup(function(use)
 	use({ "rafamadriz/neon", as = "neon" })
 	use("Mofiqul/vscode.nvim")
 	use({ "ellisonleao/gruvbox.nvim" })
+  use 'frenzyexists/aquarium-vim'
+  use "rebelot/kanagawa.nvim"
+
 	use({ "simrat39/symbols-outline.nvim" })
 	use("feline-nvim/feline.nvim")
 	use({ "mrjones2014/legendary.nvim" })
@@ -152,13 +155,15 @@ packer.startup(function(use)
 	use({ "ahmedkhalf/project.nvim" })
 	use({ "Shatur/neovim-session-manager" })
 
-	local user_ok, user = pcall(require, "user")
+	local user_ok, user = pcall(require, "user.plugins")
 	if not user_ok then
 		print("No custom user config")
 	else
 		print("loading custom config...")
 		for _, value in ipairs(user) do
-			use({ value })
+			if value then
+				use({ value })
+		end
 		end
 	end
 

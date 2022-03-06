@@ -18,8 +18,11 @@ if not status_ok then
 	return
 end
 
+-- vim.cmd([[
+--     set guifont=CaskaydiaCove\ Nerd\ Font:h14
+-- ]])
 vim.cmd([[
-    set guifont=CaskaydiaCove\ Nerd\ Font:h14
+  set guifont=iMWritingMonoS\ NF:h14
 ]])
 
 vim.g.vscode_style = "dark"

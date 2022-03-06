@@ -61,4 +61,7 @@ todo_comments.setup()
 -- require"plugins.nvim-lines".register_lsp_virtual_lines()
 
 -- Load user custom configs here, lastly, to override configs from the repo
-require "user"
+local user_okay, user = pcall(require, "user")
+if not user_okay then
+	return
+end
