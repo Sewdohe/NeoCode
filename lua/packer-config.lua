@@ -62,6 +62,10 @@ packer.startup(function(use)
 	use({ "ray-x/lsp_signature.nvim" })
 	use({ "hrsh7th/cmp-nvim-lua" })
 	use({ "folke/lua-dev.nvim" })
+  use {
+    "SmiteshP/nvim-gps",
+    requires = "nvim-treesitter/nvim-treesitter"
+  }
 	use({
 		"folke/trouble.nvim",
 		requires = "kyazdani42/nvim-web-devicons",
@@ -91,11 +95,14 @@ packer.startup(function(use)
 	-- Theme / UI
 	-- -----------------
 	use({ "rafamadriz/neon", as = "neon" })
+  use("nekonako/xresources-nvim")
 	use("Mofiqul/vscode.nvim")
 	use({ "ellisonleao/gruvbox.nvim" })
   use 'frenzyexists/aquarium-vim'
   use "rebelot/kanagawa.nvim"
-
+  use "Shatur/neovim-ayu"
+  use {"folke/zen-mode.nvim"}
+  use {"folke/twilight.nvim"}
 	use({ "simrat39/symbols-outline.nvim" })
 	use("feline-nvim/feline.nvim")
 	use({ "mrjones2014/legendary.nvim" })
@@ -153,6 +160,7 @@ packer.startup(function(use)
 	})
 	use({ "windwp/nvim-autopairs" })
 	use({ "ahmedkhalf/project.nvim" })
+  use({"natecraddock/workspaces.nvim"})
 	use({ "Shatur/neovim-session-manager" })
 
 	local user_ok, user = pcall(require, "user.plugins")

@@ -45,6 +45,7 @@ local settings = {
   scrolloff = 8,                           -- is one of my fav
   sidescrolloff = 8,
 }
+
 vim.opt.shortmess:append "c"
 vim.g.mapleader = ','
 -- better session options
