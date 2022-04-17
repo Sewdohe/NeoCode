@@ -22,10 +22,11 @@ require("settings")
 require("keymap")
 require("packer-config")
 require("visual")
+require("plugins.transparent")
 require("lsp")
 require("plugins.cmp")
--- require("plugins.lualine")
-require("plugins.feline")
+ require("plugins.lualine")
+-- require("plugins.feline")
 require("plugins.nvim-tree")
 require("plugins.treesitter")
 require("plugins.bufferline")
@@ -55,11 +56,12 @@ if not nvim_comment_okay then
 end
 nvim_comment.setup()
 
-local todo_comments_okay, todo_comments = pcall(require, "todo-comments")
-if not todo_comments_okay then
-	return
-end
-todo_comments.setup()
+-- causing error on so %
+-- local todo_comments_okay, todo_comments = pcall(require, "todo-comments")
+-- if not todo_comments_okay then
+-- 	return
+-- end
+-- todo_comments.setup()
 
 -- This plugin is shifting the cursor and making it hard to autocomplete to be useful
 -- require"plugins.nvim-lines".register_lsp_virtual_lines()

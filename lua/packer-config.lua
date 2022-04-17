@@ -97,6 +97,8 @@ packer.startup(function(use)
 	use({ "rafamadriz/neon", as = "neon" })
   use("nekonako/xresources-nvim")
 	use("Mofiqul/vscode.nvim")
+  -- If you are using Packer
+  use 'marko-cerovac/material.nvim'
 	use({ "ellisonleao/gruvbox.nvim" })
   use 'frenzyexists/aquarium-vim'
   use "rebelot/kanagawa.nvim"
@@ -107,6 +109,7 @@ packer.startup(function(use)
 	use("feline-nvim/feline.nvim")
 	use({ "mrjones2014/legendary.nvim" })
 	use("famiu/bufdelete.nvim")
+  use("xiyaowong/nvim-transparent")
 	use({
 		"noib3/nvim-cokeline",
 		requires = "kyazdani42/nvim-web-devicons", -- If you want devicons

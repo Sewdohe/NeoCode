@@ -113,11 +113,6 @@ components.active[1][1] = {
   end,
   right_sep = {
     str = '',
-    hl = {
-      fg = 'green',
-      bg = 'bg',
-      style = 'bold'
-    },
   }
 }
 -- vi-symbol

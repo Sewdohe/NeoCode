@@ -47,6 +47,7 @@ local custom_mappings = {
 	{ "<c-s>", ":w<CR>", opts = { noremap = true, silent = false }, description = "Save file" },
 	{ "<c-s>", ":w<CR>", mode = "i", opts = { noremap = true, silent = false }, description = "Save file" },
   {"<leader><leader>z", ":ZenMode <CR>", opts = opts, description = "UI: Toggle Zen Mode"},
+  {"<leader><leader>t", ":TransparentToggle <CR>", opts = opts, description = "UI: Toggle Transparency"},
   -- LSP completion and diagnostics
   {"<leader><leader>t", ":TroubleToggle document_diagnostics<CR>", opts = opts, description = "lsp: View Diagnostics List"},
   {"<leader><leader>T", ":TroubleToggle workspace_diagnostics<CR>", opts = opts, description = "lsp: View Workspace Diagnostics List"},
