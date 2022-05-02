@@ -25,7 +25,10 @@ struct Args {
     deps: bool,
 
     #[clap(short, long)]
-    create_user: bool
+    create_user: bool,
+    
+    #[clap(short, long)]
+    gui: bool,
 }
 
 fn main() {
@@ -35,6 +38,7 @@ fn main() {
     let testing = args.testing;
     let deps = args.deps;
     let create_user = args.create_user;
+    let gui = args.gui;
 
     let starting_dir: PathBuf = match env::current_exe() {
         Ok(val) => val.parent().unwrap().to_path_buf(),
@@ -52,6 +56,9 @@ fn main() {
             if deps {
                 // install deps if the user so wishes
                 funcs::check_dependencies();
+                if gui {
+                    funcs::install_neovide();
+                }
             }
 
             if create_user {
@@ -62,7 +69,7 @@ fn main() {
             funcs::backup_old_config(config_folder_path.clone());
             // symlink the new config (this one)
             funcs::symlink_config(config_folder_path.clone(), starting_dir);
-            // headlessly run packer sync if the user wants it 
+            // headlessly run packer sync if the user wants it
             if install_packer {
                 funcs::run_packer_install();
             } else {

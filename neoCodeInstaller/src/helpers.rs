@@ -696,4 +696,14 @@ pub mod funcs {
             ),
         }
     }
+
+    #[cfg(target_os = "macos")]
+    pub fn install_neovide(){
+        std::process::Command::new("brew")
+            .arg("install")
+            .arg("brukberhane/homebrew-brew/neovide")
+            .arg("--cask")
+            .spawn()
+            .expect("Error: failed to install GUI");
+    }
 }
