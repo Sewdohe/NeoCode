@@ -25,7 +25,7 @@ struct Args {
     deps: bool,
 
     #[clap(short, long)]
-    create_user: bool
+    create_user: bool,
 }
 
 fn main() {
@@ -62,7 +62,7 @@ fn main() {
             funcs::backup_old_config(config_folder_path.clone());
             // symlink the new config (this one)
             funcs::symlink_config(config_folder_path.clone(), starting_dir);
-            // headlessly run packer sync if the user wants it 
+            // headlessly run packer sync if the user wants it
             if install_packer {
                 funcs::run_packer_install();
             } else {

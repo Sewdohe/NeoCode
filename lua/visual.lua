@@ -28,19 +28,21 @@ vim.cmd([[
   hi! NonText ctermbg=NONE guibg=NONE
 ]])
 
-vim.g.vscode_style = "dark"
+vim.g.vscode_style = "light"
 vim.g.vscode_italic_comment = 1
 -- Disable nvim-tree background color
 vim.g.vscode_disable_nvimtree_bg = true
-vim.o.background = "dark"
+vim.o.background = "light"
+-- TODO: we need a service to switch the background
+-- variable when the global light/dark scheme is changed.
 vim.opt.printheader = "Dari Wholesales"
 -- vim.cmd[[colorscheme ayu]]
 -- require('ayu').setup({
 --     mirage = true, -- Set to `true` to use `mirage` variant instead of `dark` for dark background.
 -- })
 -- [darker, lighter, oceanic, palenight, deep ocean]
-vim.g.material_style = "deep ocean"
-vim.cmd 'colorscheme material'
+vim.g.material_style = "darker"
+vim.cmd 'colorscheme ayu'
 vim.cmd([[
   highlight Comment cterm=italic gui=italic
   highlight Comment cterm=italic

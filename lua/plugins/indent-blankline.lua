@@ -19,3 +19,4 @@ indent_blankline.setup({
 	show_current_context_start = true,
 	filetype_exclude = { "NvimTree", "alpha", "Telescope", "Aerial", "aerial", "t", "ToggleTerm" },
 })
+

@@ -49,6 +49,7 @@ end
 
 packer.startup(function(use)
 	use({ "wbthomason/packer.nvim" })
+	use_rocks {"luasocket"}
 	-- LSP and code navigation
 	-- ------------------------------------
 	use({ "neovim/nvim-lspconfig" }) -- Collection of configurations for the built-in LSP client
@@ -61,6 +62,8 @@ packer.startup(function(use)
 	use({ "hrsh7th/nvim-cmp" })
 	use({ "ray-x/lsp_signature.nvim" })
 	use({ "hrsh7th/cmp-nvim-lua" })
+  use 'mfussenegger/nvim-dap'
+	use({ "sewdohe/nvim-adapt" })
 	use({ "folke/lua-dev.nvim" })
   use {
     "SmiteshP/nvim-gps",
@@ -106,7 +109,6 @@ packer.startup(function(use)
   use {"folke/zen-mode.nvim"}
   use {"folke/twilight.nvim"}
 	use({ "simrat39/symbols-outline.nvim" })
-	use("feline-nvim/feline.nvim")
 	use({ "mrjones2014/legendary.nvim" })
 	use("famiu/bufdelete.nvim")
   use("xiyaowong/nvim-transparent")
@@ -134,6 +136,7 @@ packer.startup(function(use)
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	})
+	use 'feline-nvim/feline.nvim'
 	use({
 		"goolord/alpha-nvim",
 		requires = { "kyazdani42/nvim-web-devicons" },
