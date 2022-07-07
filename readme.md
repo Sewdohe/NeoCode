@@ -16,7 +16,7 @@ Installer works for:
 
 ## Community
 
-This project is actually growing! I'm stoked!! Lets chat about it and discuss it's furlture:
+This project is actually growing! I'm stoked!! Lets chat about it and discuss it's future:
 https://discord.gg/9tZq3WrU4p
 
 
@@ -158,9 +158,11 @@ Use `[d` or `]d`.
 ### UI Navigation
 
 * **Popup Terminal:**
-`ctrl + \` will give you a floating terminal that you can run commands in
+`ctrl + \`` (the tilde key without shift) will give you a floating terminal that you can run commands in
 * **Switch Tabs:**
-`gt` and `gy` OR `shift+h` and `shift+y`
+`gt` and `gy` OR `shift+h` and `shift+l`
+* **Close Tabs:**
+* the close tab button has been removed, if using a mouse please use right-click to close an open tab
 * **Jump up or down by pages:**
 `shift+j` and `shift+k`
 * **Switch Windows:**
@@ -175,3 +177,5 @@ Use `[d` or `]d`.
 - [ ] Have the installer install NERD front automatically (cross platform)
 - [ ] (maybe) ship Neovide binary inside the installer to futher simplify the setup
 - [ ] Set list of default installed language servers and treesitter parsers
+- [ ] Improve documentation
+- [ ] Integrate more VS-code keybinds to make transition easier for newbies

@@ -9,11 +9,14 @@ local status_ok, toggleterm = pcall(require, "toggleterm.terminal")
 if not status_ok then
 	return
 end
-local lazygit = toggleterm.Terminal:new({ cmd = "lazygit", hidden = true, dir = "git_dir" })
 
-local function _lazygit_toggle()
+local lazygit = toggleterm.Terminal:new({ cmd = "lazygit", hidden = true})
+
+function _lazygit_toggle()
 	lazygit:toggle()
 end
+
+-- TODO: Add lazygit as a dep to install with installer
 
 local custom_mappings = {
 	{ "<C-b>", ":NvimTreeToggle<CR>", description = "Toggle file tree", opts = opts },
@@ -26,7 +29,7 @@ local custom_mappings = {
 	{ "J", "<C-f>", opts = opts, description = "Jump forward in document" },
 	{ "K", "<C-b>", opts = opts, description = "Jump backward in document" },
 	-- call lazygit with control g
-	{ "<C-g>", _lazygit_toggle, opts = opts, description = "Toggle LazyGit terminal" },
+	{ "<C-g>", "<cmd>lua _lazygit_toggle()<CR>", opts = opts, description = "Toggle LazyGit terminal" },
 	{ "gt", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Previous tab" },
 	{ "gy", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next tab" },
 	{ "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
