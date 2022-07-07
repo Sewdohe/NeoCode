@@ -560,23 +560,21 @@ pub mod funcs {
                 .arg("bucket")
                 .arg("add")
                 .arg("versions")
-                .arg("https://github.com/ScoopInstaller/Versions")
                 .spawn()
                 .expect("Error: failed to add versions bucket")
                 .wait()
                 .expect("Error: Something went wrong");
 
-            // // add extras bucket to get lazygit
-            // std::process::Command::new("powershell")
-            //     .env("PATH", scoop_path.as_os_str())
-            //     .arg("scoop")
-            //     .arg("bucket")
-            //     .arg("add")
-            //     .arg("extras")
-            //     .spawn()
-            //     .expect("Error: Failed to run scoop installer")
-            //     .wait()
-            //     .expect("Error: Something went wrong");
+            std::process::Command::new("powershell")
+            .env("PATH", scoop_path.as_os_str())
+            .arg("scoop")
+            .arg("bucket")
+            .arg("add")
+            .arg("extras")
+            .spawn()
+            .expect("Error: failed to add versions bucket")
+            .wait()
+            .expect("Error: Something went wrong");
             
             if !gcc_installed {
                 std::process::Command::new("powershell")
