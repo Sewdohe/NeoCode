@@ -19,24 +19,27 @@ end
 -- TODO: Add lazygit as a dep to install with installer
 
 local custom_mappings = {
-	{ "<C-b>", ":NvimTreeToggle<CR>", description = "Toggle file tree", opts = opts },
 	-- cutting and pasting lines
 	{ "<C-x>", "dd", mode = "n", description = "Cut Line", opts = opts },
 	{ "<C-v>", "p", opts = opts },
 	{ "<C-v>", "p", mode = "n", opts = opts },
 	{ "<C-k>", legendary.find, description = "Search key bindings" },
+
 	-- Document jumping since we re-bind file tree to C-b
 	{ "J", "<C-f>", opts = opts, description = "Jump forward in document" },
 	{ "K", "<C-b>", opts = opts, description = "Jump backward in document" },
+
 	-- call lazygit with control g
 	{ "<C-g>", "<cmd>lua _lazygit_toggle()<CR>", opts = opts, description = "Toggle LazyGit terminal" },
 	{ "gt", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Previous tab" },
 	{ "gy", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next tab" },
 	{ "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
 	{ "<C-o>", ":SymbolsOutline<CR>", opts = opts, description = "Browse Symbols" },
+
 	-- Commenting
 	{ "<leader><leader>c", ":CommentToggle<CR>", mode = "v", opts = opts, description = "Toggle Comment" },
 	{ "<leader><leader>c", ":CommentToggle<CR>", mode = "n", opts = opts, description = "Toggle Comment" },
+
 	-- folding
 	{ "<C-]", "za", mode = "n", opts = opts, description = "Fold Out" },
 	{ "<C-[", "zc", mode = "n", opts = opts, description = "Fold In" },
@@ -44,6 +47,7 @@ local custom_mappings = {
 	{ "gy", ":BufferLineCycleNext<CR>", opts = opts, description = "Next Tab" },
 	{ "H", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Next Tab (alternate)" },
 	{ "L", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next Tab (alternate)" },
+
 	-- ease of use
 	{ "qq", "<ESC>", mode = "i", opts = opts, description = "Exit insert mode / ESC key" },
 	{ "qb", ":Bdelete<CR>", opts = opts, description = "Close current buffer / tab" },
@@ -51,6 +55,9 @@ local custom_mappings = {
 	{ "<c-s>", ":w<CR>", mode = "i", opts = { noremap = true, silent = false }, description = "Save file" },
   {"<leader><leader>z", ":ZenMode <CR>", opts = opts, description = "UI: Toggle Zen Mode"},
   {"<leader><leader>t", ":TransparentToggle <CR>", opts = opts, description = "UI: Toggle Transparency"},
+	{ "<C-b>", ":NvimTreeToggle<CR>", description = "Toggle file tree", opts = opts },
+	{ "<leader><leader>h", ":Alpha<CR>", description = "Return to Home Screen", opts = opts },
+
   -- LSP completion and diagnostics
   {"<leader><leader>t", ":TroubleToggle document_diagnostics<CR>", opts = opts, description = "lsp: View Diagnostics List"},
   {"<leader><leader>T", ":TroubleToggle workspace_diagnostics<CR>", opts = opts, description = "lsp: View Workspace Diagnostics List"},
@@ -74,8 +81,8 @@ end
 
 local commands = {
 	-- You can also use legendar.nvim to create commands!
-	{ ":DoSomething", ':echo "something"', description = "Do something!" },
-	{ ":Reload", ":so ./init.lua", description = "Refresh Config" },
+	{ ":SaveAndRealoadFile", ':w | :so %', description = "Saves and re-sources the file into Neovim" },
+	{ ":ReloadNeoCode", ":so ./init.lua", description = "Refresh Config" },
 }
 
 local status_ok, user_commands = pcall(require, "user.commands")

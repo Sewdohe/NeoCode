@@ -94,6 +94,9 @@ telescope.setup {
       filetypes = { "png", "webp", "jpg", "jpeg" },
       find_cmd = "fzf", -- find command (defaults to `fd`)
     },
+    sessions_picker = {
+      sessions_dir = vim.fn.stdpath('data') ..'/session/',  -- same as '/home/user/.local/share/nvim/session'
+    },
     file_browser = {
       -- theme = "ivy",
       -- require("telescope.themes").get_dropdown {
@@ -117,3 +120,5 @@ telescope.setup {
     },
   },
 }
+
+require('telescope').load_extension('sessions_picker')

@@ -167,7 +167,8 @@ packer.startup(function(use)
 	use({ "windwp/nvim-autopairs" })
 	use({ "ahmedkhalf/project.nvim" })
   use({"natecraddock/workspaces.nvim"})
-	use({ "Shatur/neovim-session-manager" })
+	use({ "natecraddock/sessions.nvim" })
+  use({"JoseConseco/telescope_sessions_picker.nvim"})
 
 	local user_ok, user = pcall(require, "user.plugins")
 	if not user_ok then

@@ -121,15 +121,24 @@ pub mod funcs {
 
             // assert that the nvim directory isn't already a symlink
             let predicate_fn = predicate::path::is_symlink();
-            assert_eq!(
-                false,
-                predicate_fn.eval(config_path.as_path()),
-                "Looks like your nvim directory is already symlinked!"
-            );
+            // assert_eq!(
+            //     false,
+            //     predicate_fn.eval(config_path.as_path()),
+            //     "Looks like your nvim directory is already symlinked!"
+            // );
 
-            match symlink_dir("Neocode", config_path.as_path()) {
-                Ok(()) => println!("{}", "Symlink done ------------------- \n \n".blue().bold()),
-                Err(err) => println!("{} {}", "Error Symlink: {}".red().bold(), err),
+            // This basically says, IF config path is already a symlink...
+            match predicate_fn.eval(config_path.as_path())
+            {
+                true => {
+                    // then give the user an error
+                    println!("Neovim folder is already symlinked to somewhere...maybe try deleting that first?")
+                },
+                false => {
+                    // else, symlink the folder to the config
+                    println!("Neovim folder is not already a symlink, we gucci.")
+                },
+
             }
         } else if os == "linux" {
             println!(

@@ -34,7 +34,6 @@ require("lsp") -- Language server support.
 -- require("nvim-adapt")
 require("plugins.cmp") -- auto completion pluign for LSP
 -- require"plugins.lualine" -- OLD - we use cokeline now.
-require"plugins.cokeline" -- Bufferline that shows tabs for each open document
 require("plugins.nvim-tree") -- File tree for browsing open directory
 require("plugins.treesitter") -- Syntax highlighter. Instal new filetypes with :TSInstall
 -- require("plugins.bufferline") we just ditched bufferline for cokeline...
@@ -44,12 +43,13 @@ require("plugins.project") -- adds folders with .git folder or .project file as 
 require("plugins.session-manager") -- manages coding sessions. Similar to workspaces.
 require("plugins.toggleterm") -- toggable terminal for Neovim. Toggle with ctrl+` (key with ~ (tilde) on it)
 require("plugins.autopairs") -- auto close brackets/pairs
-require("plugins.indent-blankline") -- indentation guides
+-- require("plugins.indent-blankline") -- indentation guides
 require("plugins.dressing") -- Provides pop-up boxes and other GUI-like elements
 require("plugins.neorg") -- Org support in Neovim
 require("plugins.legendary") -- Shows a searchable list of key-binds, an ease of use plugin that lets you discover new binds.
 require("plugins.workspaces") -- allows creating "workspaces" to just right back into what you were doing
 require("neovide") -- loads settings that are just for the GUI wrapper, Neovide
+require("plugins.telescope")
 
 -- Here we load plugins which we don't configure
 local fidget_ok, fidget = pcall(require, "fidget")
@@ -73,3 +73,7 @@ local user_okay, user = pcall(require, "user")
 if not user_okay then
 	return
 end
+
+-- We require cokeline lastly, to ensure that the colors it gets is from the last set theme.
+-- If we load it before user config, the cokeline colors always match the default VS code theme.
+require"plugins.cokeline" -- Bufferline that shows tabs for each open document

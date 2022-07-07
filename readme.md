@@ -23,10 +23,9 @@ https://discord.gg/9tZq3WrU4p
 ## Dependencies:
 
 ### Windows:
-
 Simply use the `--deps` flag on the installer and it will automaticallt get all your dependencies for you! Still, if you prefer to do that sort of thing yourself, check below:
 
-Make sure to enable developer mode.
+Make sure to enable developer mode on Windows so the script can create the Symlink between the Config and your neovim folder.
 
 Scoop package manager:
 `iwr -useb get.scoop.sh | iex`
@@ -74,7 +73,9 @@ https://github.com/neovide/neovide
 
 clone this repo somewhere easy to access on your pc. For example, I use ~\Code.
 
-cd into the Neovide install directory, and simply run `./NeoCodeInstaller<yoursystem> --install-packer`
+cd into the Neovide install directory, and simply run `./NeoCodeInstaller<yoursystem> --deps --install-packer`
+
+you can also pass the `--create-user` flag to have the script generate a user folder for you
 
 If running Windows (other systems to come VERY soon) then also add the `--deps` flag to have the installer grab scoop package manager and download everything you need for this config.
 
