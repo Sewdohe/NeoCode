@@ -551,6 +551,45 @@ pub mod funcs {
         }
 
         if scoop_installed {
+            // a bit nasty and redundant...but adding code for buckets here as well since it
+            // appears bucket installs may fail on first install of scoop
+
+            //install scoop's git, we need it to use buckets
+            // the regular git doesn't seem to do the job
+            std::process::Command::new("powershell")
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("install")
+                .arg("git")
+                .spawn()
+                .expect("Error: Failed to install git")
+                .wait()
+                .expect("Error: Something went wrong");
+
+            // we need the versions bucket in order to install neovim
+            std::process::Command::new("powershell")
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("bucket")
+                .arg("add")
+                .arg("versions")
+                .spawn()
+                .expect("Error: Failed to run scoop installer")
+                .wait()
+                .expect("Error: Something went wrong");
+
+            // add extras bucket to get lazygit
+            std::process::Command::new("powershell")
+                .env("PATH", scoop_path.as_os_str())
+                .arg("scoop")
+                .arg("bucket")
+                .arg("add")
+                .arg("extras")
+                .spawn()
+                .expect("Error: Failed to run scoop installer")
+                .wait()
+                .expect("Error: Something went wrong");
+            
             if !gcc_installed {
                 std::process::Command::new("powershell")
                     .env("PATH", scoop_path.as_os_str())
