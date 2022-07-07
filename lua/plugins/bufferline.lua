@@ -21,10 +21,11 @@ bufferline.setup({
 		show_tab_indicators = true,
     show_buffer_close_icons = true,
     show_buffer_icons = true,
-		separator_style = "thick",
+    separator_style = { '', '' },
     diagnostics = "nvim_lsp",
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
-      return "("..count..")"
+      local icon = level:match("error") and " " or " "
+      return " " .. icon .. count
     end,
     -- NOTE: this will be called a lot so don't do any heavy processing here
     custom_filter = function(buf_number, buf_numbers)
@@ -46,6 +47,6 @@ bufferline.setup({
         return true
       end
     end,
-    always_show_bufferline = false
+    always_show_bufferline = false,
 	},
 })

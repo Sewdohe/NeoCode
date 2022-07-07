@@ -39,8 +39,8 @@ local custom_mappings = {
 	{ "<C-[", "zc", mode = "n", opts = opts, description = "Fold In" },
 	{ "gt", ":BufferLineCyclePrev<CR>", opts = opts, description = "Next Tab" },
 	{ "gy", ":BufferLineCycleNext<CR>", opts = opts, description = "Next Tab" },
-	{ "H", ":BufferLineCyclePrev<CR>", opts = opts, description = "Next Tab (alternate)" },
-	{ "L", ":BufferLineCycleNext<CR>", opts = opts, description = "Next Tab (alternate)" },
+	{ "H", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Next Tab (alternate)" },
+	{ "L", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next Tab (alternate)" },
 	-- ease of use
 	{ "qq", "<ESC>", mode = "i", opts = opts, description = "Exit insert mode / ESC key" },
 	{ "qb", ":Bdelete<CR>", opts = opts, description = "Close current buffer / tab" },

@@ -24,9 +24,9 @@ end
 local config = {
 	options = {
 		icons_enabled = true,
-		theme = "auto",
+		theme = "ayu",
 		component_separators = { left = "|", right = "|" },
-		section_separators = { left = "", right = "" },
+		-- section_separators = { left = "", right = "" },
 		disabled_filetypes = {},
 		always_divide_middle = true,
 	},
@@ -51,3 +51,5 @@ local config = {
 }
 
 lualine.setup(config)
+
+
