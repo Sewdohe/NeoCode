@@ -1,0 +1,4 @@
+neoCodeInstaller/target/
+plugin
+lua/usercustom/*.lua
+lua/user/
