@@ -89,7 +89,10 @@ packer.startup(function(use)
 
 	-- Syntax highlighter
 	-- ---------------------
-	use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+	use {
+        'nvim-treesitter/nvim-treesitter',
+        run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+    }
 	use({ "romgrk/nvim-treesitter-context" })
 	use({ "godlygeek/tabular" })
 	use({ "preservim/vim-markdown" })
@@ -106,7 +109,6 @@ packer.startup(function(use)
   use 'marko-cerovac/material.nvim'
 	use({ "ellisonleao/gruvbox.nvim" })
   use 'frenzyexists/aquarium-vim'
-  use "rebelot/kanagawa.nvim"
   use "Shatur/neovim-ayu"
   use {"folke/zen-mode.nvim"}
   use {"folke/twilight.nvim"}

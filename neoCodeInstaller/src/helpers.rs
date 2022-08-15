@@ -11,6 +11,10 @@ pub mod standard_helpers {
     use std::env;
     use std::fs;
     use std::io;
+    use std::io::stdin;
+    use std::io::stdout;
+    use std::io::Read;
+    use std::io::Write;
     use std::path::Path;
     use std::path::PathBuf;
 
@@ -19,6 +23,13 @@ pub mod standard_helpers {
 
     #[cfg(target_family = "unix")]
     use std::os::unix::fs::symlink as symlink_dir;
+
+    pub fn pause() {
+        let mut stdout = stdout();
+        stdout.write(b"Press Enter to continue...").unwrap();
+        stdout.flush().unwrap();
+        stdin().read(&mut [0]).unwrap();
+    }
 
     pub fn backup_old_config(config_path: PathBuf) {
         println!("{}", "\n \nSTEP 1: Backing up old config".blue().bold());

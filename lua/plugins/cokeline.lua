@@ -41,7 +41,12 @@ diagnostics = {
   truncation = { priority = 1 },
 }
 
-require("cokeline").setup(
+local user_okay, cokeline = pcall(require, "cokeline")
+if not user_okay then
+	return
+end
+
+cokeline.setup(
     {
         default_hl = {
             fg = function(buffer)

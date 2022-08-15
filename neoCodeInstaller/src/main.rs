@@ -68,13 +68,17 @@ fn main() {
             }
             // backup the old config (if there is one)
             standard_helpers::backup_old_config(config_folder_path.clone());
+            standard_helpers::pause();
             // symlink the new config (this one)
             standard_helpers::symlink_config(config_folder_path.clone(), starting_dir);
+            standard_helpers::pause();
             // headlessly run packer sync if the user wants it
             if install_packer {
                 OSFuncs::run_packer_install();
             } else {
                 println!("{}", "SKIPPING STEP 3: --install_packer flag wasn't passed. Automatic packer install skipped.".blue().bold());
+                println!("{}", "You'll have to run :PackerInstall to download plugins!!".red().bold());
+                standard_helpers::pause();
             }
         } else {
             standard_helpers::clone_config_repo();
