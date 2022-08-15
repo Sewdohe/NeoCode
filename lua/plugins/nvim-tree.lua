@@ -52,7 +52,7 @@ require("nvim-tree").setup { -- BEGIN_DEFAULT_OPTS
     renderer = {
       add_trailing = false,
       group_empty = false,
-      highlight_git = false,
+      highlight_git = true,
       full_name = false,
       highlight_opened_files = "none",
       root_folder_modifier = ":~",
@@ -128,7 +128,7 @@ require("nvim-tree").setup { -- BEGIN_DEFAULT_OPTS
       },
     },
     filters = {
-      dotfiles = false,
+      dotfiles = true,
       custom = {},
       exclude = {},
     },
@@ -138,7 +138,7 @@ require("nvim-tree").setup { -- BEGIN_DEFAULT_OPTS
     },
     git = {
       enable = true,
-      ignore = true,
+      ignore = false,
       timeout = 400,
     },
     actions = {
