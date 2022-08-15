@@ -31,19 +31,16 @@ require("packer-config") -- Configuation for package manager "Packer"
 require("visual") -- Visual settings for this Neovim insance
 require("plugins.transparent")
 require("lsp") -- Language server support.
--- require("nvim-adapt")
 require("plugins.cmp") -- auto completion pluign for LSP
 require"plugins.lualine" -- OLD - we use cokeline now.
 require("plugins.nvim-tree") -- File tree for browsing open directory
 require("plugins.treesitter") -- Syntax highlighter. Instal new filetypes with :TSInstall
--- require("plugins.bufferline") we just ditched bufferline for cokeline...
 require("plugins.twilight")
 require("plugins.alpha") -- Neovim start page with shortcuts
 require("plugins.project") -- adds folders with .git folder or .project file as a "project"
 require("plugins.session-manager") -- manages coding sessions. Similar to workspaces.
 require("plugins.toggleterm") -- toggable terminal for Neovim. Toggle with ctrl+` (key with ~ (tilde) on it)
 require("plugins.autopairs") -- auto close brackets/pairs
--- require("plugins.indent-blankline") -- indentation guides
 require("plugins.dressing") -- Provides pop-up boxes and other GUI-like elements
 require("plugins.neorg") -- Org support in Neovim
 require("plugins.legendary") -- Shows a searchable list of key-binds, an ease of use plugin that lets you discover new binds.
