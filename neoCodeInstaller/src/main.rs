@@ -8,10 +8,10 @@ use colored::*;
 pub use helpers::standard_helpers;
 
 #[cfg(target_os = "windows")]
-pub use helpers::funcsWindows as OSFuncs;
+pub use win::helpers_windows as OSFuncs;
 
 #[cfg(target_os = "linux")]
-pub use helpers::helpers_linux as OSFuncs;
+pub use linux::helpers_linux as OSFuncs;
 
 #[cfg(target_os = "macos")]
 pub use helpers::helpers_osx as OSFuncs;
