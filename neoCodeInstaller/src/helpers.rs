@@ -25,7 +25,7 @@ pub mod standard_helpers {
     use std::os::unix::fs::symlink as symlink_dir;
 
     pub fn pause() {
-        let mut stdout = stdout();
+       let mut stdout = stdout();
         stdout.write(b"Press Enter to continue...").unwrap();
         stdout.flush().unwrap();
         stdin().read(&mut [0]).unwrap();
@@ -65,12 +65,39 @@ pub mod standard_helpers {
         }
     }
 
+    #[cfg(target_os = "linux")]
     pub fn clone_config_repo() {
         let repo_url = "https://github.com/Sewdohe/NeoCode";
-        std::process::Command::new("sh")
-            .arg("git")
+        std::process::Command::new("git")
             .arg("clone")
             .arg(repo_url)
+            .arg("NeoCode")
+            .spawn()
+            .expect("Error: couldn't clone repo")
+            .wait()
+            .expect("Error: please try again");
+    }
+
+    #[cfg(target_os = "unix")]
+    pub fn clone_config_repo() {
+        let repo_url = "https://github.com/Sewdohe/NeoCode";
+        std::process::Command::new("git")
+            .arg("clone")
+            .arg(repo_url)
+            .arg("NeoCode")
+            .spawn()
+            .expect("Error: couldn't clone repo")
+            .wait()
+            .expect("Error: please try again");
+    }
+
+    #[cfg(target_os = "windows")]
+    pub fn clone_config_repo() {
+        let repo_url = "https://github.com/Sewdohe/NeoCode";
+        std::process::Command::new("git")
+            .arg("clone")
+            .arg(repo_url)
+            .arg("NeoCode")
             .spawn()
             .expect("Error: couldn't clone repo")
             .wait()
@@ -100,9 +127,7 @@ pub mod standard_helpers {
         }
     }
 
-    pub fn symlink_config(mut config_path: PathBuf, starting_dir: PathBuf) {
-        clone_config_repo();
-
+    pub fn symlink_config(mut config_path: PathBuf, starting_dir: &mut PathBuf) {
         println!(
             "{}",
             "STEP 2: Symlinking NeoCode config to config directory: "
@@ -121,10 +146,9 @@ pub mod standard_helpers {
                 err
             ),
         }
-        let dir: &Path = match starting_dir.parent() {
-            Some(val) => val,
-            None => Path::new(""),
-        };
+
+        let mut neocode_directory: PathBuf = starting_dir.to_path_buf();
+        neocode_directory.push("NeoCode");
 
         config_path.push("nvim");
 
@@ -138,11 +162,11 @@ pub mod standard_helpers {
 
             // assert that the nvim directory isn't already a symlink
             let predicate_fn = predicate::path::is_symlink();
-            // assert_eq!(
-            //     false,
-            //     predicate_fn.eval(config_path.as_path()),
-            //     "Looks like your nvim directory is already symlinked!"
-            // );
+            assert_eq!(
+                false,
+                predicate_fn.eval(config_path.as_path()),
+                "Looks like your nvim directory is already symlinked!"
+            );
 
             // This basically says, IF config path is already a symlink...
             match predicate_fn.eval(config_path.as_path()) {
@@ -157,8 +181,8 @@ pub mod standard_helpers {
             }
         } else if os == "linux" {
             println!(
-                "trying to [unix] symlink {} to {}",
-                dir.display(),
+                "trying to symlink {} to {}",
+                neocode_directory.display(),
                 config_path.display()
             );
 
@@ -170,14 +194,14 @@ pub mod standard_helpers {
                 "Looks like your nvim directory is already symlinked!"
             );
 
-            match symlink_dir(dir, config_path.as_path()) {
+            match symlink_dir(neocode_directory, config_path.as_path()) {
                 Ok(()) => println!("{}", "Symlink done ------------------- \n \n".red().bold()),
                 Err(err) => println!("Error Symlink: {}", err),
             }
         } else if os == "macos" {
             println!(
                 "trying to [macOS] symlink {} to {}",
-                dir.display(),
+                neocode_directory.display(),
                 config_path.display()
             );
 
@@ -189,8 +213,8 @@ pub mod standard_helpers {
                 "Looks like your nvim directory is already symlinked!"
             );
 
-            match symlink_dir(dir, config_path.as_path()) {
-                Ok(()) => println!("{}", "Symlink done ------------------- \n \n".red().bold()),
+            match symlink_dir(neocode_directory, config_path.as_path()) {
+                Ok(()) => println!("{}", "Symlink done ------------------- \n \n".blue().bold()),
                 Err(err) => println!("Error Symlink: {}", err),
             }
         }
@@ -369,7 +393,7 @@ pub mod helpers_linux {
 
         use crate::standard_helpers::check_for_binary;
         use core::panic;
-        let mut bin_path = PathBuf::from(r"/usr/local/bin/");
+        let _bin_path = PathBuf::from(r"/usr/local/bin/");
 
         let mut nvim_installed = check_for_binary("nvim");
         let mut fzf_installed = check_for_binary("fzf");
@@ -417,17 +441,159 @@ pub mod helpers_linux {
     }
 }
 
-pub mod helpers_windows {
-    use colored::*;
-    use predicates::prelude::*;
+pub mod helpers_osx {
+    use crate::standard_helpers::get_home_dir;
+    use colored::Colorize;
     use std::env;
     use std::fs;
-    use std::io;
-    use std::path::Path;
     use std::path::PathBuf;
 
+    #[cfg(target_family = "macos")]
+    pub fn uninstall() {
+        println!("{}", "Removing NeoCode configuration".blue().bold());
+        let mut data_dir: PathBuf = get_home_dir();
+        let mut config_dir = get_home_dir();
+
+        data_dir.push(".local");
+        data_dir.push("share");
+        data_dir.push("nvim");
+        data_dir.push("site");
+        data_dir.push("pack");
+        data_dir.push("packer");
+
+        config_dir.push(".config");
+
+        match env::set_current_dir(config_dir.as_path()) {
+            Ok(()) => println!("Changed dir to config: {}", config_dir.display()),
+            Err(err) => println!("Error: Couldn't change to config folder: {}", err),
+        }
+
+        match std::fs::remove_file("nvim") {
+            Ok(_) => println!("Deleted config folder symlink"),
+            Err(_err) => println!(
+                "{}",
+                "Err: No symlinked nvim config folder to remove"
+                    .red()
+                    .bold()
+            ),
+        }
+        match fs::remove_dir_all(data_dir) {
+            Ok(_) => println!("Deleted data folder"),
+            Err(_err) => println!("{}", "Err: No data dir to delete".red().bold()),
+        }
+    }
+
+    #[cfg(target_family = "macos")]
+    pub fn run_packer_install() {
+        println!(
+            "{}",
+            "STEP 3: running Neovim bootstrapping for unix"
+                .blue()
+                .bold()
+        );
+        std::process::Command::new("sh")
+            .arg("-c")
+            .arg("nvim")
+            .arg("--headless")
+            .arg("-c")
+            .arg("autocmd User PackerComplete quitall")
+            .arg("-c")
+            .arg("PackerSync")
+            .spawn()
+            .expect("Error: Failed to run editor")
+            .wait()
+            .expect("Error: Editor returned a non-zero status");
+    }
+
+    // Currently empty, allows compilation on macos.
+    #[cfg(target_os = "macos")]
+    pub fn check_dependencies() {
+        // NOTE: Check if macOS dependencies are installed
+
+        use core::panic;
+        // use std::process::Stdio;
+        // let mut bin_path = PathBuf::from(r"/usr/local/bin/");
+
+        let mut brew_installed = check_for_binary("brew");
+        let mut nvim_installed = check_for_binary("nvim");
+        let mut fzf_installed = check_for_binary("fzf");
+        let mut ripgrep_installed = check_for_binary("rg");
+        // TODO: lazygit
+        let mut lazygit_installed = check_for_binary("lazygit");
+
+        if !brew_installed {
+            std::process::Command::new("bash")
+                .arg("-c")
+                .arg("\"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"")
+                .spawn()
+                .expect("Error: failed to install Homebrew");
+            brew_installed = true;
+        }
+
+        if brew_installed {
+            if !nvim_installed {
+                //NOTE: Tap custom repo to get nightly builds
+                std::process::Command::new("brew")
+                    .arg("tap")
+                    .arg("brukberhane/homebrew-brew")
+                    .spawn()
+                    .expect("Error: failed to tap 'brukberhane/brew'");
+
+                std::process::Command::new("brew")
+                    .arg("install")
+                    .arg("neovim-nightly")
+                    .arg("--cask")
+                    .arg("--no-quarantine")
+                    .spawn()
+                    .expect("Error: failed to install neovim-nightly");
+                nvim_installed = true;
+            }
+
+            if !fzf_installed {
+                std::process::Command::new("brew")
+                    .arg("install")
+                    .arg("fzf")
+                    .spawn()
+                    .expect("Error: failed to install fzf");
+                fzf_installed = true;
+            }
+
+            if !ripgrep_installed {
+                std::process::Command::new("brew")
+                    .arg("install")
+                    .arg("ripgrep")
+                    .spawn()
+                    .expect("Error: failed to install ripgrep");
+                ripgrep_installed = true;
+            }
+        }
+
+        if brew_installed && nvim_installed && fzf_installed && ripgrep_installed {
+            println!("{}", "All deps are met! Time to configure...".blue());
+        } else {
+            panic!("All deps didn't install! ABORT!");
+        }
+    }
+}
+
+pub mod helpers_windows {
+    use colored::*;
+    use std::fs;
+    use std::path::PathBuf;
+    use crate::standard_helpers::*;
+
     #[cfg(target_os = "windows")]
-    use std::os::windows::fs::symlink_dir;
+    pub fn clone_config_repo() {
+        let repo_url = "https://github.com/Sewdohe/NeoCode";
+        std::process::Command::new("powershell")
+            .arg("git")
+            .arg("clone")
+            .arg(repo_url)
+            .spawn()
+            .expect("Error: couldn't clone repo")
+            .wait()
+            .expect("Error: please try again");
+    }
 
     #[cfg(target_os = "windows")]
     pub fn uninstall() {
@@ -489,7 +655,7 @@ pub mod helpers_windows {
     pub fn install_neovim() {
         use std::process::Stdio;
 
-        let mut scoop_path = standard_helpers::get_home_dir();
+        let mut scoop_path = crate::standard_helpers::get_home_dir();
         scoop_path.push("scoop");
         scoop_path.push("shims");
 
@@ -518,9 +684,9 @@ pub mod helpers_windows {
                     .underline(),
                 output_string.red()
             );
-            nvim_installed = false;
+            // nvim_installed = false;
         } else {
-            nvim_installed = true;
+            // nvim_installed = true;
         }
     }
 
@@ -529,6 +695,7 @@ pub mod helpers_windows {
     pub fn check_dependencies() {
         use core::panic;
         use std::process::Stdio;
+        
         let mut scoop_path = get_home_dir();
         scoop_path.push("scoop");
         scoop_path.push("shims");
@@ -544,50 +711,46 @@ pub mod helpers_windows {
         if !scoop_installed {
             // iwr -useb get.scoop.sh | iex
             std::process::Command::new("powershell")
-                .arg("iwr")
-                .arg("-useb")
-                .arg("get.scoop.sh")
-                .arg("| iex")
+                .args(["iwr", "-useb", "get.scoop.sh", "| iex"])
                 .spawn()
                 .expect("Error: Failed to run scoop installer")
                 .wait()
-                .expect("Error: Something went wrong");
+                .expect("Failed to run scoop install");
 
             //install scoop's git, we need it to use buckets
             // the regular git doesn't seem to do the job
             std::process::Command::new("powershell")
-                .env("PATH", scoop_path.as_os_str())
-                .arg("scoop")
-                .arg("install")
-                .arg("git")
+                .env("PATH", &scoop_path)
+                .args(["scoop", "install", "git"])
                 .spawn()
                 .expect("Error: Failed to install git")
                 .wait()
-                .expect("Error: Something went wrong");
+                .expect("Git install failed");
 
+            let mut git_path = scoop_path.clone();
+            git_path.push("apps");
+            git_path.push("git");
+            git_path.push("current");
+
+            println!("Attemping bucket addition...");
             // we need the versions bucket in order to install neovim
-            std::process::Command::new("powershell")
+            std::process::Command::new("scoop")
                 .env("PATH", scoop_path.as_os_str())
-                .arg("scoop")
-                .arg("bucket")
-                .arg("add")
-                .arg("versions")
+                .env("PATH", git_path)
+                .args(["bucket", "add", "versions"])
                 .spawn()
-                .expect("Error: Failed to run scoop installer")
+                .expect("Error: Failed to add versions bucket")
                 .wait()
-                .expect("Error: Something went wrong");
+                .expect("Version bucket failed");
 
             // add extras bucket to get lazygit
-            std::process::Command::new("powershell")
+            std::process::Command::new("scoop")
                 .env("PATH", scoop_path.as_os_str())
-                .arg("scoop")
-                .arg("bucket")
-                .arg("add")
-                .arg("extras")
+                .args(["bucket", "add", "extras"])
                 .spawn()
-                .expect("Error: Failed to run scoop installer")
+                .expect("Error: Failed to add extras bucket")
                 .wait()
-                .expect("Error: Something went wrong");
+                .expect("Extras bucket failed");
 
             println!("{}", "Scoop install completed successfully".blue());
             scoop_installed = true;
@@ -597,9 +760,8 @@ pub mod helpers_windows {
             // a bit nasty and redundant...but adding code for buckets here as well since it
             // appears bucket installs may fail on first install of scoop
             // we need the versions bucket in order to install neovim
-            std::process::Command::new("powershell")
+            std::process::Command::new("scoop")
                 .env("PATH", scoop_path.as_os_str())
-                .arg("scoop")
                 .arg("bucket")
                 .arg("add")
                 .arg("versions")
@@ -608,9 +770,8 @@ pub mod helpers_windows {
                 .wait()
                 .expect("Error: Something went wrong");
 
-            std::process::Command::new("powershell")
+            std::process::Command::new("scoop")
                 .env("PATH", scoop_path.as_os_str())
-                .arg("scoop")
                 .arg("bucket")
                 .arg("add")
                 .arg("extras")
@@ -735,139 +896,6 @@ pub mod helpers_windows {
             println!("{}", "All deps. are met! Time to configure...".blue());
         } else {
             panic!("All deps didn't install! ABORT!!");
-        }
-    }
-}
-
-pub mod helpers_osx {
-    use crate::standard_helpers::get_home_dir;
-    use colored::Colorize;
-    use std::env;
-    use std::fs;
-    use std::path::PathBuf;
-
-    #[cfg(target_family = "macos")]
-    pub fn uninstall() {
-        println!("{}", "Removing NeoCode configuration".blue().bold());
-        let mut data_dir: PathBuf = get_home_dir();
-        let mut config_dir = get_home_dir();
-
-        data_dir.push(".local");
-        data_dir.push("share");
-        data_dir.push("nvim");
-        data_dir.push("site");
-        data_dir.push("pack");
-        data_dir.push("packer");
-
-        config_dir.push(".config");
-
-        match env::set_current_dir(config_dir.as_path()) {
-            Ok(()) => println!("Changed dir to config: {}", config_dir.display()),
-            Err(err) => println!("Error: Couldn't change to config folder: {}", err),
-        }
-
-        match std::fs::remove_file("nvim") {
-            Ok(_) => println!("Deleted config folder symlink"),
-            Err(_err) => println!(
-                "{}",
-                "Err: No symlinked nvim config folder to remove"
-                    .red()
-                    .bold()
-            ),
-        }
-        match fs::remove_dir_all(data_dir) {
-            Ok(_) => println!("Deleted data folder"),
-            Err(_err) => println!("{}", "Err: No data dir to delete".red().bold()),
-        }
-    }
-
-    #[cfg(target_family = "macos")]
-    pub fn run_packer_install() {
-        println!(
-            "{}",
-            "STEP 3: running Neovim bootstrapping for unix"
-                .blue()
-                .bold()
-        );
-        std::process::Command::new("sh")
-            .arg("-c")
-            .arg("nvim")
-            .arg("--headless")
-            .arg("-c")
-            .arg("autocmd User PackerComplete quitall")
-            .arg("-c")
-            .arg("PackerSync")
-            .spawn()
-            .expect("Error: Failed to run editor")
-            .wait()
-            .expect("Error: Editor returned a non-zero status");
-    }
-
-    // Currently empty, allows compilation on macos.
-    #[cfg(target_os = "macos")]
-    pub fn check_dependencies() {
-        // NOTE: Check if macOS dependencies are installed
-
-        use core::panic;
-        // use std::process::Stdio;
-        // let mut bin_path = PathBuf::from(r"/usr/local/bin/");
-
-        let mut brew_installed = check_for_binary("brew");
-        let mut nvim_installed = check_for_binary("nvim");
-        let mut fzf_installed = check_for_binary("fzf");
-        let mut ripgrep_installed = check_for_binary("rg");
-
-        if !brew_installed {
-            std::process::Command::new("bash")
-                .arg("-c")
-                .arg("\"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"")
-                .spawn()
-                .expect("Error: failed to install Homebrew");
-            brew_installed = true;
-        }
-
-        if brew_installed {
-            if !nvim_installed {
-                //NOTE: Tap custom repo to get nightly builds
-                std::process::Command::new("brew")
-                    .arg("tap")
-                    .arg("brukberhane/homebrew-brew")
-                    .spawn()
-                    .expect("Error: failed to tap 'brukberhane/brew'");
-
-                std::process::Command::new("brew")
-                    .arg("install")
-                    .arg("neovim-nightly")
-                    .arg("--cask")
-                    .arg("--no-quarantine")
-                    .spawn()
-                    .expect("Error: failed to install neovim-nightly");
-                nvim_installed = true;
-            }
-
-            if !fzf_installed {
-                std::process::Command::new("brew")
-                    .arg("install")
-                    .arg("fzf")
-                    .spawn()
-                    .expect("Error: failed to install fzf");
-                fzf_installed = true;
-            }
-
-            if !ripgrep_installed {
-                std::process::Command::new("brew")
-                    .arg("install")
-                    .arg("ripgrep")
-                    .spawn()
-                    .expect("Error: failed to install ripgrep");
-                ripgrep_installed = true;
-            }
-        }
-
-        if brew_installed && nvim_installed && fzf_installed && ripgrep_installed {
-            println!("{}", "All deps are met! Time to configure...".blue());
-        } else {
-            panic!("All deps didn't install! ABORT!");
         }
     }
 }

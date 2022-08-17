@@ -4,6 +4,3 @@ vim.cmd([[
   let g:neovide_cursor_vfx_mode = "sonicboom"
   set guifont=MesloLGL\ Nerd\ Font:h14
 ]])
-
-
-vim.cmd 'colorscheme dracula'

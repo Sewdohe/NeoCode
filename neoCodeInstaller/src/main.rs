@@ -40,11 +40,10 @@ fn main() {
     let args = Args::parse();
     let uninstall = args.uninstall;
     let install_packer = args.install_packer;
-    let testing = args.testing;
     let deps = args.deps;
     let create_user = args.create_user;
 
-    let starting_dir: PathBuf = match env::current_exe() {
+    let mut starting_dir: PathBuf = match env::current_exe() {
         Ok(val) => val.parent().unwrap().to_path_buf(),
         Err(_err) => PathBuf::new(),
     };
@@ -54,34 +53,38 @@ fn main() {
         println!("Config uninstalled.");
         return;
     } else {
-        if !testing {
-            let config_folder_path = standard_helpers::determine_config_path();
+        let config_folder_path = standard_helpers::determine_config_path();
 
-            if deps {
-                // install deps if the user so wishes
-                OSFuncs::check_dependencies();
-            }
+        if deps {
+            // install deps if the user so wishes
+            OSFuncs::check_dependencies();
+        }
 
-            if create_user {
-                // if this flag is passed, create the custom user directory
-                standard_helpers::create_usercustom(starting_dir.clone());
-            }
-            // backup the old config (if there is one)
-            standard_helpers::backup_old_config(config_folder_path.clone());
-            standard_helpers::pause();
-            // symlink the new config (this one)
-            standard_helpers::symlink_config(config_folder_path.clone(), starting_dir);
-            standard_helpers::pause();
-            // headlessly run packer sync if the user wants it
-            if install_packer {
-                OSFuncs::run_packer_install();
-            } else {
-                println!("{}", "SKIPPING STEP 3: --install_packer flag wasn't passed. Automatic packer install skipped.".blue().bold());
-                println!("{}", "You'll have to run :PackerInstall to download plugins!!".red().bold());
-                standard_helpers::pause();
-            }
+        // go ahead and clone the config
+        standard_helpers::clone_config_repo();
+
+        if create_user {
+            // if this flag is passed, create the custom user directory
+            standard_helpers::create_usercustom(starting_dir.clone());
+        }
+        // backup the old config (if there is one)
+        standard_helpers::backup_old_config(config_folder_path.clone());
+        standard_helpers::pause();
+        // symlink the new config (this one)
+        standard_helpers::symlink_config(config_folder_path.clone(), &mut starting_dir);
+        standard_helpers::pause();
+        // headlessly run packer sync if the user wants it
+        if install_packer {
+            OSFuncs::run_packer_install();
         } else {
-            standard_helpers::clone_config_repo();
+            println!("{}", "SKIPPING STEP 3: --install_packer flag wasn't passed. Automatic packer install skipped.".blue().bold());
+            println!(
+                "{}",
+                "You'll have to run :PackerInstall to download plugins!!"
+                    .red()
+                    .bold()
+            );
+            standard_helpers::pause();
         }
     }
 }

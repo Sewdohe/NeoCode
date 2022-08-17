@@ -1,3 +1,8 @@
+local user_okay, cokeline = pcall(require, "cokeline")
+if not user_okay then
+	return
+end
+
 local is_picking_focus = require("cokeline/mappings").is_picking_focus
 local is_picking_close = require("cokeline/mappings").is_picking_close
 local get_hex = require("cokeline/utils").get_hex
@@ -41,10 +46,6 @@ diagnostics = {
   truncation = { priority = 1 },
 }
 
-local user_okay, cokeline = pcall(require, "cokeline")
-if not user_okay then
-	return
-end
 
 cokeline.setup(
     {
