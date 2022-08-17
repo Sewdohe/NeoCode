@@ -8,13 +8,19 @@ use colored::*;
 pub use helpers::standard_helpers;
 
 #[cfg(target_os = "windows")]
+pub mod win;
+#[cfg(target_os = "windows")]
 pub use win::helpers_windows as OSFuncs;
 
+#[cfg(target_os = "linux")]
+pub mod linux;
 #[cfg(target_os = "linux")]
 pub use linux::helpers_linux as OSFuncs;
 
 #[cfg(target_os = "macos")]
-pub use helpers::helpers_osx as OSFuncs;
+pub mod osx;
+#[cfg(target_os = "macos")]
+pub use osx::helpers_osx as OSFuncs;
 
 #[derive(Parser, Debug)]
 #[clap(author, version, about, long_about = None)]
