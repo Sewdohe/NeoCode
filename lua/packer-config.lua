@@ -41,7 +41,7 @@ end
 
 packer.startup(function(use)
     use({"wbthomason/packer.nvim"})
-    use_rocks {"luasocket"}
+    use_rocks {"luasocket", "luafilesystem", "luaposix"}
     -- LSP and code navigation
     -- ------------------------------------
     use({"neovim/nvim-lspconfig"}) -- Collection of configurations for the built-in LSP client

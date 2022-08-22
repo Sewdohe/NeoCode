@@ -83,7 +83,25 @@ local commands = {
 	-- You can also use legendar.nvim to create commands!
 	{ ":SaveAndRealoadFile", ':w | :so %', description = "Saves and re-sources the file into Neovim" },
 	{ ":ReloadNeoCode", ":so ./init.lua", description = "Refresh Config" },
+  { ":OpenWork", ":lua open_work()", description = "Open work folder to current day"}
 }
+
+open_work = function()
+  require "lfs"
+
+  vim.cmd([[
+    cd ~/Documents/Work Orders
+  ]])
+	
+  local today = os.date("%B %d")
+	local todays_dir = "~/Documents/Work Orders/" .. today
+	local current_dir = lfs.currentdir()
+	local is_dir = lfs.chdir(today) and true or false
+
+  if(not is_dir) then
+    lfs.mkdir('~/Documents/Work Orders/' .. today)
+  end
+end
 
 local status_ok, user_commands = pcall(require, "user.commands")
 if status_ok then

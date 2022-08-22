@@ -2,9 +2,7 @@ local status_ok, alpha = pcall(require, "alpha")
 if not status_ok then
   return
 end
-
 local icons = require "icons"
-
 local dashboard = require "alpha.themes.dashboard"
 dashboard.section.header.val = {
   [[                               __                ]],
@@ -24,6 +22,7 @@ dashboard.section.buttons.val = {
   ),
   dashboard.button("r", icons.ui.History .. " Recent files", ":Telescope oldfiles <CR>"),
   dashboard.button("t", icons.ui.List .. " Find text", ":Telescope live_grep <CR>"),
+  dashboard.button("o", icons.ui.List .. " Take an Order", ":OpenWork<CR>"),
   dashboard.button("s", icons.ui.SignIn .. " Find Session", ":Telescope sessions_picker<CR>"),
   dashboard.button("c", icons.ui.Gear .. " Config", ":e ~/.config/nvim/init.lua <CR>"),
   dashboard.button("q", icons.diagnostics.Error .. " Quit", ":qa<CR>"),
