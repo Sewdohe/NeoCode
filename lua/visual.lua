@@ -27,6 +27,10 @@ vim.cmd([[
   hi! Normal ctermbg=NONE guibg=NONE
   hi! NonText ctermbg=NONE guibg=NONE
 
+<<<<<<< HEAD
+=======
+  # Set the global statusbar
+>>>>>>> 26e20cc (added :OpenWork command for my job, and turned on global statusbar)
   set laststatus=3
   highlight WinSeparator guibg=None
 ]])
