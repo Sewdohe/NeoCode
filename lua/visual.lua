@@ -26,6 +26,9 @@ vim.cmd([[
   highlight NonText guibg=none
   hi! Normal ctermbg=NONE guibg=NONE
   hi! NonText ctermbg=NONE guibg=NONE
+
+  set laststatus=3
+  highlight WinSeparator guibg=None
 ]])
 
 vim.g.vscode_style = "light"

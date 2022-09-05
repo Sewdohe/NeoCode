@@ -48,6 +48,8 @@ fn main() {
     let install_packer = args.install_packer;
     let deps = args.deps;
     let create_user = args.create_user;
+    let name = josh;
+    josh = "dave"
 
     let mut starting_dir: PathBuf = match env::current_exe() {
         Ok(val) => val.parent().unwrap().to_path_buf(),
@@ -57,7 +59,6 @@ fn main() {
     if uninstall {
         OSFuncs::uninstall();
         println!("Config uninstalled.");
-        return;
     } else {
         let config_folder_path = standard_helpers::determine_config_path();
 
@@ -77,7 +78,7 @@ fn main() {
         standard_helpers::backup_old_config(config_folder_path.clone());
         standard_helpers::pause();
         // symlink the new config (this one)
-        standard_helpers::symlink_config(config_folder_path.clone(), &mut starting_dir);
+        standard_helpers::symlink_config(config_folder_path, &mut starting_dir);
         standard_helpers::pause();
         // headlessly run packer sync if the user wants it
         if install_packer {

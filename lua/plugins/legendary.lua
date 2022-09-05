@@ -95,7 +95,6 @@ open_work = function()
 	
   local today = os.date("%B %d")
 	local todays_dir = "~/Documents/Work Orders/" .. today
-	local current_dir = lfs.currentdir()
 	local is_dir = lfs.chdir(today) and true or false
 
   if(not is_dir) then
