@@ -41,6 +41,8 @@ end
 
 packer.startup(function(use)
     use({"wbthomason/packer.nvim"})
+    use("fladson/vim-kitty")
+    use("~/Code/neonight")
     use_rocks {"luasocket", "luafilesystem", "luaposix"}
     -- LSP and code navigation
     -- ------------------------------------
@@ -56,7 +58,7 @@ packer.startup(function(use)
     use({"hrsh7th/cmp-nvim-lua"})
     use 'mfussenegger/nvim-dap'
     use({"sewdohe/nvim-adapt"})
-    use({"folke/lua-dev.nvim"})
+    use({"folke/neodev.nvim"})
     use {
         "SmiteshP/nvim-navic",
         requires = "neovim/nvim-lspconfig"

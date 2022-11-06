@@ -27,20 +27,13 @@ vim.cmd([[
   hi! Normal ctermbg=NONE guibg=NONE
   hi! NonText ctermbg=NONE guibg=NONE
 
-<<<<<<< HEAD
-=======
-  # Set the global statusbar
->>>>>>> 26e20cc (added :OpenWork command for my job, and turned on global statusbar)
   set laststatus=3
   highlight WinSeparator guibg=None
 ]])
 
-vim.g.vscode_style = "light"
+vim.g.vscode_style = "dark"
 vim.g.vscode_italic_comment = 1
 vim.g.vscode_disable_nvimtree_bg = true
-vim.o.background = "dark"
-vim.opt.printheader = "Dari Wholesales"
-vim.g.material_style = "darker"
 
 local status_ok, vscode = pcall(require, "vscode")
 if not status_ok then

@@ -31,8 +31,6 @@ local custom_mappings = {
 
 	-- call lazygit with control g
 	{ "<C-g>", "<cmd>lua _lazygit_toggle()<CR>", opts = opts, description = "Toggle LazyGit terminal" },
-	{ "gt", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Previous tab" },
-	{ "gy", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next tab" },
 	{ "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
 	{ "<C-o>", ":SymbolsOutline<CR>", opts = opts, description = "Browse Symbols" },
 
@@ -43,8 +41,8 @@ local custom_mappings = {
 	-- folding
 	{ "<C-]", "za", mode = "n", opts = opts, description = "Fold Out" },
 	{ "<C-[", "zc", mode = "n", opts = opts, description = "Fold In" },
-	{ "gt", ":BufferLineCyclePrev<CR>", opts = opts, description = "Next Tab" },
-	{ "gy", ":BufferLineCycleNext<CR>", opts = opts, description = "Next Tab" },
+	{ "gt", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Next Tab" },
+	{ "gy", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next Tab" },
 	{ "H", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Next Tab (alternate)" },
 	{ "L", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next Tab (alternate)" },
 

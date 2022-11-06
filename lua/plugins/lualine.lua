@@ -24,7 +24,7 @@ end
 local config = {
 	options = {
 		icons_enabled = true,
-		theme = "dracula",
+		theme = "dracula-nvim",
 		component_separators = { left = "|", right = "|" },
 		-- section_separators = { left = "", right = "" },
 		disabled_filetypes = {},

@@ -8,7 +8,6 @@ bufferline.setup({
 	options = {
     mode="buffers",
     tab_size = 20,
-		indicator_icon = "▎",
 		buffer_close_icon = "",
 		modified_icon = "●",
 		close_icon = "",
@@ -21,7 +20,7 @@ bufferline.setup({
 		show_tab_indicators = true,
     show_buffer_close_icons = true,
     show_buffer_icons = true,
-    separator_style = { '', '' },
+    separator_style = 'slant',
     diagnostics = "nvim_lsp",
     diagnostics_indicator = function(count, level, diagnostics_dict, context)
       local icon = level:match("error") and " " or " "
@@ -47,6 +46,6 @@ bufferline.setup({
         return true
       end
     end,
-    always_show_bufferline = false,
+    always_show_bufferline = true,
 	},
 })
