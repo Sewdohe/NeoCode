@@ -3,33 +3,17 @@ if not status_ok then
 	return
 end
 
-local opts = { noremap = true, silent = true }
--- Use lazygit to handle github repos
-local status_ok, toggleterm = pcall(require, "toggleterm.terminal")
-if not status_ok then
-	return
-end
-
-local lazygit = toggleterm.Terminal:new({ cmd = "lazygit", hidden = true})
-
-function _lazygit_toggle()
-	lazygit:toggle()
-end
-
 -- we assign these based on where we are running Neovim
 local tabSwitchPrev
 local tabSwitchNext
-local fileTreeFocus
 
 if vim.g.vscode then
   tabSwitchPrev = { "H", ":Tabprev<CR>", opts = opts, description = "Prev Tab (alternate)" }
-  tabSwitchNext = { "L", ":Tabnext<CR>", opts = opts, description = "Next Tab (alternate)" }
-	fileTreeFocus = { "<C-b>", "<Cmd>call VSCodeNotify('workbench.explorer.fileView.focus')<CR>", description = "focus file tree", opts = opts }
+  tabSwitchNext = { "L", ":TabnexLt<CR>", opts = opts, description = "Next Tab (alternate)" }
 end
 if not vim.g.vscode then
 	tabSwitchPrev = { "H", "<Plug>(cokeline-focus-prev)<CR>", opts = opts, description = "Next Tab (alternate)" }
 	tabSwitchNext = { "L", "<Plug>(cokeline-focus-next)<CR>", opts = opts, description = "Next Tab (alternate)" }
-  fileTreeFocus = { "<C-b>", ":NvimTreeToggle<CR>", description = "Toggle file tree", opts = opts }
 end
 
 -- TODO: Add lazygit as a dep to install with installer
@@ -69,7 +53,7 @@ local custom_mappings = {
 	{ "<c-s>", ":w<CR>", mode = "i", opts = { noremap = true, silent = false }, description = "Save file" },
   {"<leader><leader>z", ":ZenMode <CR>", opts = opts, description = "UI: Toggle Zen Mode"},
   {"<leader><leader>t", ":TransparentToggle <CR>", opts = opts, description = "UI: Toggle Transparency"},
-	{ "<C-b>", "<Cmd>call VSCodeNotify('workbench.explorer.fileView.focus')<CR>", description = "Toggle file tree", opts = opts },
+	{ "<C-b>", ":NvimTreeToggle<CR>", description = "Toggle file tree", opts = opts },
 	{ "<leader><leader>h", ":Alpha<CR>", description = "Return to Home Screen", opts = opts },
 
   -- LSP completion and diagnostics
