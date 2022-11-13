@@ -114,7 +114,7 @@ packer.startup(function(use)
     use {"folke/zen-mode.nvim"}
     use {"folke/twilight.nvim"}
     use({"simrat39/symbols-outline.nvim"})
-    use({"mrjones2014/legendary.nvim"})
+    use({"mrjones2014/legendary.nvim", tag = 'v1.0.0'})
     use("famiu/bufdelete.nvim")
     use("xiyaowong/nvim-transparent")
     use({

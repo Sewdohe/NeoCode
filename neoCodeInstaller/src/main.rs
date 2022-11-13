@@ -48,8 +48,6 @@ fn main() {
     let install_packer = args.install_packer;
     let deps = args.deps;
     let create_user = args.create_user;
-    let name = josh;
-    josh = "dave"
 
     let mut starting_dir: PathBuf = match env::current_exe() {
         Ok(val) => val.parent().unwrap().to_path_buf(),
