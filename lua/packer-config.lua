@@ -41,6 +41,8 @@ end
 
 packer.startup(function(use)
     use({"wbthomason/packer.nvim"})
+    use({"nvim-lua/plenary.nvim"})
+
     use("fladson/vim-kitty")
     use("~/Code/neonight")
     use_rocks {"luasocket", "luafilesystem", "luaposix"}
@@ -163,7 +165,6 @@ packer.startup(function(use)
 
     -- Search tools
     -- --------------
-    use({"nvim-lua/plenary.nvim"})
     use({"junegunn/fzf"})
     use({"junegunn/fzf.vim"})
     use({

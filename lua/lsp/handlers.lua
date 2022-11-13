@@ -2,7 +2,7 @@ local M = {}
 -- local virtualtypes = require("virtualtypes")
 
 M.setup = function()
-	local icons = require("icons")
+	local status_ok, icons = pcall(require, "icons")
 	local signs = {
 
 		{ name = "DiagnosticSignError", text = icons.diagnostics.Error },
