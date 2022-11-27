@@ -80,10 +80,11 @@ local custom_mappings = {
   {"gr", "<cmd>lua vim.lsp.buf.refrences()<CR>", opts = opts, description = "lsp: goto refrences"},
   {"gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts = opts, description = "lsp: goto implementation"},
   {"<c-space>", "<cmd>lua vim.lsp.buf.hover()<CR>", opts = opts, description = "lsp: show hover window"},
-  {"<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts = opts, description = "lsp: perform code action"},
+  {"<leader><leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts = opts, description = "lsp: perform code action"},
   {"[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded"})<CR>', opts = opts, description = "lsp: goto prev diagnostic"},
   {"]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded"})<CR>', opts = opts, description = "lsp: goto next diagnostic"},
   {"<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts = opts, description = "lsp: set local list"},
+  {"<leader><leader>d", ":TroubleToggle<CR>", opts = opts, description = "Show Diagnostics sidebar"},
 }
 
 local status_ok, user_mappings = pcall(require, "user.keybinds")
@@ -94,7 +95,7 @@ if status_ok then
 end
 
 local commands = {
-	-- You can also use legendar.nvim to create commands!
+	-- You can also use legendary.nvim to create commands!
 	{ ":SaveAndRealoadFile", ':w | :so %', description = "Saves and re-sources the file into Neovim" },
 	{ ":ReloadNeoCode", ":so ./init.lua", description = "Refresh Config" },
   { ":OpenWork", ":lua open_work()", description = "Open work folder to current day"}

@@ -38,7 +38,7 @@ else
 
   -------------------- SYNTAX PLUGINS ------------------------------
   --=============================================================
-  require("plugins.syntax.treesitter") -- Syntax highlighter. Instal new filetypes with :TSInstall
+  require("plugins.syntax.treesitter") -- Syntax highlighter. Instal new filetypes with :TSInstall <filetype | all>
   require("plugins.editor.trouble")
 
 
