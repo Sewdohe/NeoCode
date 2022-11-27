@@ -158,8 +158,6 @@ packer.startup(function(use)
             opt = true
         }
     })
-    use({"windwp/windline.nvim"})
-    use 'feline-nvim/feline.nvim'
     use({
         "goolord/alpha-nvim",
         requires = {"kyazdani42/nvim-web-devicons"}
@@ -171,11 +169,6 @@ packer.startup(function(use)
     -- ---------------------
     use({"akinsho/toggleterm.nvim"})
 
-    -- Note Taking
-    use({
-        "nvim-neorg/neorg",
-        requires = "nvim-lua/plenary.nvim"
-    })
 
     -- Search tools
     -- --------------
