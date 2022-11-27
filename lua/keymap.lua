@@ -15,7 +15,6 @@ vim.api.nvim_set_keymap("n", "<leader><leader>b", ":Telescope buffers<CR>", opts
 vim.api.nvim_set_keymap("n", "<leader><leader>g", ":Telescope live_grep<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader><leader>w", ":Telescope workspaces<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader><leader>c", ":CommentToggle<CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader><leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 
 -- Stay in indent mode
 vim.api.nvim_set_keymap("v", "<", "<gv", opts)

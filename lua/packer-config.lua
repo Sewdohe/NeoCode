@@ -48,7 +48,11 @@ packer.startup(function(use)
     use_rocks {"luasocket", "luafilesystem", "luaposix"}
     -- LSP and code navigation
     -- ------------------------------------
-    use({"neovim/nvim-lspconfig"}) -- Collection of configurations for the built-in LSP client
+    use {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+    }
     use({"williamboman/nvim-lsp-installer"})
     use({"hrsh7th/cmp-nvim-lsp"})
     use({"hrsh7th/cmp-buffer"})
@@ -97,7 +101,17 @@ packer.startup(function(use)
     use({"godlygeek/tabular"})
     use({"preservim/vim-markdown"})
     use({"ellisonleao/glow.nvim"})
-
+    use({'MunifTanjim/prettier.nvim'})
+    use "lukas-reineke/lsp-format.nvim"
+    use"jose-elias-alvarez/typescript.nvim"
+    use 'simrat39/rust-tools.nvim'
+    use {
+        'kosayoda/nvim-lightbulb',
+        requires = 'antoinemadec/FixCursorHold.nvim',
+    }
+    use {
+      "ray-x/lsp_signature.nvim",
+    }
     -- Theme / UI
     -- -----------------
     use 'Mofiqul/dracula.nvim'

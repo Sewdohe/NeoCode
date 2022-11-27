@@ -18,7 +18,7 @@ if not status_ok then
 end
 
 vim.cmd([[
-  set printfont=CaskaydiaCove\ Nerd\ Font:h14
+  set printfont=CaskaydiaCove\ Nerd\ Font:h10
   highlight Comment cterm=italic gui=italic
   highlight Normal ctermbg=none
   highlight NonText ctermbg=none

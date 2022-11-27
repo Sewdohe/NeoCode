@@ -16,7 +16,7 @@ M.setup = function()
 	end
 
 	local config = {
-		virtual_text = true,
+		virtual_text = false,
 		signs = {
 			active = signs,
 		},
@@ -67,7 +67,7 @@ local function lsp_keymaps(bufnr)
 	vim.api.nvim_set_keymap("n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
 	vim.api.nvim_set_keymap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 	vim.api.nvim_set_keymap("n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-	vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
+	vim.api.nvim_set_keymap("n", "<leader><leader>f", "<cmd>vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })<CR>", opts)
 end
 
 local notify_status_ok, notify = pcall(require, "notify")
@@ -76,17 +76,19 @@ if not notify_status_ok then
 end
 
 M.on_attach = function(client, bufnr)
-	local virt_types_ok, virt_types = pcall(require, "virtualtypes")
-	if not virt_types_ok then
-		return
-	end
+	-- local virt_types_ok, virt_types = pcall(require, "virtualtypes")
+	-- if not virt_types_ok then
+	-- 	return
+	-- end
 	notify(client.name)
-	if client.name == "tsserver" or client.name == "html" then
-		client.resolved_capabilities.document_formatting = false
-	end
+	-- if client.name == "tsserver" or client.name == "html" then
+	-- 	client.resolved_capabilities.document_formatting = false
+	-- end
 	lsp_keymaps(bufnr)
 	lsp_highlight_document(client)
-	virt_types.on_attach()
+	-- virt_types.on_attach()
+  require("lsp-format").setup {}
+  require("lspconfig").gopls.setup { on_attach = require("lsp-format").on_attach }
 	-- Call the setup function to change the default behavior
 	require("aerial").setup({
 		backends = { "lsp", "treesitter", "markdown" },

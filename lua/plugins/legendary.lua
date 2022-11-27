@@ -61,6 +61,7 @@ local custom_mappings = {
 	{ "gy", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next Tab" },
   tabSwitchPrev,
   tabSwitchNext,
+  fileTreeFocus,
 
 	-- ease of use
 	{ "qq", "<ESC>", mode = "i", opts = opts, description = "Exit insert mode / ESC key" },
@@ -69,7 +70,6 @@ local custom_mappings = {
 	{ "<c-s>", ":w<CR>", mode = "i", opts = { noremap = true, silent = false }, description = "Save file" },
   {"<leader><leader>z", ":ZenMode <CR>", opts = opts, description = "UI: Toggle Zen Mode"},
   {"<leader><leader>t", ":TransparentToggle <CR>", opts = opts, description = "UI: Toggle Transparency"},
-	{ "<C-b>", "<Cmd>call VSCodeNotify('workbench.explorer.fileView.focus')<CR>", description = "Toggle file tree", opts = opts },
 	{ "<leader><leader>h", ":Alpha<CR>", description = "Return to Home Screen", opts = opts },
 
   -- LSP completion and diagnostics

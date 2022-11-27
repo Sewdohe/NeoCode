@@ -35,8 +35,7 @@ else
   require("visual") -- Visual settings for this Neovim insance
   require("plugins.transparent")
   require("lsp") -- Language server support.
-  require("plugins.cmp") -- auto completion pluign for LSP
-  -- require"plugins.lualine" -- OLD - we use cokeline now.
+  require"plugins.lualine" -- OLD - we use cokeline now.
   require("plugins.nvim-tree") -- File tree for browsing open directory
   require("plugins.treesitter") -- Syntax highlighter. Instal new filetypes with :TSInstall
   require("plugins.twilight")
@@ -68,9 +67,6 @@ end
 nvim_comment.setup()
 
 require("plugins.cokeline")
-
--- This plugin is shifting the cursor and making it hard to autocomplete to be useful
--- require"plugins.nvim-lines".register_lsp_virtual_lines()
 
 -- Load user custom configs here, lastly, to override configs from the repo
 local user_okay, user = pcall(require, "user")
