@@ -1,3 +1,5 @@
+-- mason is an improvement on lsp-installer
+-- it keeps the language servers seperate from your system
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
@@ -8,7 +10,6 @@ require("mason-lspconfig").setup({
     "eslint",
     "html",
     "marksman",
-    ""
   },
   automatic_installation = true
 })
@@ -25,9 +26,7 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
+  -- LSP signature gives a floating popup for function paramaters and stuff
   require "lsp_signature".on_attach({
     bind = true, -- This is mandatory, otherwise border config won't get registered.
     handler_opts = {
@@ -97,6 +96,9 @@ require('lspconfig')['sumneko_lua'].setup{
       diagnostics = {
         globals = { "vim" },
       },
+      -- library = { } tells the lua server where some external libs that neovim uses are.
+      -- It's VERY useful for hacking on Neovim
+      -- You'll get completion on vim. !
       workspace = {
         library = {
           [vim.fn.expand "$VIMRUNTIME/lua"] = true,

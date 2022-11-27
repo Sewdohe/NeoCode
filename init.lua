@@ -31,11 +31,15 @@ else
   require("settings") -- some base settings every Vim install should have
   require("keymap") -- loads some default keymaps that haven't been moved into legendary yet
   require("packer-config") -- Configuation for package manager "Packer"
-  require("plugins.bufferline") -- tabs vs code style
   require("visual") -- Visual settings for this Neovim insance
   require("plugins.transparent")
   require("lsp") -- Language server support.
-  require"plugins.lualine" -- OLD - we use cokeline now.
+
+  -- STATUS LINE
+  require"plugins.lualine"
+  -- BUFFER LINE
+  require"plugins.cokeline"
+
   require("plugins.nvim-tree") -- File tree for browsing open directory
   require("plugins.treesitter") -- Syntax highlighter. Instal new filetypes with :TSInstall
   require("plugins.twilight")
@@ -66,7 +70,7 @@ if not nvim_comment_okay then
 end
 nvim_comment.setup()
 
-require("plugins.cokeline")
+-- require("plugins.cokeline")
 
 -- Load user custom configs here, lastly, to override configs from the repo
 local user_okay, user = pcall(require, "user")

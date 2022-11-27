@@ -18,15 +18,17 @@ local function lsp_server_name()
 	end
 	return msg
 end
+-- icon = ' LSP:',ra
+-- color = { fg = '#ffffff', gui = 'bold' },
 
 local config = {
 	options = {
 		icons_enabled = true,
 		theme = "dracula-nvim",
-		component_separators = { left = " ", right = " " },
+		component_separators = { left = "|", right = "|" },
 		-- section_separators = { left = "", right = "" },
 		disabled_filetypes = {},
-		always_divide_middle = false,
+		always_divide_middle = true,
 	},
 	sections = {
 		lualine_a = { "mode" },
@@ -49,5 +51,4 @@ local config = {
 }
 
 lualine.setup(config)
-
 

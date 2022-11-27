@@ -44,7 +44,6 @@ packer.startup(function(use)
     use({"nvim-lua/plenary.nvim"})
 
     use("fladson/vim-kitty")
-    use("~/Code/neonight")
     use_rocks {"luasocket", "luafilesystem", "luaposix"}
     -- LSP and code navigation
     -- ------------------------------------
@@ -159,6 +158,7 @@ packer.startup(function(use)
             opt = true
         }
     })
+    use({"windwp/windline.nvim"})
     use 'feline-nvim/feline.nvim'
     use({
         "goolord/alpha-nvim",
