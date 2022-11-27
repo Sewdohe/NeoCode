@@ -28,32 +28,44 @@ if vim.g.vscode then
   require("keymap") -- loads some default keymaps that haven't been moved into legendary yet
   require("plugins.legendary") -- Shows a searchable list of key-binds, an ease of use plugin that lets you discover new binds.
 else
+  -------------------- CORE SETTINGS ------------------------------
+  --=============================================================
+  require("packer-config") -- Configuation for package manager "Packer"
   require("settings") -- some base settings every Vim install should have
   require("keymap") -- loads some default keymaps that haven't been moved into legendary yet
-  require("packer-config") -- Configuation for package manager "Packer"
   require("visual") -- Visual settings for this Neovim insance
-  require("plugins.transparent")
   require("lsp") -- Language server support.
 
-  -- STATUS LINE
-  require"plugins.lualine"
-  -- BUFFER LINE
-  require"plugins.cokeline"
+  -------------------- SYNTAX PLUGINS ------------------------------
+  --=============================================================
+  require("plugins.syntax.treesitter") -- Syntax highlighter. Instal new filetypes with :TSInstall
+  require("plugins.editor.trouble")
 
-  require("plugins.nvim-tree") -- File tree for browsing open directory
-  require("plugins.treesitter") -- Syntax highlighter. Instal new filetypes with :TSInstall
-  require("plugins.twilight")
-  require("plugins.alpha") -- Neovim start page with shortcuts
-  require("plugins.project") -- adds folders with .git folder or .project file as a "project"
-  require("plugins.session-manager") -- manages coding sessions. Similar to workspaces.
-  require("plugins.toggleterm") -- toggable terminal for Neovim. Toggle with ctrl+` (key with ~ (tilde) on it)
-  require("plugins.autopairs") -- auto close brackets/pairs
-  require("plugins.dressing") -- Provides pop-up boxes and other GUI-like elements
-  require("plugins.neorg") -- Org support in Neovim
-  require("plugins.legendary") -- Shows a searchable list of key-binds, an ease of use plugin that lets you discover new binds.
-  require("plugins.workspaces") -- allows creating "workspaces" to just right back into what you were doing
+
+  --------------------- EDITOR PLUGINS ------------------------------
+  --=============================================================
+  require("plugins.editor.autopairs") -- ....it auto-pairs things
+  require("plugins.editor.project") -- adds folders with .git folder or .project file as a "project"
+  require("plugins.editor.toggleterm") -- toggable terminal for Neovim. Toggle with ctrl+` (key with ~ (tilde) on it)
+  require("plugins.editor.symbol-outline") -- shows file overview in a sidebar
+  require("plugins.editor.session-manager") -- manages coding sessions. Similar to workspaces.
+  require("plugins.editor.workspaces") -- allows creating "workspaces" to just right back into what you were doing
+  require("plugins.editor.trouble") -- Diagnostics on crack
+
+
+  --------------------- UI PLUGINS ------------------------------
+  --=============================================================
+  require("plugins.ui.nvim-tree") -- File tree for browsing open directory
+  require("plugins.ui.twilight")
+  require("plugins.ui.alpha") -- Neovim start page with shortcuts
+  require("plugins.ui.lualine") -- Neovim status line (bottom bar)
+  require("plugins.ui.cokeline")  -- Neovim buffer bar (top bar) - like a tab bar in VS code
+  require("plugins.ui.legendary") -- Shows a searchable list of key-binds, an ease of use plugin that lets you discover new binds.
+  require("plugins.ui.zenmode") -- focus on your code
+  require("plugins.ui.telescope") -- awesome UI-like universal thing-picker
+  require("plugins.ui.dressing") -- Provides pop-up boxes and other GUI-like elements
+
   require("neovide") -- loads settings that are just for the GUI wrapper, Neovide
-  require("plugins.telescope")
 end
 
 -- Here we load plugins which we don't configure
@@ -70,7 +82,6 @@ if not nvim_comment_okay then
 end
 nvim_comment.setup()
 
--- require("plugins.cokeline")
 
 -- Load user custom configs here, lastly, to override configs from the repo
 local user_okay, user = pcall(require, "user")
