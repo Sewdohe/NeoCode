@@ -2,14 +2,18 @@
 if vim.g.neovide then
   vim.cmd([[
     hi Normal guibg=NONE ctermbg=NONE
-    set guifont=CaskaydiaCove\ Nerd\ Font:h10
+    set guifont=MesloLGS\ NF:h8
   ]])
-  vim.g.neovide_refresh_rate=144
-  vim.g.neovide_remember_window_size = true
-  -- UNCOMMENT if you want transparent BG
-  -- your theme must also have a transparent BG for this to work
-
-  -- vim.g.neovide_transparency = 0.0
-  -- vim.g.transparency = 0.8
-
 end
+
+
+vim.g.neovide_refresh_rate=144
+vim.g.neovide_remember_window_size = false
+-- vim.g.neovide_transparency = 0.0
+-- vim.g.transparency = 0.8
+
+
+-- vim.cmd("colorscheme kanagawa")
+-- vim.cmd[[colorscheme dracula]]
+require('ayu').setup({})
+-- require('moonlight').set()

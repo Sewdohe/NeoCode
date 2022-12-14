@@ -90,6 +90,7 @@ require("cokeline").setup(
                 delete_buffer_on_left_click = true,
                 truncation = { priority = 1 },
             },
+            space,
             -- diagnostics
             {
               text = function(buffer)

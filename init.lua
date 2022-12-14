@@ -35,7 +35,7 @@ else
   require("keymap") -- loads some default keymaps that haven't been moved into legendary yet
   require("visual") -- Visual settings for this Neovim insance
   require("lsp") -- Language server support.
-
+  require("autocommands")
   -------------------- SYNTAX PLUGINS ------------------------------
   --=============================================================
   require("plugins.syntax.treesitter") -- Syntax highlighter. Instal new filetypes with :TSInstall <filetype | all>
@@ -58,13 +58,12 @@ else
   require("plugins.ui.nvim-tree") -- File tree for browsing open directory
   require("plugins.ui.twilight")
   require("plugins.ui.alpha") -- Neovim start page with shortcuts
-  require("plugins.ui.lualine") -- Neovim status line (bottom bar)
   require("plugins.ui.cokeline")  -- Neovim buffer bar (top bar) - like a tab bar in VS code
   require("plugins.ui.legendary") -- Shows a searchable list of key-binds, an ease of use plugin that lets you discover new binds.
   require("plugins.ui.zenmode") -- focus on your code
   require("plugins.ui.telescope") -- awesome UI-like universal thing-picker
   require("plugins.ui.dressing") -- Provides pop-up boxes and other GUI-like elements
-
+  -- require("plugins.ui.indents") -- Highlights indendation level
   require("neovide") -- loads settings that are just for the GUI wrapper, Neovide
 end
 
@@ -82,9 +81,22 @@ if not nvim_comment_okay then
 end
 nvim_comment.setup()
 
+vim.g.closetag_filenames = '*.html,*.xhtml,*.phtml,*.tsx, *.jsx'
+vim.cmd[[
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ 'typescriptreact': 'jsxRegion,tsxRegion',
+    \ 'javascriptreact': 'jsxRegion',
+    \ }
+]]
+
 
 -- Load user custom configs here, lastly, to override configs from the repo
 local user_okay, user = pcall(require, "user")
 if not user_okay then
 	return
 end
+
+-- req. lualine last, after user theme has loaded
+require("plugins.ui.lualine") -- Neovim status line (bottom bar)

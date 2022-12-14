@@ -25,7 +25,7 @@ local config = {
 	options = {
 		icons_enabled = true,
 		theme = "dracula-nvim",
-		component_separators = { left = "|", right = "|" },
+		component_separators = { left = " ", right = " " },
 		-- section_separators = { left = "", right = "" },
 		disabled_filetypes = {},
 		always_divide_middle = true,
@@ -34,8 +34,8 @@ local config = {
 		lualine_a = { "mode" },
 		lualine_b = { "branch", "diff", "diagnostics" },
 		lualine_c = { { lsp_server_name, icons_enabled = true, icon = " LSP:" }, "filename" },
-		lualine_x = { "encoding", "fileformat", "filetype" },
-		lualine_y = { "progress" },
+		lualine_x = { "filetype" },
+		lualine_y = { },
 		lualine_z = { "location" },
 	},
 	inactive_sections = {

@@ -19,3 +19,20 @@ vim.cmd [[
 
   autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}
 ]]
+
+vim.api.nvim_create_autocmd({
+  "BufWinEnter",
+  "BufWritePost",
+  "CursorMoved",
+  "InsertLeave",
+  "TextChanged",
+  "TextChangedI",
+  -- add more events here
+}, {
+  group = vim.api.nvim_create_augroup("barbecue", {}),
+  callback = function()
+    require("barbecue.ui").update()
+
+    -- maybe a bit more logic here
+  end,
+})
