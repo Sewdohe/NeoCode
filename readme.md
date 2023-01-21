@@ -7,7 +7,9 @@ There are many, many good Vim configs out there...many in which are better than 
 
 The config was made to be a simple as possible. I think any setting you could need to change would be found right where you expect it to be.
 
-![show-off](showoff.gif) / ! [](showoff.gif)
+![show-off](showoff.gif) [](showoff.gif)
+Neocode with it's new Catppuccin look running in Neovide using the multigrid flag for
+fancy animations
 
 Installer works for:
   - (most) linux distros
@@ -131,7 +133,9 @@ This project is literally brand new, and I am working on it alone. Some things m
 
 ## Commonly Used Keybinds:
 
-### VS Code Alternaitve Features:
+> <leader> key refers to the comma ( , ) key on your keyboard!
+
+### VS Code Features:
 
 * **Command Pallete:**
 I can't use crtl+shift+p as keybind in vim, so the command pallette is used with `crtl+k`
@@ -174,6 +178,8 @@ key for memoralibilitys sake
 
 ### UI Navigation
 
+* **Return to Dashboard**
+`<leader><leader>h`
 * **Popup Terminal:**
 `ctrl + ~` (the tilde key without shift) will give you a floating terminal that you can run commands in
 * **Switch Tabs:**
