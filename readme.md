@@ -153,13 +153,29 @@ Use `<leader><leader>b` to search and quickly open an already open buffer.
 Use `<leader><leader>f` to auto-format a document using the language server.
 * **move to next / prev diagnostic**: 
 Use `[d` or `]d`.
+
+### LSP Commands
+
+Most lsp command (command pertaining to the language server) are prefixed with the space key instead of the leader
+key for memoralibilitys sake
+
 * **Rename Symbol:**
-`F2`
+`F2` or `space-rn`
+* **Format Buffer/Document**
+`space-f`
+* **Perform Code Action**
+`space-ca`
+* **Goto Definition**
+`space-d`
+* **Goto Declaration**
+`space-D`
+* **Signature Help**
+`ctrl-i`
 
 ### UI Navigation
 
 * **Popup Terminal:**
-`ctrl + \`` (the tilde key without shift) will give you a floating terminal that you can run commands in
+`ctrl + ~` (the tilde key without shift) will give you a floating terminal that you can run commands in
 * **Switch Tabs:**
 `gt` and `gy` OR `shift+h` and `shift+l`
 * **Close Tabs:**
@@ -173,10 +189,24 @@ Use `[d` or `]d`.
 * **Quick-exit Insert Mode:**
 `qq`
 
+### VS Code Support
+This configuration now supports being ran inside VS Code itself via the "Neovim VS Code Plugin".
+
+When using the configuation inside VS Code it just uses keybinds, legendary, and settings.lua. Still makes for
+a pretty seamless experience when compared with VS Code native features IMO. More VS Code keybinds to come soon!
+
+Due to limitations of running Neovim inside VS Code, we can't have fuzzy finders and whatnot render, so you'll need
+to use the VS Code counterparts (such a ctrl+p and strl+shift+p)
+
+
+### Coming Soon: GUI Installer
+I'm working on ditching the CLI installer I've built currently in favor of a Tauri-powered web GUI to install Neocode
+& it's deps as easy as possible. More info and preview to come shortly! 
+
 ## TODO:
-- [x] Set Neovide multigrid env var in installer script
+- [ ] Set Neovide multigrid env var in installer script
 - [ ] Have the installer install NERD front automatically (cross platform)
 - [ ] (maybe) ship Neovide binary inside the installer to futher simplify the setup
-- [ ] Set list of default installed language servers and treesitter parsers
+- [X] Set list of default installed language servers and treesitter parsers
 - [ ] Improve documentation
-- [ ] Integrate more VS-code keybinds to make transition easier for newbies
+- [X] Integrate more VS-code keybinds to make transition easier for newbies
