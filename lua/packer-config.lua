@@ -111,7 +111,6 @@ packer.startup(function(use)
   use({ "preservim/vim-markdown" })
   use({ "ellisonleao/glow.nvim" })
   use({ 'MunifTanjim/prettier.nvim' })
-  use "lukas-reineke/lsp-format.nvim"
   use "jose-elias-alvarez/typescript.nvim"
   use 'simrat39/rust-tools.nvim'
   use({
@@ -134,14 +133,14 @@ packer.startup(function(use)
   -- -----------------
   -- If you are using Packer
   use 'shaunsingh/moonlight.nvim'
+  use 'feline-nvim/feline.nvim'
+  use 'kdheepak/tabline.nvim'
+  use 'glepnir/dashboard-nvim'
   use {
     'lewis6991/gitsigns.nvim',
     config = function()
       require('gitsigns').setup()
     end
-  }
-  use {
-    "SmiteshP/nvim-navic",
   }
   use {
     "utilyre/barbecue.nvim",
@@ -153,6 +152,14 @@ packer.startup(function(use)
       require("barbecue").setup()
     end,
   }
+  use({
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    module = "persistence",
+    config = function()
+      require("persistence").setup()
+    end,
+  })
   use 'Mofiqul/dracula.nvim'
   use({
     "rafamadriz/neon",

@@ -8,7 +8,7 @@ ___      ___ ___  ________  ___  ___  ________  ___ |
     \|__|/       \|__|\_________\|_______|\|__|\|__|\|_______|
                      \|_________|
 --]]
-local colorscheme = "vscode"
+local colorscheme = "catppuccin"
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
@@ -19,10 +19,9 @@ end
 
 vim.cmd([[
   highlight Comment cterm=italic gui=italic
+  
   highlight Normal ctermbg=none
   highlight NonText ctermbg=none
-  highlight Normal guibg=none
-  highlight NonText guibg=none
 
   highlight WinSeparator guibg=None
 ]])
@@ -65,3 +64,48 @@ vscode.setup({
   -- Disable nvim-tree background color
   disable_nvimtree_bg = true,
 })
+
+require("catppuccin").setup({
+    flavour = "mocha", -- latte, frappe, macchiato, mocha
+    background = { -- :h background
+        light = "latte",
+        dark = "mocha",
+    },
+    transparent_background = false,
+    term_colors = true,
+    dim_inactive = {
+        enabled = false,
+        shade = "dark",
+        percentage = 0.15,
+    },
+    no_italic = false, -- Force no italic
+    no_bold = false, -- Force no bold
+    styles = {
+        comments = { "italic" },
+        conditionals = { "italic" },
+        loops = {},
+        functions = {},
+        keywords = {},
+        strings = {},
+        variables = {},
+        numbers = {},
+        booleans = {},
+        properties = {},
+        types = {},
+        operators = {},
+    },
+    color_overrides = {},
+    custom_highlights = {},
+    integrations = {
+        cmp = true,
+        gitsigns = true,
+        nvimtree = true,
+        telescope = true,
+        notify = true,
+        mini = false,
+        -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+    },
+})
+
+-- vim.cmd[[colorscheme dracula]]
+vim.cmd.colorscheme "catppuccin"

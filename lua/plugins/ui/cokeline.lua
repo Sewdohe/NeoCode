@@ -4,6 +4,36 @@ local get_hex = require("cokeline/utils").get_hex
 
 local colors = require('dracula').colors()
 
+
+local catppccn_colors = {
+  base = "#1E1E2E",
+  blue = "#89B4FA",
+  crust = "#11111B",
+  flamingo = "#F2CDCD",
+  green = "#A6E3A1",
+  lavender = "#B4BEFE",
+  mantle = "#181825",
+  maroon = "#EBA0AC",
+  mauve = "#CBA6F7",
+  overlay0 = "#6C7086",
+  overlay1 = "#7F849C",
+  overlay2 = "#9399B2",
+  peach = "#FAB387",
+  pink = "#F5C2E7",
+  red = "#F38BA8",
+  rosewater = "#F5E0DC",
+  sapphire = "#74C7EC",
+  sky = "#89DCEB",
+  subtext0 = "#A6ADC8",
+  subtext1 = "#BAC2DE",
+  surface0 = "#313244",
+  surface1 = "#45475A",
+  surface2 = "#585B70",
+  teal = "#94E2D5",
+  text = "#CDD6F4",
+  yellow = "#F9E2AF"
+}
+
 local red = colors.red
 local yellow = colors.yellow
 local space = {text = " "}
@@ -11,7 +41,10 @@ local dark = colors.bg
 local text = colors.fg
 local grey = colors.gutter_fg
 local light = colors.comment
-local high = colors.purple
+local high = catppccn_colors.blue
+
+
+-- separator_style = { "", "" },
 
 require("cokeline").setup(
     {
@@ -32,18 +65,20 @@ require("cokeline").setup(
         components = {
             {
                 text = function(buffer)
-                    if buffer.index ~= 1 then
-                        return ""
-                    end
-                    return ""
+                  return " "
                 end,
                 bg = function(buffer)
                     if buffer.is_focused then
-                        return high
+                        return catppccn_colors.base
                     end
-                    return grey
+                    return catppccn_colors.base
                 end,
-                fg = dark
+                fg = function(buffer)
+                      if buffer.is_focused then
+                        return high
+                      end
+                        return grey
+                      end
             },
             space,
             {
@@ -82,10 +117,10 @@ require("cokeline").setup(
             },
             {
                 text = function(buffer)
-                  return buffer.is_modified and '' or ''
+                  return buffer.is_modified and '' or ''
                 end,
                 fg = function(buffer)
-                  return buffer.is_modified and colors.red or colors.menu
+                  return buffer.is_modified and colors.menu or colors.menu
                 end,
                 delete_buffer_on_left_click = true,
                 truncation = { priority = 1 },
@@ -95,29 +130,40 @@ require("cokeline").setup(
             {
               text = function(buffer)
                 return
-                  (buffer.diagnostics.errors ~= 0 and '  ' .. buffer.diagnostics.errors)
-                  or (buffer.diagnostics.warnings ~= 0 and '  ' .. buffer.diagnostics.warnings)
+                  (buffer.diagnostics.errors ~= 0 and '  ' .. buffer.diagnostics.errors)
+                  or (buffer.diagnostics.warnings ~= 0 and '  ' .. buffer.diagnostics.warnings)
                   or ''
               end,
               fg = function(buffer)
                 return
-                  (buffer.diagnostics.errors ~= 0 and colors.red)
-                  or (buffer.diagnostics.warnings ~= 0 and colors.yellow)
+                  (buffer.diagnostics.errors ~= 0 and colors.menu)
+                  or (buffer.diagnostics.warnings ~= 0 and colors.menu)
                   or nil
               end,
               truncation = { priority = 1 },
             },
             space,
             {
-                text = "",
+                text = " ",
                 fg = function(buffer)
                     if buffer.is_focused then
                         return high
                     end
                     return grey
                 end,
-                bg = dark
+                bg = catppccn_colors.base
             }
-        }
+        },
+  sidebar = {
+    filetype = 'NvimTree',
+    components = {
+      {
+        text = '  NvimTree',
+        fg = yellow,
+        bg = get_hex('NvimTreeNormal', 'bg'),
+        style = 'bold',
+      },
+    }
+  },
     }
 )

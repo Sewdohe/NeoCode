@@ -4,6 +4,7 @@ if not status_ok then
 end
 
 local opts = { noremap = true, silent = true }
+
 -- Use lazygit to handle github repos
 local status_ok, toggleterm = pcall(require, "toggleterm.terminal")
 if not status_ok then
@@ -24,16 +25,18 @@ local fileTreeFocus
 if vim.g.vscode then
   tabSwitchPrev = { "H", ":Tabprev<CR>", opts = opts, description = "Prev Tab (alternate)" }
   tabSwitchNext = { "L", ":Tabnext<CR>", opts = opts, description = "Next Tab (alternate)" }
-  fileTreeFocus = { "<C-b>", "<Cmd>call VSCodeNotify('workbench.explorer.fileView.focus')<CR>",
-    description = "focus file tree", opts = opts }
+  fileTreeFocus = {
+    "<C-b>",
+    "<Cmd>call VSCodeNotify('workbench.explorer.fileView.focus')<CR>",
+    description = "focus file tree",
+    opts = opts,
+  }
 end
 if not vim.g.vscode then
-  tabSwitchPrev = { "H", "<Plug>(cokeline-focus-prev)<CR>", opts = opts, description = "Next Tab (alternate)" }
-  tabSwitchNext = { "L", "<Plug>(cokeline-focus-next)<CR>", opts = opts, description = "Next Tab (alternate)" }
+  tabSwitchPrev = { "H", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Next Tab (alternate)" }
+  tabSwitchNext = { "L", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next Tab (alternate)" }
   fileTreeFocus = { "<C-b>", ":NvimTreeToggle<CR>", description = "Toggle file tree", opts = opts }
 end
-
--- TODO: Add lazygit as a dep to install with installer
 
 local custom_mappings = {
   -- cutting and pasting lines
@@ -42,6 +45,13 @@ local custom_mappings = {
   { "<C-v>", "p", mode = "n", opts = opts },
   { "<C-k>", legendary.find, description = "Search key bindings" },
 
+  -- Load previous session for directory
+  {
+    "<leader><leader>s",
+    "<cmd>lua require('persistence').load()<CR>",
+    opts = opts,
+    description = "Loads session file for current open directory",
+  },
   -- Document jumping since we re-bind file tree to C-b
   { "J", "<C-f>", opts = opts, description = "Jump forward in document" },
   { "K", "<C-b>", opts = opts, description = "Jump backward in document" },
@@ -70,25 +80,26 @@ local custom_mappings = {
   { "<c-s>", ":w<CR>", opts = { noremap = true, silent = false }, description = "Save file" },
   { "<c-s>", ":w<CR>", mode = "i", opts = { noremap = true, silent = false }, description = "Save file" },
   { "<leader><leader>z", ":ZenMode <CR>", opts = opts, description = "UI: Toggle Zen Mode" },
-  { "<leader><leader>t", ":TransparentToggle <CR>", opts = opts, description = "UI: Toggle Transparency" },
   { "<leader><leader>h", ":Alpha<CR>", description = "Return to Home Screen", opts = opts },
   { "<leader><leader>t", ":Twilight<CR>", description = "Toggle Twilight (focus mode)", opts = opts },
 
   -- LSP completion and diagnostics
-  { "<leader><leader>T", ":TroubleToggle workspace_diagnostics<CR>", opts = opts,
-    description = "lsp: View Workspace Diagnostics List" },
-  { "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts = opts, description = "lsp: goto declaration" },
-  { "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts = opts, description = "lsp: goto definition" },
-  { "gr", "<cmd>lua vim.lsp.buf.refrences()<CR>", opts = opts, description = "lsp: goto refrences" },
-  { "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts = opts, description = "lsp: goto implementation" },
-  { "<c-space>", "<cmd>lua vim.lsp.buf.hover()<CR>", opts = opts, description = "lsp: show hover window" },
-  { "<leader><leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts = opts, description = "lsp: perform code action" },
-  { "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded"})<CR>', opts = opts,
-    description = "lsp: goto prev diagnostic" },
-  { "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded"})<CR>', opts = opts,
-    description = "lsp: goto next diagnostic" },
-  { "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts = opts, description = "lsp: set local list" },
-  { "<leader><leader>d", ":TroubleToggle<CR>", opts = opts, description = "Show Diagnostics sidebar" },
+  {
+    "<space>t",
+    ":TroubleToggle workspace_diagnostics<CR>",
+    opts = opts,
+    description = "lsp: View Workspace Diagnostics List/View Workspace Errors",
+  },
+  { "<space>d", ":TroubleToggle<CR>", opts = opts, description = "Show Diagnostics sidebar/View Errors" },
+  {"<space>D", description = "Goto declaration"},
+  {"<space>d", description = "Goto definition"},
+  {"<space>h", description = "Hover Error / Show Error Popup"},
+  {"<space>i", description = "Goto Implementation"},
+  {"<C-i>", description = "Signature Help"},
+  {"<space>rn", description = "Rename Symbol"},
+  {"<space>ca", description = "Perform Code Action"},
+  {"<space>gr", description = "View Refrences"},
+  {"<space>f", description = "Format Buffer (async)"},
 }
 
 local status_ok, user_mappings = pcall(require, "user.keybinds")
@@ -100,13 +111,13 @@ end
 
 local commands = {
   -- You can also use legendary.nvim to create commands!
-  { ":SaveAndRealoadFile", ':w | :so %', description = "Saves and re-sources the file into Neovim" },
+  { ":SaveAndRealoadFile", ":w | :so %", description = "Saves and re-sources the file into Neovim" },
   { ":ReloadNeoCode", ":so ./init.lua", description = "Refresh Config" },
-  { ":OpenWork", ":lua open_work()", description = "Open work folder to current day" }
+  { ":OpenWork", ":lua open_work()", description = "Open work folder to current day" },
 }
 
 open_work = function()
-  require "lfs"
+  require("lfs")
 
   vim.cmd([[
     cd ~/Documents/Work Orders
@@ -116,8 +127,8 @@ open_work = function()
   local todays_dir = "~/Documents/Work Orders/" .. today
   local is_dir = lfs.chdir(today) and true or false
 
-  if (not is_dir) then
-    lfs.mkdir('~/Documents/Work Orders/' .. today)
+  if not is_dir then
+    lfs.mkdir("~/Documents/Work Orders/" .. today)
   end
 end
 

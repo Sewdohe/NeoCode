@@ -1,34 +1,6 @@
-local components = {
-  active = {},
-  inactive = {}
-}
+local ctp_feline = require('catppuccin.groups.integrations.feline')
 
--- INSERT COMPONENTS
 
--- LEFT SIDE
-components.active[1][1] = {
-    {
-      provider = 'vi_mode',
-      hl = function()
-        return {
-          name = require('feline.providers.vi_mode').get_mode_highlight_name(),
-          fg = require('feline.providers.vi_mode').get_mode_color(),
-          style = 'bold'
-        }
-      end,
-      right_sep = ' '
-    }
-}
-
--- MIDDLE
-table.insert(components.active[1], {
-
+require("feline").setup({
+    components = ctp_feline.get(),
 })
-
--- RIGHT SIDE
-table.insert(components.active[1], {
-
-})
-
-require('feline').setup()
-require('feline').winbar.setup()

@@ -36,6 +36,7 @@ local settings = {
   expandtab = true,                        -- convert tabs to spaces
   shiftwidth = 2,                          -- the number of spaces inserted for each indentation
   tabstop = 2,                             -- insert 2 spaces for a tab
+  softtabstop = 2,
   cursorline = true,                       -- highlight the current line
   number = true,                           -- set numbered lines
   relativenumber = false,                  -- set relative numbered lines
@@ -48,6 +49,7 @@ local settings = {
 
 vim.opt.shortmess:append "c"
 vim.g.mapleader = ','
+vim.g.loaded_netrwPlugin = 1
 -- better session options
 vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
 vim.o.breakindent = true;

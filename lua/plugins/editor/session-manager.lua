@@ -6,10 +6,10 @@ end
 local status_ok, Path = pcall(require, "plenary.path")
 if(Path) then
   session_manager.setup({
-    -- events = { "VimLeavePre" },
     events = { "WinEnter" },
-    session_filepath = vim.fn.stdpath('data') ..'/sessions/',
-  })
+    session_filepath = vim.fn.stdpath('data') ..'/session/',
+    absolute = true,
+})
 end
 
 local tele_status_ok, telescope = pcall(require, "telescope")
