@@ -7,7 +7,7 @@ There are many, many good Vim configs out there...many in which are better than 
 
 The config was made to be a simple as possible. I think any setting you could need to change would be found right where you expect it to be.
 
-![show-off](showoff.gif) [](showoff.gif)
+![show-off](newcode-new-new.gif) [](neocode-new-new.gif)
 Neocode with it's new Catppuccin look running in Neovide using the multigrid flag for
 fancy animations
 
@@ -133,7 +133,7 @@ This project is literally brand new, and I am working on it alone. Some things m
 
 ## Commonly Used Keybinds:
 
-> <leader> key refers to the comma ( , ) key on your keyboard!
+> leader key refers to the comma ( , ) key on your keyboard!
 
 ### VS Code Features:
 
