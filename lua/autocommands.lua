@@ -20,6 +20,11 @@ vim.cmd [[
   autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}
 ]]
 
+local bbq_ok, bbq = pcall(require, "barbecue")
+if not bbq_ok then
+  return
+end
+
 vim.api.nvim_create_autocmd({
   "BufWinEnter",
   "BufWritePost",
