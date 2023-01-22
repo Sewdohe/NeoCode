@@ -26,6 +26,10 @@ The only plugin with nested folders is the LSP plugin, due to the complex nature
 
 -- IMPORTANT!!! Leader key is comma (,)
 -- Example: Keyybind <leader><leader>c means press comma twice followed by the c key to perform action
+
+require("packer-config")
+
+-- Configuation for package manager "Packer"
 if vim.g.vscode then
   require("settings") -- some base settings every Vim install should have
   require("keymap") -- loads some default keymaps that haven't been moved into legendary yet
@@ -33,7 +37,7 @@ if vim.g.vscode then
 else
   -------------------- CORE SETTINGS ------------------------------
   --=============================================================
-  require("packer-config") -- Configuation for package manager "Packer"
+
   require("settings") -- some base settings every Vim install should have
   require("keymap") -- loads some default keymaps that haven't been moved into legendary yet
   require("visual") -- Visual settings for this Neovim insance
@@ -65,6 +69,8 @@ else
   require("plugins.ui.dressing") -- Provides pop-up boxes and other GUI-like elements
   require("plugins.ui.bbq")
   require("plugins.ui.gitsign")
+  require("plugins.ui.feline") -- Neovim status line (bottom bar)
+  require("plugins.ui.cokeline")
 end
 
 -- Here we load plugins which we don't configure
@@ -97,8 +103,4 @@ if not user_okay then
   return
 end
 
--- req. lualine last, after user theme has loaded
 require("neovide") -- loads settings that are just for the GUI wrapper, Neovide
-require("plugins.ui.feline") -- Neovim status line (bottom bar)
--- require("plugins.ui.bufferline")
-require("plugins.ui.cokeline")

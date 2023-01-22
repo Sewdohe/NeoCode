@@ -3,6 +3,11 @@ if not status_ok then
 	return
 end
 
+-- local autotag_ok, autotag = pcall(require, "nvim-ts-autotag")
+-- if not autotag_ok then
+-- 	return
+-- end
+
 local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
 
 configs.setup({

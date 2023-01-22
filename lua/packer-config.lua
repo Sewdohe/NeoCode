@@ -14,34 +14,30 @@ else
   OperatingSystem = "windows"
 end
 
--- after loading the basic settings, let's check if packer is
--- installed before loading a shitload of errors:
-local fn = vim.fn
-local install_path
-
-if OperatingSystem == "unix" then
-  install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-else
-  install_path = fn.stdpath("data") .. "\\site\\pack\\packer\\start\\packer.nvim"
+-- ensure packer is available before loading a bunch of errors
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
 end
 
-if fn.empty(fn.glob(install_path)) > 0 then
-  print("Installing packer to: " .. install_path)
-  Packer_bootstrap = fn.system({ "git", "clone", "--depth", "1", "https://github.com/wbthomason/packer.nvim",
-    install_path })
-  print("installed packer")
-end
-
-vim.cmd([[packadd packer.nvim]])
+local packer_bootstrap = ensure_packer()
 
 -- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-  return
-end
+-- local status_ok, packer = pcall(require, "packer")
+-- if not status_ok then
+--   return
+-- end
 
-packer.startup(function(use)
+require("packer").startup(function(use)
   use({ "wbthomason/packer.nvim" })
+  use({ "windwp/nvim-ts-autotag" })
+
   use({ "nvim-lua/plenary.nvim" })
   use {
     'VonHeikemen/lsp-zero.nvim',
@@ -120,7 +116,6 @@ packer.startup(function(use)
     'kosayoda/nvim-lightbulb',
     requires = 'antoinemadec/FixCursorHold.nvim',
   }
-  use({ "windwp/nvim-ts-autotag" })
   use({ 'alvan/vim-closetag' })
   -- Theme / UI
   -- -----------------
@@ -232,9 +227,8 @@ packer.startup(function(use)
       end
     end
   end
-
-  if Packer_bootstrap then
-    print("running sync")
-    require("packer").sync()
+  if packer_bootstrap then
+    print("first start - running packer sync")
+    require('packer').sync()
   end
 end)
