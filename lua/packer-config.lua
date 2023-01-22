@@ -66,7 +66,6 @@ packer.startup(function(use)
     }
   }
 
-  use("fladson/vim-kitty")
   use_rocks { "luasocket", "luafilesystem", "luaposix" }
   -- LSP and code navigation
   -- ------------------------------------
@@ -116,18 +115,12 @@ packer.startup(function(use)
   use({
       "kylechui/nvim-surround",
       tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-      config = function()
-          require("nvim-surround").setup({
-              -- Configuration here, or leave empty to use defaults
-          })
-      end
   })
   use {
     'kosayoda/nvim-lightbulb',
     requires = 'antoinemadec/FixCursorHold.nvim',
   }
   use({ "windwp/nvim-ts-autotag" })
-  use 'feline-nvim/feline.nvim'
   use({ 'alvan/vim-closetag' })
   -- Theme / UI
   -- -----------------
@@ -137,10 +130,7 @@ packer.startup(function(use)
   use 'kdheepak/tabline.nvim'
   use 'glepnir/dashboard-nvim'
   use {
-    'lewis6991/gitsigns.nvim',
-    config = function()
-      require('gitsigns').setup()
-    end
+    'lewis6991/gitsigns.nvim'
   }
   use {
     "utilyre/barbecue.nvim",
@@ -148,9 +138,6 @@ packer.startup(function(use)
       "smiteshp/nvim-navic",
       "kyazdani42/nvim-web-devicons", -- optional
     },
-    config = function()
-      require("barbecue").setup()
-    end,
   }
   use({
     "folke/persistence.nvim",

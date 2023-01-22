@@ -52,6 +52,7 @@ else
   require("plugins.editor.session-manager") -- manages coding sessions. Similar to workspaces.
   require("plugins.editor.workspaces") -- allows creating "workspaces" to just right back into what you were doing
   require("plugins.editor.trouble") -- Diagnostics on crack
+  require("plugins.editor.surround")
 
   --------------------- UI PLUGINS ------------------------------
   --=============================================================
@@ -62,6 +63,8 @@ else
   require("plugins.ui.zenmode") -- focus on your code
   require("plugins.ui.telescope") -- awesome UI-like universal thing-picker
   require("plugins.ui.dressing") -- Provides pop-up boxes and other GUI-like elements
+  require("plugins.ui.bbq")
+  require("plugins.ui.gitsign")
 end
 
 -- Here we load plugins which we don't configure
