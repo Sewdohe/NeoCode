@@ -202,7 +202,7 @@ When using the configuation inside VS Code it just uses keybinds, legendary, and
 a pretty seamless experience when compared with VS Code native features IMO. More VS Code keybinds to come soon!
 
 Due to limitations of running Neovim inside VS Code, we can't have fuzzy finders and whatnot render, so you'll need
-to use the VS Code counterparts (such a ctrl+p and strl+shift+p)
+to use the VS Code counterparts (such a ctrl+p and ctrl+shift+p)
 
 
 ### Coming Soon: GUI Installer
