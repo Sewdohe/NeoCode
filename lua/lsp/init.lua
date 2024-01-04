@@ -8,7 +8,7 @@ end
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
-    "sumneko_lua",
+    "lua_ls",
     "rust_analyzer",
     "tsserver",
     "cssls",
@@ -91,7 +91,7 @@ require("typescript").setup({
   },
 })
 
-require("lspconfig").sumneko_lua.setup({
+require("lspconfig").lua_ls.setup({
   on_attach = on_attach,
   settings = {
     Lua = {

@@ -160,7 +160,6 @@ require("cokeline").setup(
       {
         text = '  NvimTree',
         fg = yellow,
-        bg = get_hex('NvimTreeNormal', 'bg'),
         style = 'bold',
       },
     }
