@@ -103,12 +103,18 @@ def check_and_install_brew():
         print("- Homebrew is not installed. Installing Homebrew...")
         subprocess.check_call(['/bin/bash', '-c', "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"])
 
+## TODO: Lazygit requires special commands to install for each OS. Will have to add those.
+
 def install_dependencies():
     """Uses the package manager returned from determine_package_manager() to install
     things the users needs to have in order to run Neocode."""
     # Determine the package manger we should use
     # based off the users OS
     package_manager = determine_package_manager()
+    dependencies = [
+        "ripgrep",
+        "fzf", 
+    ]
 
     # Print header for this step
     # and set the fore color for all console output for dep checks
@@ -128,11 +134,17 @@ def install_dependencies():
         # Install Neovim itself
         if platform.system() == "Linux":
             subprocess.check_call(["sudo", package_manager, "install", "-y", "neovim"])
+            for dep in dependencies:
+                subprocess.check_call(["sudo", package_manager, "install", "-y", dep])
         elif platform.system() == "Darwin":
             check_and_install_brew()
+            for dep in dependencies:
+                subprocess.check_call(["sudo", package_manager, "install", "-y", dep])
             subprocess.check_call(["sudo", package_manager, "install", "-y", "neovim"])
         elif platform.system() == "Windows":
             check_and_install_choco()
+            for dep in dependencies:
+                subprocess.check_call(["sudo", package_manager, "install", dep])
             subprocess.check_call(["choco", "install", "neovim"])
         else:
             print("idk what even is your OS.")

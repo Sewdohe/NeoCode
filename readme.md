@@ -7,83 +7,32 @@ There are many, many good Vim configs out there...many in which are better than 
 
 The config was made to be a simple as possible. I think any setting you could need to change would be found right where you expect it to be.
 
-![show-off](newcode-new-new.gif) [](neocode-new-new.gif)
-Neocode with it's new Catppuccin look running in Neovide using the multigrid flag for
+![show-off](newcode-new-new.gif)
+NeoCode with it's new Catppuccin look running in Neovide using the multigrid flag for
 fancy animations
 
 Installer works for:
-  - (most) linux distros
+  - The following Linux Distros:
+	  - Ubuntu
+	  - Fedora
   - Windows 10/11
   - Mac OSX
 
 ## Community
 
-This project is actually growing! I'm stoked!! Lets chat about it and discuss it's future:
-https://discord.gg/9tZq3WrU4p
+This project is actually growing! I'm stoked!! Join the [Discord](https://discord.gg/9tZq3WrU4p)
 
 
 ## Dependencies:
 
-### Windows:
-Simply use the `--deps` flag on the installer and it will automaticallt get all your dependencies for you! Still, if you prefer to do that sort of thing yourself, check below:
-
-Make sure to enable developer mode on Windows so the script can create the Symlink between the Config and your neovim folder.
-
-Scoop package manager:
-`iwr -useb get.scoop.sh | iex`
-
-Ripgrep for Live-grepping (find in project)
-`scoop install ripgrep`
-
-FZF for file searching
-`scoop install fzf`
-
-Lazygit for working with git in the terminal
-`scoop bucket add extras`
-`scoop install lazygit`
-
-Neovim Nightly:
-`scoop bucket add versions`
-`scoop install neovim-nightly`
-
-### MacOS:
-
-Simply use the --deps flag on the installer and it will automaticallt get all your dependencies for you! Still, if you prefer to do that sort of thing yourself, check below:
-
-Make sure to enable developer mode.
-
-Homebrew package manager:
-`/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
-
-Ripgrep for Live-grepping (find in project)
-`brew install ripgrep`
-
-FZF for file searching
-`brew install fzf`
-
-Lazygit for working with git in the terminal
-`brew install lazygit`
-
-Neovim Nightly:
-Instructions coming soon!
-
-Neovide (reccomended):
-https://github.com/neovide/neovide
+The new installer script should manage/download all dependencies automatically now. You no longer need to install deps manually.
 
 
 ## Instructions
 
-clone this repo somewhere easy to access on your pc. For example, I use ~\Code.
-
-cd into the Neovide install directory, and simply run `./NeoCodeInstaller<yoursystem> --deps --install-packer`
-
-you can also pass the `--create-user` flag to have the script generate a user folder for you
-
-If running Windows (other systems to come VERY soon) then also add the `--deps` flag to have the installer grab scoop package manager and download everything you need for this config.
-
-The install will be automatic and headlessly install all the needed plugins.
-
-I just released the binaries today for Windows and Linux, please let me know if there are any issues with them!
+1. Clone/Download repo to somewhere on your PC. The config will need to remain where it's placed after installation, so place it somewhere you don't mind it living!
+2. enter the directory where you downloaded the repo using your terminal/console and run the python installer file using `python installer.py`
+3. watch as the installer does **everything** for you
 
 ## FAQ
 
@@ -127,9 +76,6 @@ custom theme, just make a copy of visual.lua, place it in user folder, and requi
 of init.lua. At the end of the plugin loading of the main init.lua, it will call all of your custom
 configs. These files are not tracked by git and therefor will persist even when you grab the newest
 updates from the github repo!
-
-## State of project
-This project is literally brand new, and I am working on it alone. Some things may not work, and I may not have all the dependecies listed as they should be...if something is missing, please let me know.
 
 ## Commonly Used Keybinds:
 
@@ -198,21 +144,13 @@ key for memoralibilitys sake
 ### VS Code Support
 This configuration now supports being ran inside VS Code itself via the "Neovim VS Code Plugin".
 
-When using the configuation inside VS Code it just uses keybinds, legendary, and settings.lua. Still makes for
-a pretty seamless experience when compared with VS Code native features IMO. More VS Code keybinds to come soon!
+When using the configuation inside VS Code it just uses keybinds, legendary, and settings.lua. Still makes for a pretty seamless experience when compared with VS Code native features IMO. More VS Code keybinds to come soon!
 
-Due to limitations of running Neovim inside VS Code, we can't have fuzzy finders and whatnot render, so you'll need
-to use the VS Code counterparts (such a ctrl+p and strl+shift+p)
-
-
-### Coming Soon: GUI Installer
-I'm working on ditching the CLI installer I've built currently in favor of a Tauri-powered web GUI to install Neocode
-& it's deps as easy as possible. More info and preview to come shortly! 
+Due to limitations of running Neovim inside VS Code, we can't have fuzzy finders and whatnot render, so you'll need to use the VS Code counterparts (such a ctrl+p and strl+shift+p)
 
 ## TODO:
 - [ ] Set Neovide multigrid env var in installer script
 - [ ] Have the installer install NERD front automatically (cross platform)
-- [ ] (maybe) ship Neovide binary inside the installer to futher simplify the setup
-- [X] Set list of default installed language servers and treesitter parsers
 - [ ] Improve documentation
+- [x] Set list of default installed language servers and treesitter parsers ✅ 2024-07-19
 - [X] Integrate more VS-code keybinds to make transition easier for newbies
