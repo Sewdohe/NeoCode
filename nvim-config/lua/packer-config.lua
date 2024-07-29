@@ -179,17 +179,12 @@ require("packer").startup(function(use)
     use "Shatur/neovim-ayu"
     use {"folke/zen-mode.nvim"}
     use {"folke/twilight.nvim"}
-    use({"simrat39/symbols-outline.nvim"})
     use({
         "mrjones2014/legendary.nvim",
         tag = 'v1.0.0'
     })
     use("famiu/bufdelete.nvim")
     use("xiyaowong/nvim-transparent")
-    use({
-        "noib3/nvim-cokeline",
-        requires = "kyazdani42/nvim-web-devicons" -- If you want devicons
-    })
     use({
         "catppuccin/nvim",
         as = "catppuccin"

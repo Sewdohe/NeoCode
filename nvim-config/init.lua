@@ -53,7 +53,6 @@ else
   require("plugins.editor.project") -- adds folders with .git folder or .project file as a "project"
   require("plugins.editor.toggleterm") -- toggable terminal for Neovim. Toggle with ctrl+` (key with ~ (tilde) on it)
   -- Symbols outline deprecated.
-  -- require("plugins.editor.symbol-outline") -- shows file overview in a sidebar
   require("plugins.editor.session-manager") -- manages coding sessions. Similar to workspaces.
   require("plugins.editor.workspaces") -- allows creating "workspaces" to just right back into what you were doing
   require("plugins.editor.trouble") -- Diagnostics on crack
@@ -73,7 +72,6 @@ else
   require("plugins.ui.bbq")
   require("plugins.ui.gitsign")
   require("plugins.ui.feline") -- Neovim status line (bottom bar)
-  -- require("plugins.ui.cokeline")
   require("plugins.ui.barbar")
   require("plugins.ui.darkman")
 end
