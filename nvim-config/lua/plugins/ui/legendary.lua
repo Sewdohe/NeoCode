@@ -33,9 +33,9 @@ if vim.g.vscode then
   }
 end
 if not vim.g.vscode then
-  tabSwitchPrev = { "H", "<Plug>(cokeline-focus-prev)", opts = opts, description = "Next Tab (alternate)" }
-  tabSwitchNext = { "L", "<Plug>(cokeline-focus-next)", opts = opts, description = "Next Tab (alternate)" }
-  fileTreeFocus = { "<C-b>", ":NvimTreeToggle<CR>", description = "Toggle file tree", opts = opts }
+  tabSwitchPrev = { "H", ":BufferPrevious<CR>", opts = opts, description = "Next Tab (alternate)" }
+  tabSwitchNext = { "L", ":BufferNext<CR>", opts = opts, description = "Next Tab (alternate)" }
+  fileTreeFocus = { "<C-b>", ":Neotree toggle<CR>", description = "Toggle file tree", opts = opts }
 end
 
 local custom_mappings = {
@@ -59,7 +59,7 @@ local custom_mappings = {
   -- call lazygit with control g
   { "<C-g>", "<cmd>lua _lazygit_toggle()<CR>", opts = opts, description = "Toggle LazyGit terminal" },
   { "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
-  { "<C-o>", ":SymbolsOutline<CR>", opts = opts, description = "Browse Symbols" },
+  { "<C-o>", ":Navbuddy<CR>", opts = opts, description = "Browse Symbols" },
 
   -- Commenting
   { "<leader><leader>c", ":CommentToggle<CR>", mode = "v", opts = opts, description = "Toggle Comment" },
