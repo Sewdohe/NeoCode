@@ -60,7 +60,7 @@ local lsp_flags = {
 -- START LSP SETUP FUNCTIONS
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = {"lua_ls", "rust_analyzer", "tsserver", "cssls", "eslint", "html", "marksman", "jdtls"},
+    ensure_installed = {"lua_ls", "rust_analyzer", "ts_ls", "cssls", "eslint", "html", "marksman", "jdtls", "godot"},
     automatic_installation = true,
     handlers = {
         -- Generic handler for any server without a specific configuration.
@@ -94,6 +94,11 @@ require("mason-lspconfig").setup({
                 on_attach = on_attach
             })
         end,
+        godot = function()
+            require'lspconfig'.gdscript.setup({
+                on_attach = on_attach
+            })
+        end
         pyright = function()
             require('lspconfig').pyright.setup({
                 on_attach = on_attach,

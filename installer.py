@@ -124,7 +124,8 @@ def install_dependencies():
     dependencies = [
         "ripgrep",
         "fzf",
-        "lazygit"
+        "lazygit",
+        "fortune-mod"
     ]
 
     # Print header for this step
