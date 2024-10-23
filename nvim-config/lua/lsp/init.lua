@@ -98,7 +98,7 @@ require("mason-lspconfig").setup({
             require'lspconfig'.gdscript.setup({
                 on_attach = on_attach
             })
-        end
+        end,
         pyright = function()
             require('lspconfig').pyright.setup({
                 on_attach = on_attach,
