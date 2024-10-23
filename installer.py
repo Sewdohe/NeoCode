@@ -7,6 +7,8 @@ from colorama import init as colorama_init
 from colorama import Fore
 from colorama import Style
 
+SYSTEM_NAME = ""
+
 colorama_init()
 
 def link(uri, label=None):
@@ -75,6 +77,8 @@ def determine_package_manager():
     print(f" {Fore.WHITE}--- {Fore.CYAN}Picking package manager based on OS {Fore.WHITE}---")
     system_info = platform.freedesktop_os_release()
     system_name = system_info.get('ID')
+    print(f" {Fore.WHITE}--- {Fore.CYAN}System is {Fore.WHITE}---" + system_name)
+    SYSTEM_NAME = system_name
 
     if system_name == 'fedora':
         print(" - system is Fedora! Use DNF. \n")
@@ -85,6 +89,12 @@ def determine_package_manager():
     if system_name == 'darwin':
         print(" - system is MacOS! Use brew. \n")
         return "brew"
+    if system_name == 'endeavouros':
+        print(" - system is Endeavour! Use pacman. \n")
+        return "pacman"
+    if system_name == 'manjaro':
+        print(" - system is Manjaro! Use pacman. \n")
+        return "pacman"
 
 
 def check_and_install_choco():
@@ -113,7 +123,8 @@ def install_dependencies():
     package_manager = determine_package_manager()
     dependencies = [
         "ripgrep",
-        "fzf", 
+        "fzf",
+        "lazygit"
     ]
 
     # Print header for this step
@@ -126,16 +137,23 @@ def install_dependencies():
         import pip
     except ImportError:
         subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
-    # Install Python packages for Neovim
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pynvim"])
+    
+    if platform.system() != "Linux":
+        # Install Python packages for Neovim
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pynvim"])
 
     # Ensure the package manager function returned SOMETHING
     if package_manager:
         # Install Neovim itself
         if platform.system() == "Linux":
-            subprocess.check_call(["sudo", package_manager, "install", "-y", "neovim"])
-            for dep in dependencies:
-                subprocess.check_call(["sudo", package_manager, "install", "-y", dep])
+            if package_manager == "apt":
+                subprocess.check_call(["sudo", package_manager, "install", "neovim"])
+                for dep in dependencies:
+                    subprocess.check_call(["sudo", package_manager, "install", "-y", dep])
+            elif package_manager == "pacman":
+                # subprocess.check_call(["sudo", package_manager, "-S", "neovim"])
+                for dep in dependencies:
+                    subprocess.check_call(["sudo", package_manager, "-S", dep, "--noconfirm"])
         elif platform.system() == "Darwin":
             check_and_install_brew()
             for dep in dependencies:

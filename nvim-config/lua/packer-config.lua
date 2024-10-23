@@ -113,11 +113,6 @@ require("packer").startup(function(use)
     use({'alvan/vim-closetag'})
     -- Theme / UI
     -- -----------------
-    -- If you are using Packer
-    use {
-        '4e554c4c/darkman.nvim',
-        run = 'go build -o bin/darkman.nvim'
-    }
     use 'shaunsingh/moonlight.nvim'
     use 'feline-nvim/feline.nvim'
     use 'kdheepak/tabline.nvim'

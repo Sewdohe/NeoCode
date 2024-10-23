@@ -1,0 +1,1 @@
+/home/sewdohe/Code/NeoCode/nvim-config/init.lua
