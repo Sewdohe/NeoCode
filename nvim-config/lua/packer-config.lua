@@ -71,7 +71,7 @@ require("packer").startup(function(use)
     use({"stevearc/aerial.nvim"})
     use({"honza/vim-snippets"})
     use({"terrortylor/nvim-comment"})
-    use({"jose-elias-alvarez/null-ls.nvim"})
+    use({"nvimtools/none-ls.nvim"})
     use({
         "folke/todo-comments.nvim",
         requires = "nvim-lua/plenary.nvim"

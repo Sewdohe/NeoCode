@@ -2,14 +2,23 @@ import os
 import platform
 import subprocess
 import sys
+import shutil
 
-from colorama import init as colorama_init
-from colorama import Fore
-from colorama import Style
+try:
+    from colorama import init as colorama_init
+    from colorama import Fore, Style
+    colorama_init()
+    _COLORAMA_AVAILABLE = True
+except ImportError:
+    _COLORAMA_AVAILABLE = False
+    class _NoColor:
+        WHITE = CYAN = GREEN = BLUE = MAGENTA = LIGHTRED_EX = LIGHTBLUE_EX = RED = ''
+    class _NoStyle:
+        RESET_ALL = ''
+    Fore = _NoColor
+    Style = _NoStyle
 
 SYSTEM_NAME = ""
-
-colorama_init()
 
 def link(uri, label=None):
     """Formats a link using the given label
@@ -27,21 +36,32 @@ def get_nvim_config_dir():
     """Returns the Neovim config directory path for a auto-detected operating system"""
     home = os.path.expanduser("~")
     if platform.system() == "Windows":
-        print(f"{Fore.WHITE} - Determined config location should be at {os.path.join(home, "AppData","Local", "nvim")}")
-        return os.path.join(home, "AppData", "Local", "nvim")
+        nvim_path = os.path.join(home, "AppData", "Local", "nvim")
+        print(f"{Fore.WHITE} - Determined config location should be at {nvim_path}")
+        return nvim_path
     else:
-        print(f"{Fore.WHITE} - Determined config location should be at {os.path.join(home, ".config", "nvim")}")
-        return os.path.join(home, ".config", "nvim")
+        nvim_path = os.path.join(home, ".config", "nvim")
+        print(f"{Fore.WHITE} - Determined config location should be at {nvim_path}")
+        return nvim_path
 
 def create_symlink(source, dest):
     """Creates a symlink between the configuration location and
     Neovims config directory for a given Operating system."""
     try:
+        if not os.path.exists(source):
+            print(f"{Fore.LIGHTRED_EX} - Source does not exist, skipping: {source}")
+            return
+
+        parent = os.path.dirname(dest)
+        if parent and not os.path.exists(parent):
+            os.makedirs(parent, exist_ok=True)
+
         if os.path.exists(dest):
             if os.path.islink(dest) or os.path.isfile(dest):
                 os.remove(dest)
             elif os.path.isdir(dest):
-                os.rmdir(dest)
+                shutil.rmtree(dest)
+
         os.symlink(source, dest)
     except OSError as e:
         print(f"Failed to create symlink {dest}: {e}")
@@ -57,8 +77,27 @@ def install_config():
         print(f"{Fore.WHITE} - Nvim config directory doesn't exist...creating for you")
         os.makedirs(config_dir)
     elif os.path.exists(config_dir):
-        print(f"{Fore.LIGHTRED_EX} - Existing Neovim config folder detected. Renaming folder to nvim.backup")
-        os.rename(config_dir, "nvim.backup")
+        parent_dir = os.path.dirname(config_dir)
+        backup_base = os.path.join(parent_dir, 'nvim.backup')
+        backup_candidate = backup_base
+        idx = 1
+        while os.path.exists(backup_candidate):
+            backup_candidate = f"{backup_base}.{idx}"
+            idx += 1
+
+        print(f"{Fore.LIGHTRED_EX} - Existing Neovim config folder detected. Renaming folder to {backup_candidate}")
+        try:
+            shutil.move(config_dir, backup_candidate)
+        except OSError as e:
+            print(f"{Fore.RED}Failed to rename existing config directory: {e}")
+            return None
+
+        # Recreate the now-empty config directory so we can populate it
+        try:
+            os.makedirs(config_dir, exist_ok=True)
+        except OSError as e:
+            print(f"{Fore.RED}Failed to create new config directory {config_dir}: {e}")
+            return None
 
     for item in os.listdir(source_dir):
         s = os.path.join(source_dir, item)
@@ -95,6 +134,9 @@ def determine_package_manager():
     if system_name == 'manjaro':
         print(" - system is Manjaro! Use pacman. \n")
         return "pacman"
+    if system_name == 'arch':
+        print(" - system is Arch! Use pacman. \n")
+        return "pacman"
 
 
 def check_and_install_choco():
@@ -121,12 +163,14 @@ def install_dependencies():
     # Determine the package manger we should use
     # based off the users OS
     package_manager = determine_package_manager()
-    dependencies = [
-        "ripgrep",
-        "fzf",
-        "lazygit",
-        "fortune-mod"
-    ]
+    # Map package names -> representative executable or check name.
+    # If the executable exists on PATH we will skip installing the package.
+    dependencies = {
+        "ripgrep": "rg",
+        "fzf": "fzf",
+        "lazygit": "lazygit",
+        "fortune-mod": "fortune",
+    }
 
     # Print header for this step
     # and set the fore color for all console output for dep checks
@@ -141,30 +185,64 @@ def install_dependencies():
     
     if platform.system() != "Linux":
         # Install Python packages for Neovim
-        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pynvim"])
+        try:
+            import importlib.util
+            if importlib.util.find_spec('pynvim') is None:
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pynvim"])
+        except Exception:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "pynvim"])
 
     # Ensure the package manager function returned SOMETHING
     if package_manager:
-        # Install Neovim itself
+        # Install Neovim itself and only install missing dependencies
         if platform.system() == "Linux":
-            if package_manager == "apt":
-                subprocess.check_call(["sudo", package_manager, "install", "neovim"])
-                for dep in dependencies:
-                    subprocess.check_call(["sudo", package_manager, "install", "-y", dep])
-            elif package_manager == "pacman":
-                # subprocess.check_call(["sudo", package_manager, "-S", "neovim"])
-                for dep in dependencies:
-                    subprocess.check_call(["sudo", package_manager, "-S", dep, "--noconfirm"])
+            # Only install what's missing. Check executables first.
+            missing = []
+            for pkg, exe in dependencies.items():
+                if shutil.which(exe) is None:
+                    missing.append(pkg)
+
+            # Install neovim if `nvim` is not available
+            if shutil.which('nvim') is None:
+                if package_manager == "apt":
+                    subprocess.check_call(["sudo", package_manager, "install", "-y", "neovim"])
+                elif package_manager == "pacman":
+                    subprocess.check_call(["sudo", package_manager, "-S", "neovim", "--noconfirm"])
+                elif package_manager == "dnf":
+                    subprocess.check_call(["sudo", package_manager, "install", "-y", "neovim"])
+
+            if missing:
+                if package_manager == "apt":
+                    for dep in missing:
+                        subprocess.check_call(["sudo", package_manager, "install", "-y", dep])
+                elif package_manager == "pacman":
+                    for dep in missing:
+                        subprocess.check_call(["sudo", package_manager, "-S", dep, "--noconfirm"])
+                elif package_manager == "dnf":
+                    for dep in missing:
+                        subprocess.check_call(["sudo", package_manager, "install", "-y", dep])
         elif platform.system() == "Darwin":
             check_and_install_brew()
-            for dep in dependencies:
-                subprocess.check_call(["sudo", package_manager, "install", "-y", dep])
-            subprocess.check_call(["sudo", package_manager, "install", "-y", "neovim"])
+            missing = []
+            for pkg, exe in dependencies.items():
+                if shutil.which(exe) is None:
+                    missing.append(pkg)
+            if missing:
+                for dep in missing:
+                    subprocess.check_call(["sudo", package_manager, "install", "-y", dep])
+            if shutil.which('nvim') is None:
+                subprocess.check_call(["sudo", package_manager, "install", "-y", "neovim"])
         elif platform.system() == "Windows":
             check_and_install_choco()
-            for dep in dependencies:
-                subprocess.check_call(["sudo", package_manager, "install", dep])
-            subprocess.check_call(["choco", "install", "neovim"])
+            missing = []
+            for pkg, exe in dependencies.items():
+                if shutil.which(exe) is None:
+                    missing.append(pkg)
+            if missing:
+                for dep in missing:
+                    subprocess.check_call([package_manager, "install", dep])
+            if shutil.which('nvim') is None:
+                subprocess.check_call(["choco", "install", "neovim"])
         else:
             print("idk what even is your OS.")
     # Handle the package manager function returning nothing/getting confused.
@@ -175,13 +253,19 @@ def run_packer_install():
     """headlessly installs packer plugins for Neovim so first boot will be smooth"""
     print(f" {Fore.WHITE}--- {Fore.CYAN}Run Packer install for clean first-startup {Fore.WHITE}---{Fore.MAGENTA}")
     command = ["nvim", "--headless", "-c", "autocmd User PackerComplete quitall", "-c", "PackerSync"]
-    subprocess.check_call(command)
+    try:
+        subprocess.check_call(command)
+    except FileNotFoundError:
+        print(f"{Fore.RED}Neovim not found in PATH. Please install Neovim and re-run this step.")
+    except subprocess.CalledProcessError as e:
+        print(f"{Fore.RED}Packer sync failed or packer.nvim is not installed: {e}")
+        print(f"{Fore.WHITE}Try opening Neovim and run `:PackerSync` manually, or install packer.nvim first.")
 
 if __name__ == "__main__":
     # try:
     print(f"{Fore.WHITE}--- {Fore.GREEN} NeoCode Installer {Fore.WHITE}---")
     print(f"{Fore.BLUE} Thanks for trying NeoCode!")
-    print(f"{Fore.WHITE} Visit the {Fore.MAGENTA}{link("https://discord.gg/9tZq3WrU4p", "Discord")}{Fore.WHITE} for support. \n")
+    # print(f"{Fore.WHITE} Visit the {Fore.MAGENTA}{link("https://discord.gg/9tZq3WrU4p", "Discord")}{Fore.WHITE} for support. \n")
     install_config()
     install_dependencies()
     run_packer_install()
