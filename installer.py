@@ -279,14 +279,35 @@ def install_dependencies():
 
 def run_packer_install():
     """headlessly installs packer plugins for Neovim so first boot will be smooth"""
-    print(f" {Fore.WHITE}--- {Fore.CYAN}Run Packer install for clean first-startup {Fore.WHITE}---{Fore.MAGENTA}")
+    print(f" {Fore.WHITE}--- {Fore.CYAN}Run Packer install for clean first-startup {Fore.WHITE}---")
+    print(f" {Fore.MAGENTA}This may take a few minutes. Installing plugins...")
     command = ["nvim", "--headless", "-c", "autocmd User PackerComplete quitall", "-c", "PackerSync"]
     try:
-        subprocess.check_call(command)
+        # Use Popen to stream output in real-time
+        process = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+            bufsize=1
+        )
+
+        # Print output line by line as it comes
+        for line in iter(process.stdout.readline, ''):
+            if line:
+                print(f"{Fore.MAGENTA} {line.rstrip()}")
+
+        process.wait()
+
+        if process.returncode == 0:
+            print(f"{Fore.GREEN} ✓ Packer sync completed successfully!")
+        else:
+            print(f"{Fore.RED} ✗ Packer sync exited with code {process.returncode}")
+
     except FileNotFoundError:
         print(f"{Fore.RED}Neovim not found in PATH. Please install Neovim and re-run this step.")
-    except subprocess.CalledProcessError as e:
-        print(f"{Fore.RED}Packer sync failed or packer.nvim is not installed: {e}")
+    except Exception as e:
+        print(f"{Fore.RED}Packer sync failed: {e}")
         print(f"{Fore.WHITE}Try opening Neovim and run `:PackerSync` manually, or install packer.nvim first.")
 
 if __name__ == "__main__":
