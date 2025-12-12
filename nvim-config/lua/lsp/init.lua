@@ -6,6 +6,8 @@ if not mason_ok then
 end
 local navbuddy = require("nvim-navbuddy")
 
+-- test comment to test the update system 👀
+
 -- INIT VARIABLES ------------------------------------
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
