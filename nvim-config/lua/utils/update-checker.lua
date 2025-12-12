@@ -58,16 +58,17 @@ local function should_check_for_updates()
     -- Check if enough time has passed since last update check
     local config_dir = vim.fn.stdpath("config")
     local marker_file = config_dir .. "/.neocode_update_check"
-    
+
     local last_check = 0
     if vim.fn.filereadable(marker_file) == 1 then
         local stat = vim.loop.fs_stat(marker_file)
         last_check = stat and stat.mtime.sec or 0
     end
-    
-    -- Check once every 24 hours (86400 seconds)
+
+    -- Check once every 6 hours (21600 seconds) - reduced from 24h
     local current_time = os.time()
-    return (current_time - last_check) > 86400
+    local cooldown = 21600
+    return (current_time - last_check) > cooldown
 end
 
 local function update_check_marker()
