@@ -60,7 +60,7 @@ local lsp_flags = {
 -- START LSP SETUP FUNCTIONS
 require("mason").setup()
 require("mason-lspconfig").setup({
-    ensure_installed = {"lua_ls", "rust_analyzer", "ts_ls", "cssls", "eslint", "html", "marksman", "jdtls", "gdscript"},
+    ensure_installed = {"ts_ls", "cssls", "eslint", "html", "marksman", "jdtls"},
     automatic_installation = true,
     handlers = {
         -- Generic handler for any server without a specific configuration.
