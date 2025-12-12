@@ -211,6 +211,13 @@ require("packer").startup(function(use)
     -- Terminal emulator
     -- ---------------------
     use({"akinsho/toggleterm.nvim"})
+    -- use({"nvzone/volt"})
+    -- use({
+    --     "nvzone/floaterm",
+    --     dependencies = "nvzone/volt",
+    --     opts = {},
+    --     cmd = "FloatermToggle",
+    -- })
 
     -- Search tools
     -- --------------

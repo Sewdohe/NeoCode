@@ -141,6 +141,18 @@ key for memoralibilitys sake
 * **Quick-exit Insert Mode:**
 `qq`
 
+#### Terminal Mappings
+This are the mappings for sidebar
+
+`a` -> add new terminal
+`e` -> edit terminal name
+Pressing any number within sidebar will switch to that terminal
+Must be pressed in main terminal buffer
+
+`Ctrl + h` -> Switch to sidebar
+`Ctrl + j` -> Cycle to prev terminal
+`Ctrl + k` -> Cycle to next terminal
+
 ### VS Code Support
 This configuration now supports being ran inside VS Code itself via the "Neovim VS Code Plugin".
 

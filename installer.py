@@ -20,6 +20,12 @@ except ImportError:
 
 SYSTEM_NAME = ""
 
+def is_termux():
+    """Detects if running in Termux environment on Android"""
+    # Check for Termux-specific environment variables and paths
+    return (os.environ.get('PREFIX', '').startswith('/data/data/com.termux') or
+            os.path.exists('/data/data/com.termux'))
+
 def link(uri, label=None):
     """Formats a link using the given label
     for console usage"""
@@ -114,6 +120,13 @@ def determine_package_manager():
     """Returns the package manager name for the given system, to be used by
     the install_dependencies function"""
     print(f" {Fore.WHITE}--- {Fore.CYAN}Picking package manager based on OS {Fore.WHITE}---")
+
+    # Check for Termux first before checking freedesktop_os_release
+    if is_termux():
+        print(f" {Fore.WHITE}--- {Fore.CYAN}System is {Fore.WHITE}---Termux (Android)")
+        print(" - system is Termux! Use pkg. \n")
+        return "pkg"
+
     system_info = platform.freedesktop_os_release()
     system_name = system_info.get('ID')
     print(f" {Fore.WHITE}--- {Fore.CYAN}System is {Fore.WHITE}---" + system_name)
@@ -195,7 +208,22 @@ def install_dependencies():
     # Ensure the package manager function returned SOMETHING
     if package_manager:
         # Install Neovim itself and only install missing dependencies
-        if platform.system() == "Linux":
+        if is_termux():
+            # Termux (Android) - uses pkg without sudo
+            missing = []
+            for pkg, exe in dependencies.items():
+                if shutil.which(exe) is None:
+                    missing.append(pkg)
+
+            # Install neovim if `nvim` is not available
+            if shutil.which('nvim') is None:
+                subprocess.check_call(["pkg", "install", "-y", "neovim"])
+
+            # Install missing dependencies
+            if missing:
+                for dep in missing:
+                    subprocess.check_call(["pkg", "install", "-y", dep])
+        elif platform.system() == "Linux":
             # Only install what's missing. Check executables first.
             missing = []
             for pkg, exe in dependencies.items():

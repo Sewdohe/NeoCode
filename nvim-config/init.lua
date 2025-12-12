@@ -51,6 +51,7 @@ else
   --=============================================================
   require("plugins.editor.autopairs") -- ....it auto-pairs things
   require("plugins.editor.project") -- adds folders with .git folder or .project file as a "project"
+  -- require("plugins.editor.floatterm") -- floating terminal for Neovim Toggle with ctrl+` (key with ~ (tilde) on it)
   require("plugins.editor.toggleterm") -- toggable terminal for Neovim. Toggle with ctrl+` (key with ~ (tilde) on it)
   -- Symbols outline deprecated.
   require("plugins.editor.session-manager") -- manages coding sessions. Similar to workspaces.
@@ -74,6 +75,7 @@ else
   require("plugins.ui.feline") -- Neovim status line (bottom bar)
   require("plugins.ui.barbar")
   require("plugins.ui.darkman")
+  require("plugins.ui.legendary")
 end
 
 -- Here we load plugins which we don't configure
@@ -271,3 +273,7 @@ let g:closetag_regions = {
 -- require("user")
 
 require("neovide") -- loads settings that are just for the GUI wrapper, Neovide
+
+-- Check for NeoCode updates on startup
+local update_checker = require("update-checker")
+update_checker.check()

@@ -5,13 +5,13 @@ end
 
 local opts = { noremap = true, silent = true }
 
--- Use lazygit to handle github repos
+-- -- Use lazygit to handle github repos
 local status_ok, toggleterm = pcall(require, "toggleterm.terminal")
 if not status_ok then
   return
 end
 
-local lazygit = toggleterm.Terminal:new({ cmd = "lazygit", hidden = true })
+local lazygit = toggleterm.Terminal:new({ cmd = "lazygit", name = "lazygit", hidden = true })
 
 function _lazygit_toggle()
   lazygit:toggle()
@@ -57,7 +57,7 @@ local custom_mappings = {
   { "K", "<C-b>", opts = opts, description = "Jump backward in document" },
 
   -- call lazygit with control g
-  { "<C-g>", "<cmd>lua _lazygit_toggle()<CR>", opts = opts, description = "Toggle LazyGit terminal" },
+  -- { "<C-g>", "<cmd>lua _lazygit_toggle()<CR>", opts = opts, description = "Toggle LazyGit terminal" },
   { "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
   { "<C-o>", ":Navbuddy<CR>", opts = opts, description = "Browse Symbols" },
 
