@@ -275,5 +275,5 @@ let g:closetag_regions = {
 require("neovide") -- loads settings that are just for the GUI wrapper, Neovide
 
 -- Check for NeoCode updates on startup
-local update_checker = require("update-checker")
+local update_checker = require("utils.update-checker")
 update_checker.check()

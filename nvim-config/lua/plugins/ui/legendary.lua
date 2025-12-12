@@ -114,6 +114,7 @@ local commands = {
   { ":SaveAndRealoadFile", ":w | :so %", description = "Saves and re-sources the file into Neovim" },
   { ":ReloadNeoCode", ":so ./init.lua", description = "Refresh Config" },
   { ":OpenWork", ":lua open_work()", description = "Open work folder to current day" },
+  { ":NeoCodeUpdate", ":lua require('utils.update-checker').force_check()", description = "Check for NeoCode updates" },
 }
 
 open_work = function()
