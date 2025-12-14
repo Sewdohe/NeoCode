@@ -17,7 +17,7 @@ vim.api.nvim_set_keymap("n", "<leader><leader>g", ":Telescope live_grep<CR>", op
 vim.api.nvim_set_keymap("n", "<leader><leader>w", ":Telescope workspaces<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader><leader>c", ":CommentToggle<CR>", opts)
 vim.api.nvim_set_keymap("n", "<leader><leader>`", ":TermSelect <CR>", opts)
-vim.api.nvim_set_keymap("n", "<leader><leader>t", ":TermNew size=15 git_dir direction=horizontal <CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader><leader>n", ":TermNew size=15 git_dir direction=horizontal <CR>", opts)
 
 -- Stay in indent mode
 vim.api.nvim_set_keymap("v", "<", "<gv", opts)

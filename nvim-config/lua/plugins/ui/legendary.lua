@@ -86,11 +86,11 @@ local custom_mappings = {
   -- LSP completion and diagnostics
   {
     "<space>t",
-    ":TroubleToggle workspace_diagnostics<CR>",
+    ":Trouble toggle workspace_diagnostics<CR>",
     opts = opts,
     description = "lsp: View Workspace Diagnostics List/View Workspace Errors",
   },
-  { "<space>d", ":TroubleToggle<CR>", opts = opts, description = "Show Diagnostics sidebar/View Errors" },
+  -- { "<space>d", ":TroubleToggle<CR>", opts = opts, description = "Show Diagnostics sidebar/View Errors" },
   {"<space>D", description = "Goto declaration"},
   {"<space>d", description = "Goto definition"},
   {"<space>h", description = "Hover Error / Show Error Popup"},

@@ -57,13 +57,14 @@ require("packer").startup(function(use)
     use 'mfussenegger/nvim-dap'
     use({"sewdohe/nvim-adapt"})
     use({"folke/neodev.nvim"})
+    use({"nvim-tree/nvim-web-devicons"})
     use {
         "SmiteshP/nvim-navic",
         requires = "neovim/nvim-lspconfig"
     }
     use({
         "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons"
+        requires = "nvim-tree/nvim-web-devicons"
     })
     -- Can't figure out how to make this one work...
     -- use {'jubnzv/virtual-types.nvim', as = "virtual-types"}
