@@ -45,6 +45,9 @@ local custom_mappings = {
   { "<C-v>", "p", mode = "n", opts = opts },
   { "<C-k>", legendary.find, description = "Search key bindings" },
 
+  -- Go back to the home screen
+  { "<C-h>", ":Alpha<CR>", mode = "n", description = "Go to Dashboard", opts = opts },
+
   -- Load previous session for directory
   {
     "<leader><leader>s",
