@@ -57,8 +57,19 @@ local custom_mappings = {
   { "K", "<C-b>", opts = opts, description = "Jump backward in document" },
 
   -- call lazygit with control g
-  -- { "<C-g>", "<cmd>lua _lazygit_toggle()<CR>", opts = opts, description = "Toggle LazyGit terminal" },
-  { "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
+  { "<C-g>", "<cmd>lua _lazygit_toggle()<CR>", opts = opts, description = "Toggle LazyGit terminal" },
+  -- { "<C-p>", ":Telescope git_files<CR>", opts = opts, description = "Find File" },
+  {
+    "<C-p>", 
+    function()
+      local ok = pcall(vim.cmd, "Telescope git_files")
+      if not ok then
+        vim.cmd("Telescope find_files")
+      end
+    end, 
+    opts = opts, 
+    description = "Find File (Git with Fallback)" 
+  },
   { "<C-o>", ":Navbuddy<CR>", opts = opts, description = "Browse Symbols" },
 
   -- Commenting

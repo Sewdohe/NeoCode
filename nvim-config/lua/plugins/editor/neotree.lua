@@ -1,4 +1,4 @@
-local status_ok, neotree = pcall(require, "neotree")
+local status_ok, neotree = pcall(require, "neo-tree")
 if not status_ok then
     return
 end
@@ -200,7 +200,8 @@ neotree.setup({
         -- "open_current",  -- netrw disabled, opening a directory opens within the
         -- window like netrw would, regardless of window.position
         -- "disabled",    -- netrw left alone, neo-tree does not handle opening dirs
-        use_libuv_file_watcher = false, -- This will use the OS level file watchers to detect changes
+        use_libuv_file_watcher = true, -- This will use the OS level file watchers to detect changes
+        bind_to_cwd = true,
         -- instead of relying on nvim autocmd events.
         window = {
             mappings = {

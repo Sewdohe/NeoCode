@@ -43,3 +43,24 @@ vim.api.nvim_create_autocmd({
     -- maybe a bit more logic here
   end,
 })
+
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function()
+    -- 1. Get the path and resolve symlinks to the real physical path
+    local path = vim.api.nvim_buf_get_name(0)
+    if path == "" or vim.bo.buftype ~= "" then return end
+    
+    local real_path = vim.uv.fs_realpath(path) or path
+    local dir = vim.fs.dirname(real_path)
+
+    -- 2. Search upward for the .git directory starting from the REAL path
+    local root_file = vim.fs.find({ ".git" }, { upward = true, path = dir })[1]
+    
+    if root_file then
+      local root = vim.fs.dirname(root_file)
+      -- 3. Change the global CWD to the discovered root
+      vim.fn.chdir(root)
+    end
+  end,
+})
